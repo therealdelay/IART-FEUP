@@ -181,8 +181,8 @@ pais(17, 'india', 'asia', 'indiano', 'indiana').
 %---------------------------------------------------------%
 
 ser(Suj,pseudonimo,_,_,_,Ob2):-
-	autor(Suj,_,_,_,_,_,_,_,Heteronimos),
-	member(Ob2,Heteronimos).
+	write(Suj),nl, write(Ob2),nl,
+	Suj == Ob2.
 
 escrever(Suj,Ob,_,_,_,_):-
 	livro(LivroId,Ob,_,_,_),

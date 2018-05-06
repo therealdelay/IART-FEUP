@@ -56,10 +56,17 @@ verificar_genero(Titulo,Genero):-
 	livro(_,Titulo,_,_,Generos_ids),
 	member(Genero_id,Generos_ids).
 
-concorda_frase(A,S,Ob):-
-	P =.. [A,S,Ob],
+concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2):-
+	write(A),nl,
+	write(S),nl,
+	write(Ob),nl,
+	write(Adv),nl,
+	write(Adjs),nl,
+	write(Prep),nl,
+	write(Ob2),nl,
+	P =.. [A,S,Ob,Adv,Adjs,Prep,Ob2],
 	(P,!,write(concordo),
-	write(discordo)).	
+	write(discordo)).
 
 	
 interrogacao_opcional --> [?].
@@ -70,12 +77,13 @@ frase-->frase_declarativa.
 %frase-->frase_conjuntiva.
 
 frase_declarativa -->
-	{write('Inicio')},
-	sintagma_nominal(N,S,_,_,_,_),
-	{write('Sujeito')},
+	{write('Inicio'),nl},
+	sintagma_nominal(N,S,_,_,_,_), !,
+	{write('Sujeito'),nl},
 	sintagma_verbal(N,A,Ob,Adv,Adjs,Prep,Ob2),
+	{write('Predicado'),nl,write(Prep),nl,write(Ob2),nl},
 	interrogacao_opcional,
-	{write('HERE'),concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2)}.
+	{write('HERE'),nl,concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2)}.
 	
 %frase_interrogativa -->
 	%pron_int,
@@ -86,19 +94,19 @@ sintagma_nominal(N,Ob,Adv,Adjs,Prep,Ob2) -->
 	sintagma_nominal_aux(N,Ob,Adv,Adjs,Prep,Ob2).
 	
 sintagma_nominal_aux(N,Ob,Adv,Adjs,Prep,Ob2) --> 
-	sintagma_nominal_aux2(N,Ob,Adv,Adjs,Prep,Ob2).
-	
-sintagma_nominal_aux(N,Ob,Adv,Adjs,Prep,Ob2) --> 
 	sintagma_nominal_aux2(N,Ob,Adv,Adjs,Prep,Ob2),
 	sintagma_preposicional(Prep,Ob2).
-
-sintagma_nominal_aux2(N,Ob,Adv,Adjs,Prep,Ob2) -->
-	sintagma_nominal_aux3(N,Ob,Adv,Adjs,Prep,Ob2).
 	
+sintagma_nominal_aux(N,Ob,Adv,Adjs,Prep,Ob2) --> 
+	sintagma_nominal_aux2(N,Ob,Adv,Adjs,Prep,Ob2).
+
 sintagma_nominal_aux2(N,Ob,Adv,Adjs,Prep,Ob2) -->
 	sintagma_nominal_aux3(N-G,Ob,Adv,Adjs,Prep,Ob2),
 	sintagma_adjetival(N-G,Adv,Adjs).
 	
+sintagma_nominal_aux2(N,Ob,Adv,Adjs,Prep,Ob2) -->
+	sintagma_nominal_aux3(N-_,Ob,Adv,Adjs,Prep,Ob2).
+		
 sintagma_nominal_aux3(N-G,Ob,_,_,_,_) --> 
 	art_indef(N-G), nome(N-G, Ob).
 	
@@ -109,37 +117,40 @@ sintagma_nominal_aux3(N-G,Ob,_,_,_,_) -->
 	nome(N-G,Ob).
 	
 sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
-	{write('Titulo'),nl},
+	%{write('Titulo'),nl},
 	[Titulo],
-	{livro(_,Titulo,_,_,_)},
-	N=s, Ob = Titulo.
+	{livro(_,Titulo,_,_,_),
+	N=s, Ob = Titulo}.
+
+sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
+	[Primeiro],[Ultimo],
+	{autor(AutorId,Primeiro,Ultimo,_,_,_,_,_,_),
+	N=s, Ob=AutorId}.
 	
 sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
-	{write('Autor Primeiro'),nl},
+	%{write('Autor Primeiro'),nl},
 	[Primeiro],
-	{autor(Suj,Primeiro,_,_,_,_,_,_,_)},
-	N=s, Ob=Suj.
+	{autor(AutorId,Primeiro,_,_,_,_,_,_,_),
+	N=s, Ob=AutorId}.
 	
 sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
 	[Ultimo],
-	{autor(Suj,_,Ultimo,_,_,_,_,_,_)},
-	N=s, Ob=Suj.
-	
+	{autor(AutorId,_,Ultimo,_,_,_,_,_,_),
+	N=s, Ob=AutorId}.
+		
 sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
-	[Primeiro],[Ultimo],
-	{autor(Suj,Primeiro,Ultimo,_,_,_,_,_,_)},
-	N=s, Ob=Suj.
-	
-sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
-	{write('Heteronimo'),nl},
+	%{write('Heteronimo'),nl},
 	[Heteronimo],
-	{write(Heteronimo),nl},
-	{autor(Suj,_,_,_,_,_,_,_,Heteronimos), write(Suj),nl, member(Heteronimo, Heteronimos)}, !,
-	N=s, Ob=Suj.
+	%{write(Heteronimo),nl},
+	{autor(AutorId,_,_,_,_,_,_,_,Heteronimos), member(Heteronimo, Heteronimos), !,
+	N=s, Ob=AutorId}.
 
 sintagma_preposicional(Prep,Ob) -->
-	preposisao(N-_,Prep),
-	sintagma_nominal(N,Ob,_,_,_,_).
+	preposicao(N-_,Prep),
+	{write('Prep: '),write(Prep)},
+	sintagma_nominal(N,Ob,_,_,_,_),
+	{write(Ob),nl}.
+	
 	
 sintagma_adjetival(N-G,Adv,Ajs) -->
 	sintagma_adjetival_aux(N-G,Adv,Ajs).
@@ -156,7 +167,8 @@ sintagma_adjetival_aux(N-G,Adv,[_|T]) -->
 	adverbio(Adv), adjetivo(N-G,T).
 	
 sintagma_verbal(N,A,Ob,Adv,Adjs,Prep,Ob2) -->
-	verbo(N,A,_), sintagma_nominal(N,Ob,Adv,Adjs,Prep,Ob2).
+	verbo(N,A,_),
+	sintagma_nominal(N,Ob,Adv,Adjs,Prep,Ob2).
 	
 %sintagma_verbal(_,A,Adv,Adjs,Prep,Ob2) --> 
 	%sintagma_nominal.
