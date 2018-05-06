@@ -1,4 +1,5 @@
 :-use_module(library(lists)).
+:- dynamic adjetivo/1.
 
 :-include('kb.pl').
 :-include('lexicon.pl').
@@ -56,15 +57,20 @@ verificar_genero(Titulo,Genero):-
 	livro(_,Titulo,_,_,Generos_ids),
 	member(Genero_id,Generos_ids).
 
-concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2):-
+concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2):-
 	write(A),nl,
 	write(S),nl,
 	write(Ob),nl,
 	write(Adv),nl,
 	write(Adjs),nl,
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	write(CleanAdjs),nl,
 	write(Prep),nl,
 	write(Ob2),nl,
-	P =.. [A,S,Ob,Adv,Adjs,Prep,Ob2],
+	write(Adjs2),nl,
+	getCleanAdjs(Adjs2,[],CleanAdjs2),
+	write(CleanAdjs2),nl,
+	P =.. [A,S,Ob,Adv,CleanAdjs,Prep,Ob2,CleanAdjs2],
 	(P,!,write(concordo),
 	write(discordo)).
 
@@ -78,26 +84,27 @@ frase-->frase_declarativa.
 
 frase_declarativa -->
 	{write('Inicio'),nl},
-	sintagma_nominal(N,S,_,_,_,_), !,
+	sintagma_nominal(N,S,_,_,_,_,_), !,
 	{write('Sujeito'),nl},
-	sintagma_verbal(N,A,Ob,Adv,Adjs,Prep,Ob2),
+	{length(Adjs,5),length(Adjs2,5)},
+	sintagma_verbal(N,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2),
 	{write('Predicado'),nl,write(Prep),nl,write(Ob2),nl},
 	interrogacao_opcional,
-	{write('HERE'),nl,concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2)}.
+	{write('HERE'),nl,concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2)}.
 	
 %frase_interrogativa -->
 	%pron_int,
 	%sintagma_verbal,
 	%[?].
 	
-sintagma_nominal(N,Ob,Adv,Adjs,Prep,Ob2) --> 
-	sintagma_nominal_aux(N,Ob,Adv,Adjs,Prep,Ob2).
+sintagma_nominal(N,Ob,Adv,Adjs,Prep,Ob2,Adjs2) -->
+	sintagma_nominal_aux(N,Ob,Adv,Adjs,Prep,Ob2,Adjs2).
 	
-sintagma_nominal_aux(N,Ob,Adv,Adjs,Prep,Ob2) --> 
+sintagma_nominal_aux(N,Ob,Adv,Adjs,Prep,Ob2,Adjs2) -->
 	sintagma_nominal_aux2(N,Ob,Adv,Adjs,Prep,Ob2),
-	sintagma_preposicional(Prep,Ob2).
+	sintagma_preposicional(Prep,Ob2,Adjs2).
 	
-sintagma_nominal_aux(N,Ob,Adv,Adjs,Prep,Ob2) --> 
+sintagma_nominal_aux(N,Ob,Adv,Adjs,Prep,Ob2,_) --> 
 	sintagma_nominal_aux2(N,Ob,Adv,Adjs,Prep,Ob2).
 
 sintagma_nominal_aux2(N,Ob,Adv,Adjs,Prep,Ob2) -->
@@ -144,35 +151,36 @@ sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
 	%{write(Heteronimo),nl},
 	{autor(AutorId,_,_,_,_,_,_,_,Heteronimos), member(Heteronimo, Heteronimos), !,
 	N=s, Ob=AutorId}.
-
-sintagma_preposicional(Prep,Ob) -->
-	preposicao(N-_,Prep),
-	{write('Prep: '),write(Prep)},
-	sintagma_nominal(N,Ob,_,_,_,_),
-	{write(Ob),nl}.
 	
+sintagma_nominal_aux3(_,_,_,_,_,_) --> 	[].
+
+sintagma_preposicional(Prep,Ob,Adjs) -->
+	preposicao(N-_,Prep),
+	%{write('Prep: '),write(Prep)},
+	sintagma_nominal(N,Ob,_,Adjs,_,_,_).
+	%{write(Ob),nl}.
 	
 sintagma_adjetival(N-G,Adv,Ajs) -->
 	sintagma_adjetival_aux(N-G,Adv,Ajs).
 	
 sintagma_adjetival(N-G,Adv,Ajs) --> 
-	sintagma_adjetival_aux(N-G,Adv,Ajs), [e],
+	sintagma_adjetival_aux(N-G,Adv,Ajs), [e].
 
-sintagma_adjetival(_,_,_).
+sintagma_adjetival(_,_,_) --> [].
 
-sintagma_adjetival_aux(N-G,_,[_|T]) --> 
-	adjetivo(N-G,T).
+sintagma_adjetival_aux(N-G,_,Adjs) --> 
+	adjetivo(N-G,Adj),
+	{actual_length(Adjs,0,Length),nth0(Length,Adjs,Adj)}.
 	
-sintagma_adjetival_aux(N-G,Adv,[_|T]) --> 
+sintagma_adjetival_aux(N-G,Adv,[_|T]) -->
 	adverbio(Adv), adjetivo(N-G,T).
 	
-sintagma_verbal(N,A,Ob,Adv,Adjs,Prep,Ob2) -->
+sintagma_verbal(N,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2) -->
 	verbo(N,A,_),
-	sintagma_nominal(N,Ob,Adv,Adjs,Prep,Ob2).
+	sintagma_nominal(N,Ob,Adv,Adjs,Prep,Ob2,Adjs2).
 	
 %sintagma_verbal(_,A,Adv,Adjs,Prep,Ob2) --> 
 	%sintagma_nominal.
-
 
 %frase_conjuntiva -->
 	%[e].

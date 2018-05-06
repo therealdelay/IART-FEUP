@@ -3,7 +3,7 @@
 %************
 %* Autores **
 %************
-%autor(id, primeiro_nome, outros_nomes, data_nasc, data_mort, sexo, id_pais,n_premios, [heretonimos])
+%autor(id, primeiro_nome, outros_nomes, data_nasc, data_mort, sexo, id_pais, n_premios, [heretonimos])
 
 autor(1, 'Alexandre', 'Dumas', 1802, 1870, m, 9, 1, []).
 autor(2, 'Alexandre', 'Dumas', 1824, 1895, m, 9, 1, []).
@@ -156,42 +156,149 @@ genero(19,'teatro').
 %**********/
 %pais(id, nome, continente, nacionalidade_fem, nacionalidade_masc)
 
-pais(1, 'portugal', 'europa', 'português', 'portuguesa').
-pais(2, 'angola', 'africa', 'angolano', 'angolana').
-pais(3, 'austria', 'europa', 'austríaco', 'austríaca').
-pais(4, 'belgica', 'europa', 'belga', 'belga').
-pais(5, 'brasil', 'america', 'brasileiro', 'brasileira').
-pais(6, 'chile', 'america', 'chileno', 'chilena').
-pais(7, 'colombia', 'america', 'colombiano', 'colombiana').
-pais(8, 'espanha', 'europa', 'espanhol', 'espanhola').
-pais(9, 'frança', 'europa', 'francês', 'francesa').
-pais(10, 'reino unido', 'europa', 'inglês', 'inglesa').
-pais(11, 'alemanha',  'europa', 'alemão', 'alemã').
-pais(12, 'irlanda', 'europa', 'irlandês', 'irlandesa').
-pais(13, 'japao', 'asia', 'japonês', 'japonesa').
-pais(14, 'mocambique', 'africa', 'moçambicano', 'moçambicana').
-pais(15, 'russia', 'europa', 'russo', 'russa').
-pais(16, 'estados unidos', 'america', 'americano', 'americana').
-pais(17, 'india', 'asia', 'indiano', 'indiana').
+pais(1, 'portugal', europa, 'português', 'portuguesa').
+pais(2, 'angola', africa, 'angolano', 'angolana').
+pais(3, 'austria', europa, 'austríaco', 'austríaca').
+pais(4, 'belgica', europa, 'belga', 'belga').
+pais(5, 'brasil', america, 'brasileiro', 'brasileira').
+pais(6, 'chile', america, 'chileno', 'chilena').
+pais(7, 'colombia', america, 'colombiano', 'colombiana').
+pais(8, 'espanha', europa, 'espanhol', 'espanhola').
+pais(9, 'frança', europa, 'francês', 'francesa').
+pais(10, 'reino unido', europa, 'inglês', 'inglesa').
+pais(11, 'alemanha',  europa, 'alemão', 'alemã').
+pais(12, 'irlanda',europa, 'irlandês', 'irlandesa').
+pais(13, 'japao', asia, 'japonês', 'japonesa').
+pais(14, 'mocambique', africa, 'moçambicano', 'moçambicana').
+pais(15, 'russia', europa, 'russo', 'russa').
+pais(16, 'estados unidos', america, 'americano', 'americana').
+pais(17, 'india', 'asia', indiano, 'indiana').
 
-%ser(Suj,Ob,Adv,Adjs,Prep,Ob2):-
+
+anoAtual(2018).
 
 %---------------------------------------------------------%
 % Acoes                                                   %
 %---------------------------------------------------------%
 
-ser(Suj,pseudonimo,_,_,_,Ob2):-
+%ser(Suj,Ob,Adv,Adjs,Prep,Ob2,Adj2):-
+
+
+%----------------------%
+% Ser                  %
+%----------------------%
+
+%Pseudonimo
+% ?- frase(['Alberto Caeiro', 'e', 'heteronimo', 'de','Fernando','Pessoa'],[]).
+
+ser(Suj,pseudonimo,_,_,_,Ob2,_):-
 	write(Suj),nl, write(Ob2),nl,
 	Suj == Ob2.
 
-escrever(Suj,Ob,_,_,_,_):-
-	livro(LivroId,Ob,_,_,_),
-	LivroId == Suj.
+%Genero
+% ?- frase(['A Mensagem', 'e', 'uma', 'poesia'],[]).
+
+ser(Titulo,Genero,_,_,_,_,_):-
+	genero(GeneroId, Genero),
+	livro(_,Titulo,_,_,Generos),
+	member(GeneroId,Generos).
 	
-nascer(Suj,_,_,_,=,Ob2):-
-	autor(Suj,_,_,Nascimento,_,_,_,_,_),
+%Nacionalidade
+% ?- frase(['Fernando','Pessoa', 'e', 'portugues'],[]).
+
+ser(AutorId,_,_,Adjs,_,_,_):-
+	length(Adjs,1),
+	nth0(0,Adjs,PaisId),
+	autor(AutorId,_,_,_,_,_,_,PaisId,_).
+	
+% ?- frase(['Fernando','Pessoa', 'e', 'europeu'],[]).
+
+ser(AutorId,_,_,Adjs,_,_,_):-
+	length(Adjs,1),
+	nth0(0,Adjs,Continente),
+	autor(AutorId,_,_,_,_,_,_,PaisId,_),
+	pais(PaisId,_,Continente,_,_).
+
+%----------------------%
+% Escrever             %
+%----------------------%
+	
+%Livro
+% ?- frase(['Fernando', 'Pessoa', 'escreveu', 'A Mensagem'],[]). 
+
+escrever(AutorId,Titulo,_,_,_,_,_):-
+	livro(_,Titulo,Autores,_,_),
+	member(AutorId,Autores).
+	
+%----------------------%
+% Estar                %
+%----------------------%
+
+%Esta morto
+% ?- frase(['Fernando','Pessoa','esta','morto'],[]).
+ 
+estar(AutorId,_,_,Adjs,_,_,_):-
+	length(Adjs,1),
+	nth0(0,Adjs,morto),
+	anoAtual(Ano),
+	autor(AutorId,_,_,_,Morte,_,_,_,_),
+	Ano >= Morte.
+
+% ?- frase(['Fernando','Pessoa','esta','vivo'],[]).
+
+estar(AutorId,_,_,Adjs,_,_,_):-
+	length(Adjs,1),
+	nth0(0,Adjs,vivo),
+	autor(AutorId,_,_,_,-1,_,_,_,_).
+
+%----------------------%
+% Nascer               %
+%----------------------%
+% ?- frase(['Fernando','Pessoa','nasceu','em','1888'],[]).
+
+nascer(AutorId,_,_,_,=,Ob2,_):-
+	autor(AutorId,_,_,Nascimento,_,_,_,_,_),
 	Nascimento == Ob2.
 	
-morrer(Suj,_,_,_,=,Ob2):-
-	autor(Suj,_,_,_,Morte,_,_,_,_),
+% ?- frase(['Fernando','Pessoa','nasceu','no','ano','1888'],[]).
+
+nascer(AutorId,_,_,_,=,ano,Adjs2):-
+	length(Adjs2,1),
+	nth0(0,Adjs2,Ano),
+	autor(AutorId,_,_,Nascimento,_,_,_,_,_),
+	Nascimento == Ano.
+	
+	
+% ?- frase(['Fernando','Pessoa','nasceu','no','seculo','XIX'],[]).
+
+nascer(AutorId,_,_,_,=,seculo,Adjs2):-
+	length(Adjs2,1),
+	nth0(0,Adjs2,Seculo),
+	autor(AutorId,_,_,Nascimento,_,_,_,_,_),
+	verificar_seculo(=,Nascimento,Seculo).
+	
+%----------------------%
+% Morrer               %
+%----------------------%
+%Morreu em
+% ?- frase(['Fernando','Pessoa','morreu','em','1935'],[]).
+
+morrer(AutorId,_,_,_,=,Ob2,_):-
+	autor(AutorId,_,_,_,Morte,_,_,_,_),
 	Morte == Ob2.
+	
+% ?- frase(['Fernando','Pessoa','morreu','no','ano','1935'],[]).
+
+morrer(AutorId,_,_,_,=,ano,Adjs2):-
+	length(Adjs2,1),
+	nth0(0,Adjs2,Ano),
+	autor(AutorId,_,_,_,Morte,_,_,_,_),
+	Morte == Ano.
+	
+% ?- frase(['Fernando','Pessoa','morreu','no','seculo','1935'],[]).
+
+morrer(AutorId,_,_,_,=,seculo,Adjs2):-
+	length(Adjs2,1),
+	nth0(0,Adjs2,Seculo),
+	autor(AutorId,_,_,_,Morte,_,_,_,_),
+	verificar_seculo(=,Morte,Seculo).

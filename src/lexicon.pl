@@ -134,6 +134,33 @@ pron_int(p-f, qn) --> [quantas].
 % Adjetivos                                               %
 %---------------------------------------------------------%
 
+adjetivo(s-m, 1) --> ['I'].
+adjetivo(s-m, 2) --> ['II'].
+adjetivo(s-m, 3) --> ['III'].
+adjetivo(s-m, 4) --> ['IV'].
+adjetivo(s-m, 5) --> ['V'].
+adjetivo(s-m, 6) --> ['VI'].
+adjetivo(s-m, 7) --> ['VII'].
+adjetivo(s-m, 8) --> ['VIII'].
+adjetivo(s-m, 9) --> ['IX'].
+adjetivo(s-m, 10) --> ['X'].
+adjetivo(s-m, 11) --> ['XI'].
+adjetivo(s-m, 12) --> ['XII'].
+adjetivo(s-m, 13) --> ['XIII'].
+adjetivo(s-m, 14) --> ['XIV'].
+adjetivo(s-m, 15) --> ['XV'].
+adjetivo(s-m, 16) --> ['XVI'].
+adjetivo(s-m, 17) --> ['XVII'].
+adjetivo(s-m, 18) --> ['XVIII'].
+adjetivo(s-m, 19) --> ['XIX'].
+adjetivo(s-m, 20) --> ['XX'].
+adjetivo(s-m, 21) --> ['XXI'].
+
+adjetivo(s-m, Nr) --> 
+	{between(0,2050,Nr)},
+	{atom_number(NrAtom,Nr)},
+	[NrAtom].
+
 adjetivo(s-_, recente) --> [recente].
 adjetivo(p-_, recente) --> [recentes].
 
@@ -207,6 +234,41 @@ adjetivo(s-f, 16) --> [americana].
 adjetivo(p-m, 16) --> [americanos].
 adjetivo(p-f, 16) --> [americanas].
 
+adjetivo(s-m, africa) --> [africano].
+adjetivo(s-f, africa) --> [africana].
+adjetivo(p-m, africa) --> [africanos].
+adjetivo(p-f, africa) --> [africanas].
+
+adjetivo(s-m, asia) --> [asiatico].
+adjetivo(s-f, asia) --> [asiatica].
+adjetivo(p-m, asia) --> [asiaticos].
+adjetivo(p-f, asia) --> [asiaticas].
+
+adjetivo(s-m, europa) --> [europeu].
+adjetivo(s-f, europa) --> [europeia].
+adjetivo(p-m, europa) --> [europeus].
+adjetivo(p-f, europa) --> [europeias].
+
+adjetivo(s-m, america) --> [americano].
+adjetivo(s-f, america) --> [americana].
+adjetivo(p-m, america) --> [americanos].
+adjetivo(p-f, america) --> [americanas].
+
+adjetivo(s-m, vivo) --> [vivo].
+adjetivo(p-m, vivo) --> [vivos].
+adjetivo(s-f, vivo) --> [viva].
+adjetivo(p-f, vivo) --> [vivas].
+
+adjetivo(s-m, morto) --> [falecido].
+adjetivo(s-f, morto) --> [falecida].
+adjetivo(p-m, morto) --> [falecidos].
+adjetivo(p-f, morto) --> [falecidas].
+
+adjetivo(s-f, morto) --> [morta].
+adjetivo(p-f, morto) --> [mortas].
+adjetivo(s-m, morto) --> [morto].
+adjetivo(p-m, morto) --> [mortos].
+
 adj_comp(mais, recente, maisrecente).
 adj_comp(menos, recente, menosrecente).
 adj_comp(mais,antigo, maisantigo).
@@ -240,7 +302,7 @@ adverbio(p-m, pouco) --> [poucos].
 adverbio(p-f, pouco) --> [poucas].
 
 %---------------------------------------------------------%
-% antivos: Autores                                   %
+% antivos: Autores                                        %
 %---------------------------------------------------------%
 
 nome(s-m, autor) --> [autor].
@@ -342,6 +404,11 @@ nome(p-m, teatro) --> [teatros].
 
 nome(s-f, tragedia) --> [tragedia].
 nome(p-f, tragedia) --> [tragedias].
+
+nome(_-_, Nr) -->
+	{between(0,2050,Nr)},
+	{atom_number(NrAtom,Nr)},
+	[NrAtom].
 
 %---------------------------------------------------------%
 % Substantivos: Nacionalidades                            %
@@ -460,18 +527,3 @@ verbo_passiva(s-m, nascer) --> [nascido].
 verbo_passiva(s-f, nascer) --> [nascida].
 verbo_passiva(p-m, nascer) --> [nascidos].
 verbo_passiva(p-f, nascer) --> [nascidas].
-
-verbo_passiva(s-m, morrer) --> [falecido].
-verbo_passiva(s-f, morrer) --> [falecida].
-verbo_passiva(p-m, morrer) --> [falecidos].
-verbo_passiva(p-f, morrer) --> [falecidas].
-
-verbo_passiva(s-m, viver) --> [vivo].
-verbo_passiva(p-m, viver) --> [vivos].
-verbo_passiva(s-f, viver) --> [viva].
-verbo_passiva(p-f, viver) --> [vivas].
-
-verbo_passiva(s-f, morrer) --> [morta].
-verbo_passiva(p-f, morrer) --> [mortas].
-verbo_passiva(s-m, morrer) --> [morto].
-verbo_passiva(p-m, morrer) --> [mortos].
