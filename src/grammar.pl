@@ -85,8 +85,8 @@ frase_declarativa -->
 	interrogacao_opcional,
 	{write('HERE'),nl,concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2)}.
 	
-%frase_interrogativa -->
-	%pron_int,
+frase_interrogativa -->
+	%pron_int(),
 	%sintagma_verbal,
 	%[?].
 	
