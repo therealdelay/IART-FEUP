@@ -79,7 +79,7 @@ interrogacao_opcional --> [?].
 interrogacao_opcional --> [].
 	
 frase-->frase_declarativa.
-%frase-->frase_interrogatva.
+frase-->frase_interrogatva.
 %frase-->frase_conjuntiva.
 
 frase_declarativa -->
@@ -93,9 +93,81 @@ frase_declarativa -->
 	{write('HERE'),nl,concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2)}.
 	
 frase_interrogativa -->
-	%pron_int(),
-	%sintagma_verbal,
-	%[?].
+	{write('Start'), nl},
+	%sintagma_nominal_int(N, S, _, _, _, _, _),
+	pron_int(N-G, Q),
+	sintagma_verbal_int(N-G, A, Ob),
+	[?],
+	{resposta(Q, A, Ob)}.
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% FRASES INTERROGATIVAS %
+%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+%'Ob' é o pronome interrogativo
+%sintagma_nominal_int(N, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
+%	{write('Entrei'), nl},
+%	sintagma_nominal_int_aux(N, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
+	
+%sintagma_nominal_int_aux(N, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
+%	{write('Entrei 2'), nl},
+%	sintagma_nominal_int_aux2(N, Ob, Adv, Adjs, Prep, Ob2),
+%	sintagma_preposicional_int(Prep, Ob2, Adjs2).
+	
+%sintagma_nominal_int_aux(N, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
+%	{write('Entrei 2'), nl},
+%	sintagma_nominal_int_aux2(N, Ob, Adv, Adjs, Prep, Ob2).
+	
+%sintagma_nominal_int_aux2(N, Ob, Adv, Adjs, Prep, Ob2) -->
+%	sintagma_nominal_int_aux3(N-G, Ob, Adv, Adjs, Prep, Ob2),
+%	sintagma_adjetival_int(N-G, Adv, Adjs).
+	
+%sintagma_nominal_int_aux2(N, Ob, Adv, Adjs, Prep, Ob2) -->
+%	{write('Entrei 3'), nl},
+%	sintagma_nominal_int_aux3(N-G, Ob, Adv, Adjs, Prep, Ob2).
+	
+%sintagma_preposicional_int(Prep, Ob, Adjs) -->
+%	preposicao(N-_, Prep),
+%	sintagma_nominal_int(N, Ob, _, Adjs, _, _, _).
+	
+%sintagma_adjetival_int(N-G, Adv, Adjs) -->
+
+%sintagma_nominal_int_aux3(N-G, Ob, _, _, _, _) -->
+%	{write('Entrei 4'), nl, write(Ob), nl},
+%	pron_int(N-G, _).
+	
+%for testing purposes only
+%sintagma_nominal_int(N, A, S) -->
+%	pron_int(N-_, _),
+%	verbo(N, A, _),
+%	[Titulo],
+%	{write('HERE'), nl}.
+
+sintagma_verbal_int(N-G, A, Ob) -->
+	verbo(N, A, _),
+	sintagma_verbal_int_aux(N-G, Ob).
+	
+sintagma_verbal_int_aux(_, Ob) -->
+	%{write('Found title name'), nl},
+	[Titulo],
+	{livro(_, Titulo, _, _, _),
+	Ob = Titulo}.
+	
+resposta(Q, A, Ob) :-
+	resposta_escrever(Q, A, Ob).
+	
+%still not formatted
+resposta_escrever(Q, A, Ob) :-
+	%write('HERE'), nl,
+	P =.. [A, AutID, Ob, _, _, _, _, _],
+	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
+	(Q==ql, write(L); 
+	length(L,N),write(N)).
+	
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% FRASES DECLARATIVAS %
+%%%%%%%%%%%%%%%%%%%%%%%
 	
 sintagma_nominal(N,Ob,Adv,Adjs,Prep,Ob2,Adjs2) -->
 	sintagma_nominal_aux(N,Ob,Adv,Adjs,Prep,Ob2,Adjs2).

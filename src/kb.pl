@@ -20,7 +20,7 @@ autor(12, 'Fiodor', 'Dostoiévski', 1821, 1881, m, 15, 1, []).
 autor(13, 'Friedrich', 'Nietzsche', 1844, 1900, m, 11, 1, []).
 autor(14, 'Gabriel', 'Garcia Marquez', 1927, 2014, m, 7, 1, []).
 autor(15, 'Haruki', 'Murakami', 1949, -1, m, 13, 1, []).
-autor(16, 'Hiroshi ', 'Fujimoto', 1933, 1996, m, 13, 1, []).
+autor(16, 'Hiroshi', 'Fujimoto', 1933, 1996, m, 13, 1, []).
 autor(17, 'Isabel', 'Allende', 1942, -1, f, 6, 1, []).
 autor(18, 'Jane', 'Austen', 1775, 1817, f, 10, 1, []).
 autor(19, 'Julio', 'Dinis', 1839, 1871, m, 1, 1, []).
