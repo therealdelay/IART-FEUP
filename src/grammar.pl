@@ -94,75 +94,98 @@ frase_declarativa -->
 	
 frase_interrogativa -->
 	{write('Start'), nl},
-	%sintagma_nominal_int(N, S, _, _, _, _, _),
-	pron_int(N-G, Q),
-	sintagma_verbal_int(N-G, A, Ob),
+	sintagma_nominal_int(N-G, Q, _, _, _, _, _, _), !,
+	{length(Adjs,5),length(Adjs2,5)},
+	sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2),
 	[?],
-	{resposta(Q, A, Ob)}.
+	{resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2)}.
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % FRASES INTERROGATIVAS %
 %%%%%%%%%%%%%%%%%%%%%%%%%
-	
-%'Ob' é o pronome interrogativo
-%sintagma_nominal_int(N, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
-%	{write('Entrei'), nl},
-%	sintagma_nominal_int_aux(N, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
-	
-%sintagma_nominal_int_aux(N, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
-%	{write('Entrei 2'), nl},
-%	sintagma_nominal_int_aux2(N, Ob, Adv, Adjs, Prep, Ob2),
-%	sintagma_preposicional_int(Prep, Ob2, Adjs2).
-	
-%sintagma_nominal_int_aux(N, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
-%	{write('Entrei 2'), nl},
-%	sintagma_nominal_int_aux2(N, Ob, Adv, Adjs, Prep, Ob2).
-	
-%sintagma_nominal_int_aux2(N, Ob, Adv, Adjs, Prep, Ob2) -->
-%	sintagma_nominal_int_aux3(N-G, Ob, Adv, Adjs, Prep, Ob2),
-%	sintagma_adjetival_int(N-G, Adv, Adjs).
-	
-%sintagma_nominal_int_aux2(N, Ob, Adv, Adjs, Prep, Ob2) -->
-%	{write('Entrei 3'), nl},
-%	sintagma_nominal_int_aux3(N-G, Ob, Adv, Adjs, Prep, Ob2).
-	
-%sintagma_preposicional_int(Prep, Ob, Adjs) -->
-%	preposicao(N-_, Prep),
-%	sintagma_nominal_int(N, Ob, _, Adjs, _, _, _).
-	
-%sintagma_adjetival_int(N-G, Adv, Adjs) -->
 
-%sintagma_nominal_int_aux3(N-G, Ob, _, _, _, _) -->
-%	{write('Entrei 4'), nl, write(Ob), nl},
-%	pron_int(N-G, _).
-	
-%for testing purposes only
-%sintagma_nominal_int(N, A, S) -->
-%	pron_int(N-_, _),
-%	verbo(N, A, _),
-%	[Titulo],
-%	{write('HERE'), nl}.
+sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
+	sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2),
+	sintagma_preposicional_int(Prep, Ob2, Adjs2).
 
-sintagma_verbal_int(N-G, A, Ob) -->
-	verbo(N, A, _),
-	sintagma_verbal_int_aux(N-G, Ob).
+sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
+	sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
+
+sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
+	sintagma_nominal_int_aux2(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2),
+	sintagma_adjetival_int(N-G, Adv, Adjs).
 	
-sintagma_verbal_int_aux(_, Ob) -->
-	%{write('Found title name'), nl},
+sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
+	sintagma_nominal_int_aux2(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
+	
+sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _) -->
+	pron_int(N-G, Q).
+	
+sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _) --> 
+	art_indef(N-G), nome(N-G, Ob).
+	
+sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _) -->
+	art_def(N-G), nome(N-G, Ob).
+	
+sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _) -->
+	nome(N-G,Ob).
+	
+sintagma_nominal_int_aux2(_, _, Ob, _, _, _, _, _) -->
 	[Titulo],
 	{livro(_, Titulo, _, _, _),
 	Ob = Titulo}.
 	
-resposta(Q, A, Ob) :-
+sintagma_preposicional_int(Prep, Ob, Adjs) -->
+	%{write('sintagma preposicional'), nl},
+	preposicao(N-G, Prep),
+	sintagma_nominal_int(N-G, _, Ob, _, Adjs, _, _, _).
+	
+sintagma_adjetival_int(N-G, Adv, Adjs) -->
+	%{write('sintagma adjectival'), nl},
+	sintagma_adjetival_int_aux(N-G, Adv, Adjs).
+	
+sintagma_adjetival_int(N-G, Adv, Adjs) -->
+	sintagma_adjetival_int_aux(N-G, Adv, Adjs), [e].
+	
+sintagma_adjetival_int(_, _, _) -->
+	[].
+	
+sintagma_adjetival_int_aux(N-G, _, Adjs) -->
+	adjetivo(N-G, Adj),
+	{actual_length(Adjs,0,Length),nth0(Length,Adjs,Adj)}.
+	
+sintagma_adjetival_int_aux(N-G, Adv, [_|T]) -->
+	adverbio(Adv),
+	adjetivo(N-G, T).
+
+sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
+	verbo(N, A, _),
+	sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
+	
+resposta(Q, A, Ob, _, _, _, _, _) :-
 	resposta_escrever(Q, A, Ob).
+	
+resposta(Q, A, Ob, _, Adjs, _, _, _) :-
+	resposta_nacionalidade(Q, A, Ob, Adjs).
 	
 %still not formatted
 resposta_escrever(Q, A, Ob) :-
-	%write('HERE'), nl,
+	A == escrever,
 	P =.. [A, AutID, Ob, _, _, _, _, _],
 	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
 	(Q==ql, write(L); 
 	length(L,N),write(N)).
+	
+resposta_nacionalidade(Q, A, Ob, Adjs) :-
+	%trace,
+	A == ser,
+	Ob == autor,
+	P =.. [A, AutID, _, _, Adjs, _, _, _],
+	%devia ser findall(AutID, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L), mas há algum problema com o predicado 'ser', por isso deixo assim para responder alguma coisa
+	findall(AutID, P, L), 
+	(Q==ql, write(L); 
+	length(L,N),write(N)).
+	%notrace.
 	
 
 %%%%%%%%%%%%%%%%%%%%%%%
