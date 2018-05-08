@@ -108,8 +108,15 @@ preposicao(s-f,=) --> [na].
 preposicao(p-m,=) --> [nos].
 preposicao(p-f,=) --> [nas].
 
-preposicao(_-_,>) --> [apos].
-preposicao(_-_,<) --> [antes].
+preposicao(N-G,>) --> [apos], art_def(N-G).
+
+preposicao(s-_,<) --> [antes], [de].
+preposicao(s-m,<) --> [antes], [do].
+preposicao(s-f,<) --> [antes], [da].
+
+preposicao(s-_,>) --> [depois], [de].
+preposicao(s-m,>) --> [depois], [do].
+preposicao(s-f,>) --> [depois], [da].
 
 %---------------------------------------------------------%
 % Pronomes Pessoais                                       %
@@ -160,6 +167,15 @@ adjetivo(s-m, Nr) -->
 	{between(0,2050,Nr)},
 	{atom_number(NrAtom,Nr)},
 	[NrAtom].
+
+	
+adjetivo(s-m, conhecido) --> [conhecido].
+adjetivo(s-f, conhecido) --> [conhecida].
+adjetivo(p-m, conhecido) --> [conhecidos].
+adjetivo(p-f, conhecido) --> [conhecidas].
+
+adjetivo(s-_, conhecido) --> [popular].
+adjetivo(p-_, conhecido) --> [popular].	
 
 adjetivo(s-_, recente) --> [recente].
 adjetivo(p-_, recente) --> [recentes].

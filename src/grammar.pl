@@ -132,7 +132,7 @@ sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _) -->
 	
 sintagma_nominal_int_aux2(_, _, Ob, _, _, _, _, _) -->
 	[Titulo],
-	{livro(_, Titulo, _, _, _),
+	{livro(_, Titulo, _, _, _, _),
 	Ob = Titulo}.
 	
 sintagma_preposicional_int(Prep, Ob, Adjs) -->
@@ -221,7 +221,7 @@ sintagma_nominal_aux3(N-G,Ob,_,_,_,_) -->
 sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
 	%{write('Titulo'),nl},
 	[Titulo],
-	{livro(_,Titulo,_,_,_),
+	{livro(_,Titulo,_,_,_,_),
 	N=s, Ob = Titulo}.
 
 sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
@@ -267,8 +267,9 @@ sintagma_adjetival_aux(N-G,_,Adjs) -->
 	adjetivo(N-G,Adj),
 	{actual_length(Adjs,0,Length),nth0(Length,Adjs,Adj)}.
 	
-sintagma_adjetival_aux(N-G,Adv,[_|T]) -->
-	adverbio(Adv), adjetivo(N-G,T).
+sintagma_adjetival_aux(N-G,Adv,Adjs) -->
+	adverbio(Adv), adjetivo(N-G,Adj),
+	{actual_length(Adjs,0,Length),nth0(Length,Adjs,Adj)}.
 	
 sintagma_verbal(N,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2) -->
 	verbo(N,A,_),
