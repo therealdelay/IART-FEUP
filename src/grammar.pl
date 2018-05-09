@@ -71,7 +71,7 @@ concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2):-
 	getCleanAdjs(Adjs2,[],CleanAdjs2),
 	write(CleanAdjs2),nl,
 	P =.. [A,S,Ob,Adv,CleanAdjs,Prep,Ob2,CleanAdjs2],
-	(P,!,write(concordo),
+	(P,!,write(concordo);
 	write(discordo)).
 
 	
@@ -93,7 +93,7 @@ frase_declarativa -->
 	{write('HERE'),nl,concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2)}.
 	
 frase_interrogativa -->
-	{write('Start'), nl},
+	%{write('Start'), nl},
 	sintagma_nominal_int(N-G, Q, _, _, _, _, _, _), !,
 	{length(Adjs,5),length(Adjs2,5)},
 	sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2),
@@ -177,15 +177,16 @@ resposta_escrever(Q, A, Ob) :-
 	length(L,N),write(N)).
 	
 resposta_nacionalidade(Q, A, Ob, Adjs) :-
-	%trace,
 	A == ser,
 	Ob == autor,
-	P =.. [A, AutID, _, _, Adjs, _, _, _],
-	%devia ser findall(AutID, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L), mas há algum problema com o predicado 'ser', por isso deixo assim para responder alguma coisa
-	findall(AutID, P, L), 
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	
+	P =.. [A, AutID, _, _, CleanAdjs, _, _, _],
+	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
+	
+	findall(Primeiro-Ultimo, (P, P2), L), 
 	(Q==ql, write(L); 
 	length(L,N),write(N)).
-	%notrace.
 	
 
 %%%%%%%%%%%%%%%%%%%%%%%

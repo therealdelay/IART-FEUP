@@ -172,7 +172,7 @@ pais(13, 'japao', asia, 'japonês', 'japonesa').
 pais(14, 'mocambique', africa, 'moçambicano', 'moçambicana').
 pais(15, 'russia', europa, 'russo', 'russa').
 pais(16, 'estados unidos', america, 'americano', 'americana').
-pais(17, 'india', 'asia', indiano, 'indiana').
+pais(17, 'india', asia, 'indiano', 'indiana').
 
 
 anoAtual(2018).
@@ -192,7 +192,7 @@ anoAtual(2018).
 % ?- frase(['Alberto Caeiro', 'e', 'heteronimo', 'de','Fernando','Pessoa'],[]).
 
 ser(Suj,pseudonimo,_,_,_,Ob2,_):-
-	write(Suj),nl, write(Ob2),nl,
+	%write(Suj),nl, write(Ob2),nl,
 	Suj == Ob2.
 
 %Genero
@@ -210,15 +210,15 @@ ser(Titulo,Genero,_,_,_,_,_):-
 ser(AutorId,_,_,Adjs,_,_,_):-
 	length(Adjs,1),
 	nth0(0,Adjs,PaisId),
-	autor(AutorId,_,_,_,_,_,_,PaisId,_).
+	autor(AutorId,_,_,_,_,_,PaisId,_,_).
 	
 % ?- frase(['Fernando','Pessoa', 'e', 'europeu'],[]).
 
 ser(AutorId,_,_,Adjs,_,_,_):-
 	length(Adjs,1),
 	nth0(0,Adjs,Continente),
-	autor(AutorId,_,_,_,_,_,_,PaisId,_),
-	pais(PaisId,_,Continente,_,_).
+	pais(PaisId,_,Continente,_,_),
+	autor(AutorId,_,_,_,_,_,PaisId,_,_).
 
 % Popularidade
 % ?- frase(['A Mensagem','e','o','livro','mais','conhecido','de','Pessoa'],[]).
