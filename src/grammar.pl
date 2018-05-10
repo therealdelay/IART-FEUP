@@ -136,7 +136,6 @@ sintagma_nominal_int_aux2(_, _, Ob, _, _, _, _, _) -->
 	Ob = Titulo}.
 	
 sintagma_preposicional_int(Prep, Ob, Adjs) -->
-	%{write('sintagma preposicional'), nl},
 	preposicao(N-G, Prep),
 	sintagma_nominal_int(N-G, _, Ob, _, Adjs, _, _, _).
 	
@@ -144,19 +143,29 @@ sintagma_adjetival_int(N-G, Adv, Adjs) -->
 	%{write('sintagma adjectival'), nl},
 	sintagma_adjetival_int_aux(N-G, Adv, Adjs).
 	
-sintagma_adjetival_int(N-G, Adv, Adjs) -->
-	sintagma_adjetival_int_aux(N-G, Adv, Adjs), [e].
+%sintagma_adjetival_int(N-G, Adv, Adjs) -->
+%	sintagma_adjetival_int_aux(N-G, Adv, Adjs), [e], sintagma_adjetival_int(N-G, Adv, Adjs),
+%	{write(Adjs), nl}.
 	
 sintagma_adjetival_int(_, _, _) -->
 	[].
 	
 sintagma_adjetival_int_aux(N-G, _, Adjs) -->
 	adjetivo(N-G, Adj),
-	{actual_length(Adjs,0,Length),nth0(Length,Adjs,Adj)}.
+	[e],
+	adjetivo(N-G, Adj2),
+	{actual_length(Adjs,0,Length), nth0(Length,Adjs,Adj), Lengthaux is Length + 1, nth0(Lengthaux, Adjs, Adj2)}.
 	
-sintagma_adjetival_int_aux(N-G, Adv, [_|T]) -->
+sintagma_adjetival_int_aux(N-G, _, Adjs) -->
+	adjetivo(N-G, Adj),
+	{actual_length(Adjs,0,Length), nth0(Length,Adjs,Adj)}.
+	%{count(Length, Adjs), nth0(Length, Adjs, Adj)}.
+	
+sintagma_adjetival_int_aux(N-G, Adv, Adjs) -->
 	adverbio(Adv),
-	adjetivo(N-G, T).
+	adjetivo(N-G, Adj),
+	{actual_length(Adjs,0,Length), nth0(Length,Adjs,Adj)}.
+	%{count(Length, Adjs), nth0(Length, Adjs, Adj)}.
 
 sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
 	verbo(N, A, _),
@@ -168,6 +177,9 @@ resposta(Q, A, Ob, _, _, _, _, _) :-
 resposta(Q, A, Ob, _, Adjs, _, _, _) :-
 	resposta_nacionalidade(Q, A, Ob, Adjs).
 	
+resposta(_, _, _, _, _, _, _, _) :-
+	write('ENTREI'), nl.
+	
 %still not formatted
 resposta_escrever(Q, A, Ob) :-
 	A == escrever,
@@ -175,11 +187,34 @@ resposta_escrever(Q, A, Ob) :-
 	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
 	(Q==ql, write(L); 
 	length(L,N),write(N)).
-	
+
+%frase_interrogativa(['quais','sao','os','escritores','portugueses','e','europeus','?'],[]).
 resposta_nacionalidade(Q, A, Ob, Adjs) :-
 	A == ser,
 	Ob == autor,
 	getCleanAdjs(Adjs,[],CleanAdjs),
+	length(CleanAdjs, Length),
+	Length > 1, !,
+	
+	nth0(0, CleanAdjs, Elem1),
+	nth0(1, CleanAdjs, Elem2),
+	Clean1 = [Elem1], Clean2 = [Elem2],
+	
+	P =.. [A, AutID, _, _, Clean1, _, _, _],
+	P1 =.. [A, AutID, _, _, Clean2, _, _, _],
+	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
+	
+	findall(Primeiro-Ultimo, ((P; P1), P2), L), sort(L, L1),
+	(Q==ql, write(L1); 
+	length(L1,N),write(N)).
+
+%frase_interrogativa(['quais','sao','os','escritores','portugueses','?'],[]).	
+resposta_nacionalidade(Q, A, Ob, Adjs) :-
+	A == ser,
+	Ob == autor,
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	
+	length(CleanAdjs, 1), !,
 	
 	P =.. [A, AutID, _, _, CleanAdjs, _, _, _],
 	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
@@ -252,7 +287,7 @@ sintagma_nominal_aux3(_,_,_,_,_,_) --> 	[].
 
 sintagma_preposicional(Prep,Ob,Adjs) -->
 	preposicao(N-_,Prep),
-	%{write('Prep: '),write(Prep)},
+	{write('Prep: '),write(Prep)},
 	sintagma_nominal(N,Ob,_,Adjs,_,_,_).
 	%{write(Ob),nl}.
 	

@@ -26,3 +26,14 @@ getHighestPop(AutorId, MaxPop):-
 getLowestPop(AutorId, MinPop):-
 	findall(LivroPop, (livro(_,_,Autores,_,_,LivroPop),member(AutorId, Autores)), Pops),
 	min_list(Pops,MinPop).
+	
+	
+not_member(_, []) :- !.
+
+not_member(X, [Head|Tail]) :-
+     X \= Head,
+    not_member(X, Tail).
+	
+count(0, []).
+count(Count, [Head|Tail]) :- write('Count: '), write(Count), nl, atom(Head), count(TailCount, Tail), Count is TailCount + 1.
+count(_, _).
