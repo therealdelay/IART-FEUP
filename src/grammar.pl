@@ -117,6 +117,15 @@ sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
 	
 sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
 	sintagma_nominal_int_aux2(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
+
+sintagma_nominal_int_aux2(N-G, Q, Ob, _, _, _, _, _) --> 
+	pron_int(N-G, Q), art_indef(N-G), nome(N-G, Ob).
+	
+sintagma_nominal_int_aux2(N-G, Q, Ob, _, _, _, _, _) -->
+	pron_int(N-G, Q), art_def(N-G), nome(N-G, Ob).
+	
+sintagma_nominal_int_aux2(N-G, Q, Ob, _, _, _, _, _) -->
+	pron_int(N-G, Q), nome(N-G, Ob).
 	
 sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _) -->
 	pron_int(N-G, Q).
@@ -134,6 +143,8 @@ sintagma_nominal_int_aux2(_, _, Ob, _, _, _, _, _) -->
 	[Titulo],
 	{livro(_, Titulo, _, _, _, _),
 	Ob = Titulo}.
+	
+sintagma_nominal_int_aux2(_,_,_,_,_,_,_,_) --> 	[].
 	
 sintagma_preposicional_int(Prep, Ob, Adjs) -->
 	preposicao(N-G, Prep),
@@ -177,8 +188,18 @@ resposta(Q, A, Ob, _, _, _, _, _) :-
 resposta(Q, A, Ob, _, Adjs, _, _, _) :-
 	resposta_nacionalidade(Q, A, Ob, Adjs).
 	
-resposta(_, _, _, _, _, _, _, _) :-
-	write('ENTREI'), nl.
+resposta(Q, A, _, _, _, Prep, Ob2, Adjs2) :-
+	resposta_nascimento(Q, A, Prep, Ob2, Adjs2).
+	
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2) :-
+	write('Q: '), write(Q), nl,
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl.
 	
 %still not formatted
 resposta_escrever(Q, A, Ob) :-
@@ -223,7 +244,13 @@ resposta_nacionalidade(Q, A, Ob, Adjs) :-
 	(Q==ql, write(L); 
 	length(L,N),write(N)).
 	
-
+resposta_nascimento(Q, A, Prep, Ob2, Adjs2) :-
+	getCleanAdjs(Adjs2, [], CleanAdjs),
+	P =.. [A, AutID, _, _, _, Prep, Ob2, CleanAdjs],
+	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
+	(Q==ql, write(L); 
+	length(L,N),write(N)).
+	
 %%%%%%%%%%%%%%%%%%%%%%%
 % FRASES DECLARATIVAS %
 %%%%%%%%%%%%%%%%%%%%%%%

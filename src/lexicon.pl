@@ -96,7 +96,7 @@ art_indef(p-f) --> [umas].
 % preposicao(p-m) --> [aos].
 % preposicao(p-f) --> [às].
 
-preposicao(s-_,=) --> [de].
+preposicao(_-_,=) --> [de].
 preposicao(s-m,=) --> [do].
 preposicao(s-f,=) --> [da].
 preposicao(p-m,=) --> [dos].
