@@ -185,8 +185,13 @@ sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
 resposta(Q, A, Ob, _, _, _, _, _) :-
 	resposta_escrever(Q, A, Ob).
 	
-resposta(Q, A, Ob, _, Adjs, _, _, _) :-
+resposta(Q, A, Ob, _, Adjs, _, Ob2, _) :-
+	var(Ob2),
 	resposta_nacionalidade(Q, A, Ob, Adjs).
+	
+resposta(Q, A, Ob, _, Adjs, Prep, Ob2, Adjs2) :-
+	nonvar(Ob2),
+	resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2).
 	
 resposta(Q, A, _, _, _, Prep, Ob2, Adjs2) :-
 	resposta_nascimento(Q, A, Prep, Ob2, Adjs2).
@@ -208,6 +213,42 @@ resposta_escrever(Q, A, Ob) :-
 	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
 	(Q==ql, write(L); 
 	length(L,N),write(N)).
+	
+%frase_interrogativa(['quais','sao','os','escritores','portugueses','e','europeus','do','seculo','XIX','?'],[]).
+resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2) :-
+	A == ser, Ob == autor, Ob2 == seculo,
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2, [], CleanAdjs2),
+	length(CleanAdjs, Length),
+	Length > 1, !,
+	
+	nth0(0, CleanAdjs, Elem1),
+	nth0(1, CleanAdjs, Elem2),
+	Clean1 = [Elem1], Clean2 = [Elem2],
+	
+	P =.. [A, AutID, _, _, Clean1, _, _, _],
+	P1 =.. [A, AutID, _, _, Clean2, _, _, _],
+	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
+	
+	findall(Primeiro-Ultimo, ((P; P1), P2, (nascer(AutID, _, _, _, Prep, Ob2, CleanAdjs2); morrer(AutID, _, _, _, Prep, Ob2, CleanAdjs2))), L), sort(L, L1),
+	(Q==ql, write(L1); 
+	length(L1,N),write(N)).
+	
+%frase_interrogativa(['quais','sao','os','escritores','portugueses','do','seculo','XIX','?'],[]).
+resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2) :-
+	A == ser, Ob == autor, Ob2 == seculo,
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2, [], CleanAdjs2),
+	
+	length(CleanAdjs, 1), !,
+	
+	P =.. [A, AutID, _, _, CleanAdjs, _, _, _],
+	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
+	
+	findall(Primeiro-Ultimo, (P, P2, (nascer(AutID, _, _, _, Prep, Ob2, CleanAdjs2); morrer(AutID, _, _, _, Prep, Ob2, CleanAdjs2))), L),
+	sort(L, L1),
+	(Q==ql, write(L1); 
+	length(L1,N),write(N)).
 
 %frase_interrogativa(['quais','sao','os','escritores','portugueses','e','europeus','?'],[]).
 resposta_nacionalidade(Q, A, Ob, Adjs) :-
@@ -245,7 +286,7 @@ resposta_nacionalidade(Q, A, Ob, Adjs) :-
 	length(L,N),write(N)).
 	
 resposta_nascimento(Q, A, Prep, Ob2, Adjs2) :-
-	A == nascer,
+	A == nascer; A == morrer,
 	getCleanAdjs(Adjs2, [], CleanAdjs),
 	P =.. [A, AutID, _, _, _, Prep, Ob2, CleanAdjs],
 	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
