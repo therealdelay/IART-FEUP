@@ -245,6 +245,7 @@ resposta_nacionalidade(Q, A, Ob, Adjs) :-
 	length(L,N),write(N)).
 	
 resposta_nascimento(Q, A, Prep, Ob2, Adjs2) :-
+	A == nascer,
 	getCleanAdjs(Adjs2, [], CleanAdjs),
 	P =.. [A, AutID, _, _, _, Prep, Ob2, CleanAdjs],
 	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
