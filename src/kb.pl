@@ -327,3 +327,19 @@ morrer(AutorId,_,_,_,Cmp,seculo,Adjs2):-
 	nth0(0,Adjs2,Seculo),
 	autor(AutorId,_,_,_,Morte,_,_,_,_),
 	verificar_seculo(Cmp,Morte,Seculo).
+	
+%----------------------%
+% Existir              %
+%----------------------%
+
+existir(LivroId, Cmp, seculo, Adjs2, Adjs3) :-
+	(Cmp == = ;  Cmp == < ; Cmp == >),
+	length(Adjs2,1),
+	nth0(0,Adjs2,Seculo),
+	length(Adjs3,1),
+	nth0(0, Adjs3, Origem),
+	livro(LivroId, _, Autores, AnoPub, _, _),
+	verificar_seculo(Cmp, AnoPub, Seculo),
+	pais(PaisId, _, Origem, _, _),
+	autor(AutorId, _, _, _, _, _, PaisId, _, _),
+	member(AutorId, Autores).

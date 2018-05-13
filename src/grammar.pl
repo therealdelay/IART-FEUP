@@ -218,21 +218,71 @@ sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
 	verbo(N, A, _),
 	sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3).
 	
-resposta(Q, A, Ob, _, _, _, _, _, _, _) :-
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
+	write('Q: '), write(Q), nl,
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl,
+	write('Ob3: '), write(Ob3), nl,
+	write('Adjs3: '), write(Adjs3), nl,
 	resposta_escrever(Q, A, Ob).
 	
-resposta(Q, A, Ob, _, Adjs, _, Ob2, _, _, _) :-
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
+	write('Q: '), write(Q), nl,
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl,
+	write('Ob3: '), write(Ob3), nl,
+	write('Adjs3: '), write(Adjs3), nl,
 	var(Ob2),
 	resposta_nacionalidade(Q, A, Ob, Adjs).
 	
-resposta(Q, A, Ob, _, Adjs, Prep, Ob2, Adjs2, _, _) :-
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
+	write('Q: '), write(Q), nl,
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl,
+	write('Ob3: '), write(Ob3), nl,
+	write('Adjs3: '), write(Adjs3), nl,
 	nonvar(Ob2),
 	resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2).
 	
-resposta(Q, A, _, _, _, Prep, Ob2, Adjs2, _, _) :-
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
+	write('Q: '), write(Q), nl,
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl,
+	write('Ob3: '), write(Ob3), nl,
+	write('Adjs3: '), write(Adjs3), nl,
 	resposta_nascimento(Q, A, Prep, Ob2, Adjs2).
 	
-resposta(Q, A, _, _, _, _, _, _, Ob3, Adjs3) :-
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
+	write('Q: '), write(Q), nl,
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl,
+	write('Ob3: '), write(Ob3), nl,
+	write('Adjs3: '), write(Adjs3), nl,
 	resposta_existencia_livros(Q, A, Ob3, Adjs3).
 	
 resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
@@ -327,7 +377,7 @@ resposta_nacionalidade(Q, A, Ob, Adjs) :-
 	length(L,N),write(N)).
 	
 resposta_nascimento(Q, A, Prep, Ob2, Adjs2) :-
-	A == nascer; A == morrer,
+	(A == nascer; A == morrer),
 	getCleanAdjs(Adjs2, [], CleanAdjs),
 	P =.. [A, AutID, _, _, _, Prep, Ob2, CleanAdjs],
 	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
@@ -346,7 +396,7 @@ resposta_existencia_livros(Q, A, Ob3, Adjs3) :-
 	Clean1 = [Elem1], Clean2 = [Elem2],
 	
 	P =.. [Ob3, LivroId, _, Autores, _, _, _],
-	findall(Titulo, (P, (ser(AutID, _, _, Clean1, _, _, _) ; ser(AutID, _, _, Clean2, _, _, _)), member(AutID, Autores), livro(LivroId, Titulo, _, AnoPub, _, _)), L),
+	findall(Titulo, (P, (ser(AutID, _, _, Clean1, _, _, _) ; ser(AutID, _, _, Clean2, _, _, _)), member(AutID, Autores), livro(LivroId, Titulo, _, _, _, _)), L),
 	(Q==ql, write(L); 
 	length(L,N),write(N)).
 
