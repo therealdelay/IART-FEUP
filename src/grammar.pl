@@ -77,7 +77,7 @@ concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2,Resposta):-
 
 	
 interrogacao_opcional --> [?].
-interrogacao_opcional --> [].
+interrogacao_opcional --> [.].
 	
 frase(Resposta)-->frase_declarativa(Resposta).
 frase(Resposta)-->frase_interrogativa(Resposta).
