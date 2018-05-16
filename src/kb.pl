@@ -60,7 +60,7 @@ livro(18, 'A Sonata Kreutzer', [21], 1889, [12], 4).
 livro(19, 'A Wild Sheep Chase', [15], 1982, [12], 5).
 livro(20, 'As Pupilas do Senhor Reitor', [19], 1867, [12], 8).
 livro(21, 'Auto de Filodemo', [22], 1587, [19], 5).
-livro(22, 'Azu14 Daioh', [20], 1999, [14], 10).
+livro(22, 'Azumanga Daioh', [20], 1999, [14], 10).
 livro(23, 'Cem Anos de Solidao', [14], 1967, [12], 9).
 livro(24, 'Crime e Castigo', [12], 1866, [12], 4).
 livro(25, 'Cronicando', [24], 1988, [18], 3).

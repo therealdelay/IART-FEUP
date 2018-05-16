@@ -141,11 +141,6 @@ sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _, _, _) -->
 sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _, _, _) -->
 	nome(N-G,Ob).
 	
-sintagma_nominal_int_aux2(_, _, Ob, _, _, _, _, _, _, _) -->
-	[Titulo],
-	{livro(_, Titulo, _, _, _, _),
-	Ob = Titulo}.
-	
 sintagma_nominal_int_aux2(_,_,_,_,_,_,_,_,_,_) --> 	[].
 	
 sintagma_preposicional_int(Prep, Ob, Adjs, Ob3, _) -->
@@ -445,12 +440,6 @@ sintagma_nominal_aux3(N-G,Ob,_,_,_,_) -->
 	nome(N-G,Ob).
 	
 sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
-	%{write('Titulo'),nl},
-	[Titulo],
-	{livro(_,Titulo,_,_,_,_),
-	N=s, Ob = Titulo}.
-
-sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
 	[Primeiro],[Ultimo],
 	{autor(AutorId,Primeiro,Ultimo,_,_,_,_,_,_),
 	N=s, Ob=AutorId}.
@@ -464,13 +453,6 @@ sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
 sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
 	[Ultimo],
 	{autor(AutorId,_,Ultimo,_,_,_,_,_,_),
-	N=s, Ob=AutorId}.
-		
-sintagma_nominal_aux3(N-_,Ob,_,_,_,_) -->
-	%{write('Heteronimo'),nl},
-	[Heteronimo],
-	%{write(Heteronimo),nl},
-	{autor(AutorId,_,_,_,_,_,_,_,Heteronimos), member(Heteronimo, Heteronimos), !,
 	N=s, Ob=AutorId}.
 	
 sintagma_nominal_aux3(_,_,_,_,_,_) --> 	[].
