@@ -79,25 +79,41 @@ questionMenu:-
 	write('*                                                                              *'),nl,
 	write('*                                                                              *'),nl,
 	write('*                                                                              *'),nl,
+	write('*                                                                              *'),nl,
 	write('*   Para voltar ao menu principal escreva "menu"                               *'),nl,
 	write('*                                                                              *'),nl,
 	write('********************************************************************************'),nl,
 	write('* Pergunta:                                                                    *'),nl,
 	readQuestion(Question),
-	processQuestion(Question),
-	answerMenu.
+	ite(atom_string(menu,Question),(clearScreen,start),true),
+	processQuestion(Question,FinalQuestion),
+	answerMenu(FinalQuestion).
 
 readQuestion(Question):-
-	write(Question),nl.
+	read_string(user_input,"\n", "\r", End, Question).
 
-processQuestion(Question):-
- 	write(Question),nl.
+quoteTokens([],SplitQuestionAux,SplitQuestionAux).
+quoteTokens([H|T],List,SplitQuestionAux):-
+	atomic_concat('',H,Aux),atomic_concat(Aux,'',Res),
+	append(List,[Res],AppList),
+	quoteTokens(T,AppList,SplitQuestionAux).
 
-answerMenu:-
+processQuestion(Question,FinalQuestion):-
+	sub_atom(Question,_,1,0,Point),
+	(Point = '.'; Point = '?'),
+	split_string(Question," ",Point,SplitQuestion),
+	quoteTokens(SplitQuestion,[],SplitQuestionAux),
+	atomic_concat('',Point,Aux),atomic_concat(Aux,'',Res),
+	append(SplitQuestionAux,[Res],FinalQuestion).
+
+answerMenu(Question):-
+	frase(Resposta,Question,[]),
 	write('*                                                                              *'),nl,
 	write('********************************************************************************'),nl,
 	write('* Resposta:                                                                    *'),nl,
-	write(' Bla bla bla'),nl,
+	write('|: '),
+	write(Resposta),nl,
+	write('*                                                                              *'),nl,
 	write('********************************************************************************'),nl,
 	write('* Pressione Enter para voltar ao menu                                          *'),nl,
 	waitForEnter,
@@ -123,7 +139,7 @@ examplesMenu:-
 	write('********************************************************************************'),nl,
 	write('* Numero da pergunta:                                                          *'),nl,
 	readOption(Option),
-	write(Option),nl,
+	%write(Option),nl,
 	Option >= 0, Option =< 7,
 	processQuestionOption(Option),
 	write("Good option.").
@@ -142,8 +158,8 @@ processQuestionOption(Option):-
 	ite(Option == 4, frase(Resposta,['Quais','os','escritores','portugueses','e','espanhois','do','seculo','XV','?'],[]), true), !,
 	ite(Option == 5, frase(Resposta,['Quantos','livros','de','escritores','africanos','existem','apos','o','seculo','XVI','?'],[]), true), !,
 	ite(Option == 6, frase(Resposta,['Alberto','Caeiro','e','heteronimo','de','Fernando','Pessoa','.'],[]), true), !,
-	ite(Option == 7, frase(Resposta,['Pessoa','e','europeu'],[]), true), !,
-	nl,
+	ite(Option == 7, frase(Resposta,['Pessoa','e','europeu','.'],[]), true), !,
+	write('********************************************************************************'),nl,
 	write('* Resposta: '),write(Resposta),nl,
 	write('* Pressione Enter para continuar.                                              *'),nl,
 	waitForEnter,nl,

@@ -72,26 +72,27 @@ concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2,Resposta):-
 	getCleanAdjs(Adjs2,[],CleanAdjs2),
 	% write(CleanAdjs2),nl,
 	P =.. [A,S,Ob,Adv,CleanAdjs,Prep,Ob2,CleanAdjs2],
-	(P,!,write(concordo),Resposta=concordo;
-	write(discordo),Resposta=discordo).
+	(P,!,Resposta=concordo;
+	Resposta=discordo).
 
 	
 interrogacao_opcional --> [?].
-interrogacao_opcional --> [].
+interrogacao_opcional --> [.].
 	
 frase(Resposta)-->frase_declarativa(Resposta).
 frase(Resposta)-->frase_interrogativa(Resposta).
 %frase-->frase_conjuntiva.
 
 frase_declarativa(Resposta) -->
-	{write('Inicio'),nl},
+	%{write('Inicio'),nl},
 	sintagma_nominal(N,S,_,_,_,_,_), !,
-	{write('Sujeito'),nl},
+	%{write('Sujeito'),nl},
 	{length(Adjs,5),length(Adjs2,5)},
 	sintagma_verbal(N,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2),
-	{write('Predicado'),nl,write(Prep),nl,write(Ob2),nl},
+	%{write('Predicado'),nl,write(Prep),nl,write(Ob2),nl},
 	interrogacao_opcional,
-	{write('HERE'),nl,concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2,Resposta)}.
+	%write('HERE'),nl,
+	{concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2,Resposta)}.
 	
 frase_interrogativa(Resposta) -->
 	%{write('Start'), nl},
