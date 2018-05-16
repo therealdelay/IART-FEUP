@@ -95,104 +95,131 @@ frase_declarativa -->
 	
 frase_interrogativa -->
 	%{write('Start'), nl},
-	sintagma_nominal_int(N-G, Q, _, _, _, _, _, _), !,
-	{length(Adjs,5),length(Adjs2,5)},
-	sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2),
+	{length(Adjs,5),length(Adjs2,5),length(Adjs3,5)},
+	sintagma_nominal_int(N-G, Q, _, _, _, _, _, _, Ob3, Adjs3), !,
+	sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, _),
 	[?],
-	{resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2)}.
+	{resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3)}.
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % FRASES INTERROGATIVAS %
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
-	sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2),
-	sintagma_preposicional_int(Prep, Ob2, Adjs2).
+sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3),
+	sintagma_preposicional_int(Prep, Ob2, Adjs2, Ob3, Adjs3).
 
-sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
-	sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
+sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3).
 
-sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
-	sintagma_nominal_int_aux2(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2),
-	sintagma_adjetival_int(N-G, Adv, Adjs).
+sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	sintagma_nominal_int_aux2(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3),
+	sintagma_adjetival_int(N-G, Adv, Adjs, Ob3, Adjs3).
 	
-sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
-	sintagma_nominal_int_aux2(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
+sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	sintagma_nominal_int_aux2(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3).
 
-sintagma_nominal_int_aux2(N-G, Q, Ob, _, _, _, _, _) --> 
-	pron_int(N-G, Q), art_indef(N-G), nome(N-G, Ob).
+sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _, Ob3, _) --> 
+	pron_int(N-G, Q), art_indef(N-G), nome(N-G, Ob3).
 	
-sintagma_nominal_int_aux2(N-G, Q, Ob, _, _, _, _, _) -->
-	pron_int(N-G, Q), art_def(N-G), nome(N-G, Ob).
+sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _, Ob3, _) -->
+	pron_int(N-G, Q), art_def(N-G), nome(N-G, Ob3).
 	
-sintagma_nominal_int_aux2(N-G, Q, Ob, _, _, _, _, _) -->
-	pron_int(N-G, Q), nome(N-G, Ob).
+sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _, Ob3, _) -->
+	pron_int(N-G, Q), nome(N-G, Ob3).
 	
-sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _) -->
+sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _, _, _) -->
 	pron_int(N-G, Q).
 	
-sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _) --> 
+sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _, _, _) --> 
 	art_indef(N-G), nome(N-G, Ob).
 	
-sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _) -->
+sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _, _, _) -->
 	art_def(N-G), nome(N-G, Ob).
 	
-sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _) -->
+sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _, _, _) -->
 	nome(N-G,Ob).
 	
-sintagma_nominal_int_aux2(_, _, Ob, _, _, _, _, _) -->
+sintagma_nominal_int_aux2(_, _, Ob, _, _, _, _, _, _, _) -->
 	[Titulo],
 	{livro(_, Titulo, _, _, _, _),
 	Ob = Titulo}.
 	
-sintagma_nominal_int_aux2(_,_,_,_,_,_,_,_) --> 	[].
+sintagma_nominal_int_aux2(_,_,_,_,_,_,_,_,_,_) --> 	[].
 	
-sintagma_preposicional_int(Prep, Ob, Adjs) -->
+sintagma_preposicional_int(Prep, Ob, Adjs, Ob3, _) -->
+	{var(Ob3)},
 	preposicao(N-G, Prep),
-	sintagma_nominal_int(N-G, _, Ob, _, Adjs, _, _, _).
+	sintagma_nominal_int(N-G, _, Ob, _, Adjs, _, _, _, _, _).
 	
-sintagma_adjetival_int(N-G, Adv, Adjs) -->
+sintagma_preposicional_int(Prep, _, _, Ob3, Adjs3) -->
+	{nonvar(Ob3)},
+	preposicao(N-G, Prep),
+	sintagma_nominal_int(N-G, _, _, _, _, _, _, _, Ob3, Adjs3).
+	
+sintagma_adjetival_int(N-G, Adv, Adjs, Ob3, Adjs3) -->
 	%{write('sintagma adjectival'), nl},
-	sintagma_adjetival_int_aux(N-G, Adv, Adjs).
+	sintagma_adjetival_int_aux(N-G, Adv, Adjs, Ob3, Adjs3).
 	
 %sintagma_adjetival_int(N-G, Adv, Adjs) -->
 %	sintagma_adjetival_int_aux(N-G, Adv, Adjs), [e], sintagma_adjetival_int(N-G, Adv, Adjs),
 %	{write(Adjs), nl}.
 	
-sintagma_adjetival_int(_, _, _) -->
+sintagma_adjetival_int(_, _, _, _, _) -->
 	[].
 	
-sintagma_adjetival_int_aux(N-G, _, Adjs) -->
+sintagma_adjetival_int_aux(N-G, _, Adjs, Ob3, _) -->
+	{var(Ob3)},
 	adjetivo(N-G, Adj),
 	[e],
 	adjetivo(N-G, Adj2),
 	{actual_length(Adjs,0,Length), nth0(Length,Adjs,Adj), Lengthaux is Length + 1, nth0(Lengthaux, Adjs, Adj2)}.
 	
-sintagma_adjetival_int_aux(N-G, _, Adjs) -->
+sintagma_adjetival_int_aux(N-G, _, _, Ob3, Adjs3) -->
+	{nonvar(Ob3)},
+	adjetivo(N-G, Adj),
+	[e],
+	adjetivo(N-G, Adj2),
+	{actual_length(Adjs3,0,Length), nth0(Length,Adjs3,Adj), Lengthaux is Length + 1, nth0(Lengthaux, Adjs3, Adj2)}.
+	
+sintagma_adjetival_int_aux(N-G, _, Adjs, Ob3, _) -->
+	{var(Ob3)},
 	adjetivo(N-G, Adj),
 	{actual_length(Adjs,0,Length), nth0(Length,Adjs,Adj)}.
 	%{count(Length, Adjs), nth0(Length, Adjs, Adj)}.
 	
-sintagma_adjetival_int_aux(N-G, Adv, Adjs) -->
+sintagma_adjetival_int_aux(N-G, _, _, Ob3, Adjs3) -->
+	{nonvar(Ob3)},
+	adjetivo(N-G, Adj),
+	{actual_length(Adjs3,0,Length), nth0(Length,Adjs3,Adj)}.
+	%{count(Length, Adjs), nth0(Length, Adjs, Adj)}.
+	
+sintagma_adjetival_int_aux(N-G, Adv, Adjs, Ob3, _) -->
+	{var(Ob3)},
 	adverbio(Adv),
 	adjetivo(N-G, Adj),
 	{actual_length(Adjs,0,Length), nth0(Length,Adjs,Adj)}.
 	%{count(Length, Adjs), nth0(Length, Adjs, Adj)}.
 
-sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
+sintagma_adjetival_int_aux(N-G, Adv, _, Ob3, Adjs3) -->
+	{nonvar(Ob3)},
+	adverbio(Adv),
+	adjetivo(N-G, Adj),
+	{actual_length(Adjs3,0,Length), nth0(Length,Adjs3,Adj)}.
+	%{count(Length, Adjs), nth0(Length, Adjs, Adj)}.	
+
+sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	{nonvar(Ob3), Q = ql},
+	[que],
 	verbo(N, A, _),
-	sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
+	sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3).
 	
-resposta(Q, A, Ob, _, _, _, _, _) :-
-	resposta_escrever(Q, A, Ob).
+sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	{var(Ob3)},
+	verbo(N, A, _),
+	sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3).
 	
-resposta(Q, A, Ob, _, Adjs, _, _, _) :-
-	resposta_nacionalidade(Q, A, Ob, Adjs).
-	
-resposta(Q, A, _, _, _, Prep, Ob2, Adjs2) :-
-	resposta_nascimento(Q, A, Prep, Ob2, Adjs2).
-	
-resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2) :-
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
 	write('Q: '), write(Q), nl,
 	write('A: '), write(A), nl,
 	write('Ob: '), write(Ob), nl,
@@ -200,7 +227,76 @@ resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2) :-
 	write('Adjs: '), write(Adjs), nl,
 	write('Prep: '), write(Prep), nl,
 	write('Ob2: '), write(Ob2), nl,
-	write('Adjs2: '), write(Adjs2), nl.
+	write('Adjs2: '), write(Adjs2), nl,
+	write('Ob3: '), write(Ob3), nl,
+	write('Adjs3: '), write(Adjs3), nl,
+	resposta_escrever(Q, A, Ob).
+	
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
+	write('Q: '), write(Q), nl,
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl,
+	write('Ob3: '), write(Ob3), nl,
+	write('Adjs3: '), write(Adjs3), nl,
+	var(Ob2),
+	resposta_nacionalidade(Q, A, Ob, Adjs).
+	
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
+	write('Q: '), write(Q), nl,
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl,
+	write('Ob3: '), write(Ob3), nl,
+	write('Adjs3: '), write(Adjs3), nl,
+	nonvar(Ob2),
+	resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2).
+	
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
+	write('Q: '), write(Q), nl,
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl,
+	write('Ob3: '), write(Ob3), nl,
+	write('Adjs3: '), write(Adjs3), nl,
+	resposta_nascimento(Q, A, Prep, Ob2, Adjs2).
+	
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
+	write('Q: '), write(Q), nl,
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl,
+	write('Ob3: '), write(Ob3), nl,
+	write('Adjs3: '), write(Adjs3), nl,
+	resposta_existencia_livros(Q, A, Ob3, Adjs3).
+	
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
+	write('Q: '), write(Q), nl,
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl,
+	write('Ob3: '), write(Ob3), nl,
+	write('Adjs3: '), write(Adjs3), nl.
 	
 %still not formatted
 resposta_escrever(Q, A, Ob) :-
@@ -209,6 +305,42 @@ resposta_escrever(Q, A, Ob) :-
 	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
 	(Q==ql, write(L); 
 	length(L,N),write(N)).
+	
+%frase_interrogativa(['quais','sao','os','escritores','portugueses','e','europeus','do','seculo','XIX','?'],[]).
+resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2) :-
+	A == ser, Ob == autor, Ob2 == seculo,
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2, [], CleanAdjs2),
+	length(CleanAdjs, Length),
+	Length > 1, !,
+	
+	nth0(0, CleanAdjs, Elem1),
+	nth0(1, CleanAdjs, Elem2),
+	Clean1 = [Elem1], Clean2 = [Elem2],
+	
+	P =.. [A, AutID, _, _, Clean1, _, _, _],
+	P1 =.. [A, AutID, _, _, Clean2, _, _, _],
+	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
+	
+	findall(Primeiro-Ultimo, ((P; P1), P2, (nascer(AutID, _, _, _, Prep, Ob2, CleanAdjs2); morrer(AutID, _, _, _, Prep, Ob2, CleanAdjs2))), L), sort(L, L1),
+	(Q==ql, write(L1); 
+	length(L1,N),write(N)).
+	
+%frase_interrogativa(['quais','sao','os','escritores','portugueses','do','seculo','XIX','?'],[]).
+resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2) :-
+	A == ser, Ob == autor, Ob2 == seculo,
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2, [], CleanAdjs2),
+	
+	length(CleanAdjs, 1), !,
+	
+	P =.. [A, AutID, _, _, CleanAdjs, _, _, _],
+	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
+	
+	findall(Primeiro-Ultimo, (P, P2, (nascer(AutID, _, _, _, Prep, Ob2, CleanAdjs2); morrer(AutID, _, _, _, Prep, Ob2, CleanAdjs2))), L),
+	sort(L, L1),
+	(Q==ql, write(L1); 
+	length(L1,N),write(N)).
 
 %frase_interrogativa(['quais','sao','os','escritores','portugueses','e','europeus','?'],[]).
 resposta_nacionalidade(Q, A, Ob, Adjs) :-
@@ -246,10 +378,38 @@ resposta_nacionalidade(Q, A, Ob, Adjs) :-
 	length(L,N),write(N)).
 	
 resposta_nascimento(Q, A, Prep, Ob2, Adjs2) :-
-	A == nascer,
+	(A == nascer; A == morrer),
 	getCleanAdjs(Adjs2, [], CleanAdjs),
 	P =.. [A, AutID, _, _, _, Prep, Ob2, CleanAdjs],
 	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
+	(Q==ql, write(L); 
+	length(L,N),write(N)).
+	
+%falta limitar em casos de '...apos o sec XIX'	
+resposta_existencia_livros(Q, A, Ob3, Adjs3) :-
+	A == existir, Ob3 == livro,
+	getCleanAdjs(Adjs3, [], CleanAdjs),
+	length(CleanAdjs, Length),
+	Length > 1, !,
+	
+	nth0(0, CleanAdjs, Elem1),
+	nth0(1, CleanAdjs, Elem2),
+	Clean1 = [Elem1], Clean2 = [Elem2],
+	
+	P =.. [Ob3, LivroId, _, Autores, _, _, _],
+	findall(Titulo, (P, (ser(AutID, _, _, Clean1, _, _, _) ; ser(AutID, _, _, Clean2, _, _, _)), member(AutID, Autores), livro(LivroId, Titulo, _, _, _, _)), L),
+	(Q==ql, write(L); 
+	length(L,N),write(N)).
+
+%falta limitar em casos de '...apos o sec XIX'		
+resposta_existencia_livros(Q, A, Ob3, Adjs3) :-
+	A == existir, Ob3 == livro,
+	getCleanAdjs(Adjs3, [], CleanAdjs),
+	
+	length(CleanAdjs, 1), !,
+	
+	P =.. [Ob3, LivroId, _, Autores, _, _, _],
+	findall(Titulo, (P, ser(AutID, _, _, CleanAdjs, _, _, _), member(AutID, Autores), livro(LivroId, Titulo, _, _, _, _)), L),
 	(Q==ql, write(L); 
 	length(L,N),write(N)).
 	
