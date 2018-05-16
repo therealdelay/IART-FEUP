@@ -92,13 +92,13 @@ frase_declarativa -->
 	interrogacao_opcional,
 	{write('HERE'),nl,concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2)}.
 	
-frase_interrogativa -->
+frase_interrogativa(Resposta) -->
 	%{write('Start'), nl},
 	{length(Adjs,5),length(Adjs2,5),length(Adjs3,5)},
 	sintagma_nominal_int(N-G, Q, _, _, _, _, _, _, Ob3, Adjs3), !,
 	sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, _),
 	[?],
-	{resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3)}.
+	{resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3, Resposta)}.
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % FRASES INTERROGATIVAS %
@@ -218,74 +218,74 @@ sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
 	verbo(N, A, _),
 	sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3).
 	
-resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
-	write('Q: '), write(Q), nl,
-	write('A: '), write(A), nl,
-	write('Ob: '), write(Ob), nl,
-	write('Adv: '), write(Adv), nl,
-	write('Adjs: '), write(Adjs), nl,
-	write('Prep: '), write(Prep), nl,
-	write('Ob2: '), write(Ob2), nl,
-	write('Adjs2: '), write(Adjs2), nl,
-	write('Ob3: '), write(Ob3), nl,
-	write('Adjs3: '), write(Adjs3), nl,
-	resposta_escrever(Q, A, Ob).
+resposta(Q, A, Ob, _, _, _, _, _, _, _, Resposta) :-
+	%write('Q: '), write(Q), nl,
+	%write('A: '), write(A), nl,
+	%write('Ob: '), write(Ob), nl,
+	%write('Adv: '), write(Adv), nl,
+	%write('Adjs: '), write(Adjs), nl,
+	%write('Prep: '), write(Prep), nl,
+	%write('Ob2: '), write(Ob2), nl,
+	%write('Adjs2: '), write(Adjs2), nl,
+	%write('Ob3: '), write(Ob3), nl,
+	%write('Adjs3: '), write(Adjs3), nl,
+	resposta_escrever(Q, A, Ob, Resposta).
 	
-resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
-	write('Q: '), write(Q), nl,
-	write('A: '), write(A), nl,
-	write('Ob: '), write(Ob), nl,
-	write('Adv: '), write(Adv), nl,
-	write('Adjs: '), write(Adjs), nl,
-	write('Prep: '), write(Prep), nl,
-	write('Ob2: '), write(Ob2), nl,
-	write('Adjs2: '), write(Adjs2), nl,
-	write('Ob3: '), write(Ob3), nl,
-	write('Adjs3: '), write(Adjs3), nl,
+resposta(Q, A, Ob, _, Adjs, _, Ob2, _, _, _, Resposta) :-
+	%write('Q: '), write(Q), nl,
+	%write('A: '), write(A), nl,
+	%write('Ob: '), write(Ob), nl,
+	%write('Adv: '), write(Adv), nl,
+	%write('Adjs: '), write(Adjs), nl,
+	%write('Prep: '), write(Prep), nl,
+	%write('Ob2: '), write(Ob2), nl,
+	%write('Adjs2: '), write(Adjs2), nl,
+	%write('Ob3: '), write(Ob3), nl,
+	%write('Adjs3: '), write(Adjs3), nl,
 	var(Ob2),
-	resposta_nacionalidade(Q, A, Ob, Adjs).
+	resposta_nacionalidade(Q, A, Ob, Adjs, Resposta).
 	
-resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
-	write('Q: '), write(Q), nl,
-	write('A: '), write(A), nl,
-	write('Ob: '), write(Ob), nl,
-	write('Adv: '), write(Adv), nl,
-	write('Adjs: '), write(Adjs), nl,
-	write('Prep: '), write(Prep), nl,
-	write('Ob2: '), write(Ob2), nl,
-	write('Adjs2: '), write(Adjs2), nl,
-	write('Ob3: '), write(Ob3), nl,
-	write('Adjs3: '), write(Adjs3), nl,
+resposta(Q, A, Ob, _, Adjs, Prep, Ob2, Adjs2, _, _, Resposta) :-
+	%write('Q: '), write(Q), nl,
+	%write('A: '), write(A), nl,
+	%write('Ob: '), write(Ob), nl,
+	%write('Adv: '), write(Adv), nl,
+	%write('Adjs: '), write(Adjs), nl,
+	%write('Prep: '), write(Prep), nl,
+	%write('Ob2: '), write(Ob2), nl,
+	%write('Adjs2: '), write(Adjs2), nl,
+	%write('Ob3: '), write(Ob3), nl,
+	%write('Adjs3: '), write(Adjs3), nl,
 	nonvar(Ob2),
-	resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2).
+	resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2, Resposta).
 	
-resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
-	write('Q: '), write(Q), nl,
-	write('A: '), write(A), nl,
-	write('Ob: '), write(Ob), nl,
-	write('Adv: '), write(Adv), nl,
-	write('Adjs: '), write(Adjs), nl,
-	write('Prep: '), write(Prep), nl,
-	write('Ob2: '), write(Ob2), nl,
-	write('Adjs2: '), write(Adjs2), nl,
-	write('Ob3: '), write(Ob3), nl,
-	write('Adjs3: '), write(Adjs3), nl,
-	resposta_nascimento(Q, A, Prep, Ob2, Adjs2).
+resposta(Q, A, _, _, _, Prep, Ob2, Adjs2, _, _, Resposta) :-
+	%write('Q: '), write(Q), nl,
+	%write('A: '), write(A), nl,
+	%write('Ob: '), write(Ob), nl,
+	%write('Adv: '), write(Adv), nl,
+	%write('Adjs: '), write(Adjs), nl,
+	%write('Prep: '), write(Prep), nl,
+	%write('Ob2: '), write(Ob2), nl,
+	%write('Adjs2: '), write(Adjs2), nl,
+	%write('Ob3: '), write(Ob3), nl,
+	%write('Adjs3: '), write(Adjs3), nl,
+	resposta_nascimento(Q, A, Prep, Ob2, Adjs2, Resposta).
 	
-resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
-	write('Q: '), write(Q), nl,
-	write('A: '), write(A), nl,
-	write('Ob: '), write(Ob), nl,
-	write('Adv: '), write(Adv), nl,
-	write('Adjs: '), write(Adjs), nl,
-	write('Prep: '), write(Prep), nl,
-	write('Ob2: '), write(Ob2), nl,
-	write('Adjs2: '), write(Adjs2), nl,
-	write('Ob3: '), write(Ob3), nl,
-	write('Adjs3: '), write(Adjs3), nl,
-	resposta_existencia_livros(Q, A, Ob3, Adjs3).
+resposta(Q, A, _, _, _, _, _, _, Ob3, Adjs3, Resposta) :-
+	%write('Q: '), write(Q), nl,
+	%write('A: '), write(A), nl,
+	%write('Ob: '), write(Ob), nl,
+	%write('Adv: '), write(Adv), nl,
+	%write('Adjs: '), write(Adjs), nl,
+	%write('Prep: '), write(Prep), nl,
+	%write('Ob2: '), write(Ob2), nl,
+	%write('Adjs2: '), write(Adjs2), nl,
+	%write('Ob3: '), write(Ob3), nl,
+	%write('Adjs3: '), write(Adjs3), nl,
+	resposta_existencia_livros(Q, A, Ob3, Adjs3, Resposta).
 	
-resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
+resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3, _) :-
 	write('Q: '), write(Q), nl,
 	write('A: '), write(A), nl,
 	write('Ob: '), write(Ob), nl,
@@ -298,15 +298,15 @@ resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) :-
 	write('Adjs3: '), write(Adjs3), nl.
 	
 %still not formatted
-resposta_escrever(Q, A, Ob) :-
+resposta_escrever(Q, A, Ob, Resposta) :-
 	A == escrever,
 	P =.. [A, AutID, Ob, _, _, _, _, _],
-	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
-	(Q==ql, write(L); 
-	length(L,N),write(N)).
+	findall(Res, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L),
+	(Q==ql, atomic_list_concat(L, ',', Resposta); 
+	length(L,Resposta)).
 	
 %frase_interrogativa(['quais','sao','os','escritores','portugueses','e','europeus','do','seculo','XIX','?'],[]).
-resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2) :-
+resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2, Resposta) :-
 	A == ser, Ob == autor, Ob2 == seculo,
 	getCleanAdjs(Adjs,[],CleanAdjs),
 	getCleanAdjs(Adjs2, [], CleanAdjs2),
@@ -321,12 +321,12 @@ resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2) :-
 	P1 =.. [A, AutID, _, _, Clean2, _, _, _],
 	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
 	
-	findall(Primeiro-Ultimo, ((P; P1), P2, (nascer(AutID, _, _, _, Prep, Ob2, CleanAdjs2); morrer(AutID, _, _, _, Prep, Ob2, CleanAdjs2))), L), sort(L, L1),
-	(Q==ql, write(L1); 
-	length(L1,N),write(N)).
+	findall(Res, ((P; P1), P2, (nascer(AutID, _, _, _, Prep, Ob2, CleanAdjs2); morrer(AutID, _, _, _, Prep, Ob2, CleanAdjs2)), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L), sort(L, L1),
+	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
+	length(L1,Resposta)).
 	
 %frase_interrogativa(['quais','sao','os','escritores','portugueses','do','seculo','XIX','?'],[]).
-resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2) :-
+resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2, Resposta) :-
 	A == ser, Ob == autor, Ob2 == seculo,
 	getCleanAdjs(Adjs,[],CleanAdjs),
 	getCleanAdjs(Adjs2, [], CleanAdjs2),
@@ -336,13 +336,13 @@ resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2) :-
 	P =.. [A, AutID, _, _, CleanAdjs, _, _, _],
 	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
 	
-	findall(Primeiro-Ultimo, (P, P2, (nascer(AutID, _, _, _, Prep, Ob2, CleanAdjs2); morrer(AutID, _, _, _, Prep, Ob2, CleanAdjs2))), L),
+	findall(Res, (P, P2, (nascer(AutID, _, _, _, Prep, Ob2, CleanAdjs2); morrer(AutID, _, _, _, Prep, Ob2, CleanAdjs2)), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L),
 	sort(L, L1),
-	(Q==ql, write(L1); 
-	length(L1,N),write(N)).
+	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
+	length(L1,Resposta)).
 
 %frase_interrogativa(['quais','sao','os','escritores','portugueses','e','europeus','?'],[]).
-resposta_nacionalidade(Q, A, Ob, Adjs) :-
+resposta_nacionalidade(Q, A, Ob, Adjs, Resposta) :-
 	A == ser,
 	Ob == autor,
 	getCleanAdjs(Adjs,[],CleanAdjs),
@@ -357,12 +357,12 @@ resposta_nacionalidade(Q, A, Ob, Adjs) :-
 	P1 =.. [A, AutID, _, _, Clean2, _, _, _],
 	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
 	
-	findall(Primeiro-Ultimo, ((P; P1), P2), L), sort(L, L1),
-	(Q==ql, write(L1); 
-	length(L1,N),write(N)).
+	findall(Res, ((P; P1), P2, atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L), sort(L, L1),
+	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
+	length(L1,Resposta)).
 
 %frase_interrogativa(['quais','sao','os','escritores','portugueses','?'],[]).	
-resposta_nacionalidade(Q, A, Ob, Adjs) :-
+resposta_nacionalidade(Q, A, Ob, Adjs, Resposta) :-
 	A == ser,
 	Ob == autor,
 	getCleanAdjs(Adjs,[],CleanAdjs),
@@ -372,20 +372,20 @@ resposta_nacionalidade(Q, A, Ob, Adjs) :-
 	P =.. [A, AutID, _, _, CleanAdjs, _, _, _],
 	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
 	
-	findall(Primeiro-Ultimo, (P, P2), L), 
-	(Q==ql, write(L); 
-	length(L,N),write(N)).
+	findall(Res, (P, P2, atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L), 
+	(Q==ql, atomic_list_concat(L, ',', Resposta); 
+	length(L,Resposta)).
 	
-resposta_nascimento(Q, A, Prep, Ob2, Adjs2) :-
+resposta_nascimento(Q, A, Prep, Ob2, Adjs2, Resposta) :-
 	(A == nascer; A == morrer),
 	getCleanAdjs(Adjs2, [], CleanAdjs),
 	P =.. [A, AutID, _, _, _, Prep, Ob2, CleanAdjs],
-	findall(Primeiro-Ultimo, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _)), L),
-	(Q==ql, write(L); 
-	length(L,N),write(N)).
+	findall(Res, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L),
+	(Q==ql, atomic_list_concat(L, ',', Resposta); 
+	length(L,Resposta)).
 	
 %falta limitar em casos de '...apos o sec XIX'	
-resposta_existencia_livros(Q, A, Ob3, Adjs3) :-
+resposta_existencia_livros(Q, A, Ob3, Adjs3, Resposta) :-
 	A == existir, Ob3 == livro,
 	getCleanAdjs(Adjs3, [], CleanAdjs),
 	length(CleanAdjs, Length),
@@ -397,11 +397,11 @@ resposta_existencia_livros(Q, A, Ob3, Adjs3) :-
 	
 	P =.. [Ob3, LivroId, _, Autores, _, _, _],
 	findall(Titulo, (P, (ser(AutID, _, _, Clean1, _, _, _) ; ser(AutID, _, _, Clean2, _, _, _)), member(AutID, Autores), livro(LivroId, Titulo, _, _, _, _)), L),
-	(Q==ql, write(L); 
-	length(L,N),write(N)).
+	(Q==ql, atomic_list_concat(L, ',', Resposta); 
+	length(L,Resposta)).
 
 %falta limitar em casos de '...apos o sec XIX'		
-resposta_existencia_livros(Q, A, Ob3, Adjs3) :-
+resposta_existencia_livros(Q, A, Ob3, Adjs3, Resposta) :-
 	A == existir, Ob3 == livro,
 	getCleanAdjs(Adjs3, [], CleanAdjs),
 	
@@ -409,8 +409,8 @@ resposta_existencia_livros(Q, A, Ob3, Adjs3) :-
 	
 	P =.. [Ob3, LivroId, _, Autores, _, _, _],
 	findall(Titulo, (P, ser(AutID, _, _, CleanAdjs, _, _, _), member(AutID, Autores), livro(LivroId, Titulo, _, _, _, _)), L),
-	(Q==ql, write(L); 
-	length(L,N),write(N)).
+	(Q==ql, atomic_list_concat(L, ',', Resposta); 
+	length(L,Resposta)).
 	
 %%%%%%%%%%%%%%%%%%%%%%%
 % FRASES DECLARATIVAS %
