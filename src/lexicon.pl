@@ -430,6 +430,104 @@ nome(_-_, Nr) -->
 	{between(0,2050,Nr)},
 	{atom_number(NrAtom,Nr)},
 	[NrAtom].
+	
+	
+%---------------------------------------------------------%
+% Substantivos: Titulos                                   %
+%---------------------------------------------------------%
+
+nome(s-_,'A Casa dos Espiritos') --> ['A','Casa','dos','Espiritos'].
+nome(s-_,'A Cidade e as Estrelas') --> ['A','Cidade','e','as','Estrelas'].
+nome(s-_,'A Dama das Camelias') --> ['A','Dama','das','Camelias'].
+nome(s-_,'Adeus As Armas') --> ['Adeus','As','Armas'].
+nome(s-_,'Agostinho de Ceuta') --> ['Agostinho','de','Ceuta'].
+nome(s-_,'A Ilustre Casa de Ramires') --> ['A','Ilustre','Casa','de','Ramires'].
+nome(s-_,'A Mensagem') --> ['A','Mensagem'].
+nome(s-_,'Amor de Perdicao') --> ['Amor','de','Perdicao'].
+nome(s-_,'Amor de Salvacao') --> ['Amor','de','Salvacao'].
+nome(s-_,'A Morgadinha dos Canaviais') --> ['A','Morgadinha','dos','Canaviais'].
+nome(s-_,'A Morte de Ivan Ilitch') --> ['A','Morte','de','Ivan','Ilitch'].
+nome(s-_,'Anfitrioes') --> ['Anfitrioes'].
+nome(s-_,'Anna Karenina') --> ['Anna','Karenina'].
+nome(s-_,'Ansatsu Kyoushitsu') --> ['Ansatsu','Kyoushitsu'].
+nome(s-_,'Aparicao') --> ['Aparicao'].
+nome(s-_,'A Reliquia') --> ['A','Reliquia'].
+nome(s-_,'A Tempestade') --> ['A','Tempestade'].
+nome(s-_,'A Sonata Kreutzer') --> ['A','Sonata','Kreutzer'].
+nome(s-_,'A Wild Sheep Chase') --> ['A','Wild','Sheep','Chase'].
+nome(s-_,'As Pupilas do Senhor Reitor') --> ['As','Pupilas','do','Senhor','Reitor'].
+nome(s-_,'Auto de Filodemo') --> ['Auto','de','Filodemo'].
+nome(s-_,'Azumanga Daioh') --> ['Azumanga','Daioh'].
+nome(s-_,'Cem Anos de Solidao') --> ['Cem','Anos','de','Solidao'].
+nome(s-_,'Crime e Castigo') --> ['Crime','e','Castigo'].
+nome(s-_,'Cronicando') --> ['Cronicando'].
+nome(s-_,'Doraemon') --> ['Doraemon'].
+nome(s-_,'Emma') --> ['Emma'].
+nome(s-_,'Estorias Abensonhadas') --> ['Estorias','Abensonhadas'].
+nome(s-_,'Estrela Polar') --> ['Estrela','Polar'].
+nome(s-_,'Estrelas Funestas') --> ['Estrelas','Funestas'].
+nome(s-_,'Estrelas Propicias') --> ['Estrelas','Propicias'].
+nome(s-_,'Hamlet') --> ['Hamlet'].
+nome(s-_,'Henrique VIII') --> ['Henrique','VIII'].
+nome(s-_,'Humilhados e Ofendidos') --> ['Humilhados','e','Ofendidos'].
+nome(s-_,'Inspiracoes') --> ['Inspiracoes'].
+nome(s-_,'Jane Eyre') --> ['Jane','Eyre'].
+nome(s-_,'Lagrimas Abencoadas') --> ['Lagrimas','Abencoadas'].
+nome(s-_,'Livro Negro de Padre Dinis - I') --> ['Livro','Negro','de','Padre','Dinis','-','I'].
+nome(s-_,'Livro Negro de Padre Dinis - II') --> ['Livro','Negro','de','Padre','Dinis','-','II'].
+nome(s-_,'Macbeth') --> ['Macbeth'].
+nome(s-_,'Manha Submersa') --> ['Manha','Submersa'].
+nome(s-_,'Mar Me Quer') --> ['Mar','Me','Quer'].
+nome(s-_,'Memorias do Subsolo') --> ['Memorias','do','Subsolo'].
+nome(s-_,'Misterios de Lisboa - I') --> ['Misterios','de','Lisboa','-','I'].
+nome(s-_,'Misterios de Lisboa - II') --> ['Misterios','de','Lisboa','-','II'].
+nome(s-_,'Misterios de Lisboa - III') --> ['Misterios','de','Lisboa','-','III'].
+nome(s-_,'Mudanca') --> ['Mudanca'].
+nome(s-_,'Ninja Hattori') --> ['Ninja','Hattori'].
+nome(s-_,'Nowegian Wood') --> ['Nowegian','Wood'].
+nome(s-_,'O Acampamento Indio') --> ['O','Acampamento','Indio'].
+nome(s-_,'O Adolescente') --> ['O','Adolescente'].
+nome(s-_,'O Amor nos Tempos de Colera') --> ['O','Amor','nos','Tempos','de','Colera'].
+nome(s-_,'O Conde de Monte Cristo') --> ['O','Conde','de','Monte','Cristo'].
+nome(s-_,'O Crime do Padro Amaro') --> ['O','Crime','do','Padro','Amaro'].
+nome(s-_,'O Duplo') --> ['O','Duplo'].
+nome(s-_,'O Eterno Marido') --> ['O','Eterno','Marido'].
+nome(s-_,'O Idiota') --> ['O','Idiota'].
+nome(s-_,'O Jogador') --> ['O','Jogador'].
+nome(s-_,'Vozes Anoitecidas') --> ['Vozes','Anoitecidas'].
+nome(s-_,'O Mandarim') --> ['O','Mandarim'].
+nome(s-_,'O Mercador de Veneza') --> ['O','Mercador','de','Veneza'].
+nome(s-_,'O Monte dos Vendavais') --> ['O','Monte','dos','Vendavais'].
+nome(s-_,'O Nascimento da 13') --> ['O','Nascimento','da','13'].
+nome(s-_,'O Outono do Patriarca') --> ['O','Outono','do','Patriarca'].
+nome(s-_,'O Primo Basilio') --> ['O','Primo','Basilio'].
+nome(s-_,'Orgulho e Preconceito') --> ['Orgulho','e','Preconceito'].
+nome(s-_,'Os Fidalgos da Casa Mourisca') --> ['Os','Fidalgos','da','Casa','Mourisca'].
+nome(s-_,'Os Irmaos Karamazov') --> ['Os','Irmaos','Karamazov'].
+nome(s-_,'Os Lusiadas') --> ['Os','Lusiadas'].
+nome(s-_,'Os Maias') --> ['Os','Maias'].
+nome(s-_,'Os Nove Bilioes de Nomes de Deus') --> ['Os','Nove','Bilioes','de','Nomes','de','Deus'].
+nome(s-_,'Os Pundonores Desagravados') --> ['Os','Pundonores','Desagravados'].
+nome(s-_,'Os Tres Mosqueteiros') --> ['Os','Tres','Mosqueteiros'].
+nome(s-_,'One Piece') --> ['One','Piece'].
+nome(s-_,'Otelo') --> ['Otelo'].
+nome(s-_,'O Visconde de Bragelonne') --> ['O','Visconde','de','Bragelonne'].
+nome(s-_,'Pensageiro Frequente') --> ['Pensageiro','Frequente'].
+nome(s-_,'9s') --> ['9s'].
+nome(s-_,'Por Quem Os Sinos Tocam') --> ['Por','Quem','Os','Sinos','Tocam'].
+nome(s-_,'Razao e Sensibilidade') --> ['Razao','e','Sensibilidade'].
+nome(s-_,'Rei Leao') --> ['Rei','Leao'].
+nome(s-_,'Romeu e Julieta') --> ['Romeu','e','Julieta'].
+nome(s-_,'Sonho de uma Noite de Verão') --> ['Sonho','de','uma','Noite','de','Verão'].
+nome(s-_,'Terra Sonâmbula') --> ['Terra','Sonâmbula'].
+nome(s-_,'Uma Família Inglesa') --> ['Uma','Família','Inglesa'].
+nome(s-_,'Vinte Anos Depois') --> ['Vinte','Anos','Depois'].
+
+%---------------------------------------------------------%
+% Substantivos: Heteronimos                               %
+%---------------------------------------------------------%
+
+nome(s-_,11) --> ['Alberto','Caeiro'].
 
 %---------------------------------------------------------%
 % Substantivos: Nacionalidades                            %
