@@ -115,7 +115,7 @@ examplesMenu:-
 	write('* 3 - Quem sao os escritores africanos?                                        *'),nl,
 	write('* 4 - Quais os escritores portugueses e espanhois do seculo XV?                *'),nl,
 	write('* 5 - Quantos livros de escritores africanos existem apos o seculo XVI?        *'),nl,
-	write('* 6 - Alberto Caeiro e heteronimo de Fernando Pessoa.                       *'),nl,
+	write('* 6 - Alberto Caeiro e heteronimo de Fernando Pessoa.                          *'),nl,
 	write('* 7 - Pessoa e europeu.                                                        *'),nl,
 	write('*                                                                              *'),nl,
 	write('* 0 - Voltar ao menu inicial                                                   *'),nl,
@@ -136,7 +136,7 @@ examplesMenu:-
 
 processQuestionOption(0):- start.
 processQuestionOption(Option):-
-	ite(Option == 1, frase(Resposta,['Quem','escreveu','Os Maias','?'],[]), true), !,
+	ite(Option == 1, frase(Resposta,['Quem','escreveu','Os','Maias','?'],[]), true), !,
 	ite(Option == 2, frase(Resposta,['Quais','sao','os','livros','mais','conhecidos','de','Fernando','Pessoa','?'],[]), true), !,
 	ite(Option == 3, frase(Resposta,['Quem','sao','os','escritores','africanos','?'],[]), true), !,
 	ite(Option == 4, frase(Resposta,['Quais','os','escritores','portugueses','e','espanhois','do','seculo','XV','?'],[]), true), !,
