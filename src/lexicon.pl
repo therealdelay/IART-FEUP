@@ -131,10 +131,15 @@ pronome_pessoal(p-f) --> [suas].
 % Pronomes Interrogativos                                 %
 %---------------------------------------------------------%
 
+pron_int(_-_, ql) --> ['Quem'].
 pron_int(_-_, ql) --> [quem].
+pron_int(s-_, ql) --> ['Qual'].
 pron_int(s-_, ql) --> [qual].
+pron_int(p-_, ql) --> ['Quais'].
 pron_int(p-_, ql) --> [quais].
+pron_int(p-m, qn) --> ['Quantos'].
 pron_int(p-m, qn) --> [quantos].
+pron_int(p-f, qn) --> ['Quantas'].
 pron_int(p-f, qn) --> [quantas].
 
 %---------------------------------------------------------%

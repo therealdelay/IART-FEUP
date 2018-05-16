@@ -105,6 +105,7 @@ answerMenu:-
 
 
 examplesMenu:-
+	clearScreen,
 	header,
 	write('*                                                                              *'),nl,
 	write('*   Escolha uma pergunta exemplo sobre literatura portuguesa                   *'),nl,
@@ -141,6 +142,9 @@ processQuestionOption(Option):-
 	ite(Option == 4, frase(['Quais','os','escritores','portugueses','e','espanhois','do','seculo','XV','?'],[]), true), !,
 	ite(Option == 5, frase(['Quantos','livros','de','escritores','africanos','existem','apos','o','seculo','XVI','?'],[]), true), !,
 	ite(Option == 6, frase(['Alberto','Caeiro','e','heteronimo','de','Fernando','Pessoa','.'],[]), true), !,
-	ite(Option == 7, frase(['Pessoa','e','europeu'],[]), true), !,
+	ite(Option == 7, frase(Resposta,['Pessoa','e','europeu'],[]), true), !,
+	nl,
+	write('* Resposta: '),write(Resposta),nl,
+	write('* Pressione Enter para continuar.                                              *'),nl,
 	waitForEnter,nl,
 	start.
