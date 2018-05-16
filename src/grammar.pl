@@ -77,10 +77,10 @@ concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2):-
 
 	
 interrogacao_opcional --> [?].
-interrogacao_opcional --> [].
+interrogacao_opcional --> [.].
 	
 frase-->frase_declarativa.
-frase-->frase_interrogatva.
+frase-->frase_interrogativa.
 %frase-->frase_conjuntiva.
 
 frase_declarativa -->
