@@ -332,7 +332,9 @@ morrer(AutorId,_,_,_,Cmp,seculo,Adjs2):-
 % Existir              %
 %----------------------%
 
-existir(LivroId, Cmp, seculo, Adjs2, Adjs3) :-
+
+
+existir(LivroId,_,_,_Cmp,seculo,Adjs2,Adjs3) :-
 	(Cmp == = ;  Cmp == < ; Cmp == >),
 	length(Adjs2,1),
 	nth0(0,Adjs2,Seculo),
