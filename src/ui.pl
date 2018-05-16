@@ -136,12 +136,12 @@ examplesMenu:-
 
 processQuestionOption(0):- start.
 processQuestionOption(Option):-
-	ite(Option == 1, frase(['Quem','escreveu','Os Maias','?'],[]), true), !,
-	ite(Option == 2, frase(['Quais','sao','os','livros','mais','conhecidos','de','Fernando','Pessoa','?'],[]), true), !,
-	ite(Option == 3, frase(['Quem','sao','os','escritores','africanos','?'],[]), true), !,
-	ite(Option == 4, frase(['Quais','os','escritores','portugueses','e','espanhois','do','seculo','XV','?'],[]), true), !,
-	ite(Option == 5, frase(['Quantos','livros','de','escritores','africanos','existem','apos','o','seculo','XVI','?'],[]), true), !,
-	ite(Option == 6, frase(['Alberto','Caeiro','e','heteronimo','de','Fernando','Pessoa','.'],[]), true), !,
+	ite(Option == 1, frase(Resposta,['Quem','escreveu','Os Maias','?'],[]), true), !,
+	ite(Option == 2, frase(Resposta,['Quais','sao','os','livros','mais','conhecidos','de','Fernando','Pessoa','?'],[]), true), !,
+	ite(Option == 3, frase(Resposta,['Quem','sao','os','escritores','africanos','?'],[]), true), !,
+	ite(Option == 4, frase(Resposta,['Quais','os','escritores','portugueses','e','espanhois','do','seculo','XV','?'],[]), true), !,
+	ite(Option == 5, frase(Resposta,['Quantos','livros','de','escritores','africanos','existem','apos','o','seculo','XVI','?'],[]), true), !,
+	ite(Option == 6, frase(Resposta,['Alberto','Caeiro','e','heteronimo','de','Fernando','Pessoa','.'],[]), true), !,
 	ite(Option == 7, frase(Resposta,['Pessoa','e','europeu'],[]), true), !,
 	nl,
 	write('* Resposta: '),write(Resposta),nl,

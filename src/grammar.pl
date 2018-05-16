@@ -80,7 +80,7 @@ interrogacao_opcional --> [?].
 interrogacao_opcional --> [].
 	
 frase(Resposta)-->frase_declarativa(Resposta).
-frase(Resposta)-->frase_interrogatva(Resposta).
+frase(Resposta)-->frase_interrogativa(Resposta).
 %frase-->frase_conjuntiva.
 
 frase_declarativa(Resposta) -->
@@ -100,88 +100,124 @@ frase_interrogativa(Resposta) -->
 	sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, _),
 	[?],
 	{resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3, Resposta)}.
-	
+
 %%%%%%%%%%%%%%%%%%%%%%%%%
 % FRASES INTERROGATIVAS %
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
-	sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2),
-	sintagma_preposicional_int(Prep, Ob2, Adjs2).
+sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3),
+	sintagma_preposicional_int(Prep, Ob2, Adjs2, Ob3, Adjs3).
 
-sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
-	sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
+sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3).
 
-sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
-	sintagma_nominal_int_aux2(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2),
-	sintagma_adjetival_int(N-G, Adv, Adjs).
+sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	sintagma_nominal_int_aux2(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3),
+	sintagma_adjetival_int(N-G, Adv, Adjs, Ob3, Adjs3).
 	
-sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
-	sintagma_nominal_int_aux2(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
+sintagma_nominal_int_aux(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	sintagma_nominal_int_aux2(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3).
 
-sintagma_nominal_int_aux2(N-G, Q, Ob, _, _, _, _, _) --> 
-	pron_int(N-G, Q), art_indef(N-G), nome(N-G, Ob).
+sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _, Ob3, _) --> 
+	pron_int(N-G, Q), art_indef(N-G), nome(N-G, Ob3).
 	
-sintagma_nominal_int_aux2(N-G, Q, Ob, _, _, _, _, _) -->
-	pron_int(N-G, Q), art_def(N-G), nome(N-G, Ob).
+sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _, Ob3, _) -->
+	pron_int(N-G, Q), art_def(N-G), nome(N-G, Ob3).
 	
-sintagma_nominal_int_aux2(N-G, Q, Ob, _, _, _, _, _) -->
-	pron_int(N-G, Q), nome(N-G, Ob).
+sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _, Ob3, _) -->
+	pron_int(N-G, Q), nome(N-G, Ob3).
 	
-sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _) -->
+sintagma_nominal_int_aux2(N-G, Q, _, _, _, _, _, _, _, _) -->
 	pron_int(N-G, Q).
 	
-sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _) --> 
+sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _, _, _) --> 
 	art_indef(N-G), nome(N-G, Ob).
 	
-sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _) -->
+sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _, _, _) -->
 	art_def(N-G), nome(N-G, Ob).
 	
-sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _) -->
+sintagma_nominal_int_aux2(N-G, _, Ob, _, _, _, _, _, _, _) -->
 	nome(N-G,Ob).
 	
-sintagma_nominal_int_aux2(_, _, Ob, _, _, _, _, _) -->
+sintagma_nominal_int_aux2(_, _, Ob, _, _, _, _, _, _, _) -->
 	[Titulo],
 	{livro(_, Titulo, _, _, _, _),
 	Ob = Titulo}.
 	
-sintagma_nominal_int_aux2(_,_,_,_,_,_,_,_) --> 	[].
+sintagma_nominal_int_aux2(_,_,_,_,_,_,_,_,_,_) --> 	[].
 	
-sintagma_preposicional_int(Prep, Ob, Adjs) -->
+sintagma_preposicional_int(Prep, Ob, Adjs, Ob3, _) -->
+	{var(Ob3)},
 	preposicao(N-G, Prep),
-	sintagma_nominal_int(N-G, _, Ob, _, Adjs, _, _, _).
+	sintagma_nominal_int(N-G, _, Ob, _, Adjs, _, _, _, _, _).
 	
-sintagma_adjetival_int(N-G, Adv, Adjs) -->
+sintagma_preposicional_int(Prep, _, _, Ob3, Adjs3) -->
+	{nonvar(Ob3)},
+	preposicao(N-G, Prep),
+	sintagma_nominal_int(N-G, _, _, _, _, _, _, _, Ob3, Adjs3).
+	
+sintagma_adjetival_int(N-G, Adv, Adjs, Ob3, Adjs3) -->
 	%{write('sintagma adjectival'), nl},
-	sintagma_adjetival_int_aux(N-G, Adv, Adjs).
+	sintagma_adjetival_int_aux(N-G, Adv, Adjs, Ob3, Adjs3).
 	
 %sintagma_adjetival_int(N-G, Adv, Adjs) -->
 %	sintagma_adjetival_int_aux(N-G, Adv, Adjs), [e], sintagma_adjetival_int(N-G, Adv, Adjs),
 %	{write(Adjs), nl}.
 	
-sintagma_adjetival_int(_, _, _) -->
+sintagma_adjetival_int(_, _, _, _, _) -->
 	[].
 	
-sintagma_adjetival_int_aux(N-G, _, Adjs) -->
+sintagma_adjetival_int_aux(N-G, _, Adjs, Ob3, _) -->
+	{var(Ob3)},
 	adjetivo(N-G, Adj),
 	[e],
 	adjetivo(N-G, Adj2),
 	{actual_length(Adjs,0,Length), nth0(Length,Adjs,Adj), Lengthaux is Length + 1, nth0(Lengthaux, Adjs, Adj2)}.
 	
-sintagma_adjetival_int_aux(N-G, _, Adjs) -->
+sintagma_adjetival_int_aux(N-G, _, _, Ob3, Adjs3) -->
+	{nonvar(Ob3)},
+	adjetivo(N-G, Adj),
+	[e],
+	adjetivo(N-G, Adj2),
+	{actual_length(Adjs3,0,Length), nth0(Length,Adjs3,Adj), Lengthaux is Length + 1, nth0(Lengthaux, Adjs3, Adj2)}.
+	
+sintagma_adjetival_int_aux(N-G, _, Adjs, Ob3, _) -->
+	{var(Ob3)},
 	adjetivo(N-G, Adj),
 	{actual_length(Adjs,0,Length), nth0(Length,Adjs,Adj)}.
 	%{count(Length, Adjs), nth0(Length, Adjs, Adj)}.
 	
-sintagma_adjetival_int_aux(N-G, Adv, Adjs) -->
+sintagma_adjetival_int_aux(N-G, _, _, Ob3, Adjs3) -->
+	{nonvar(Ob3)},
+	adjetivo(N-G, Adj),
+	{actual_length(Adjs3,0,Length), nth0(Length,Adjs3,Adj)}.
+	%{count(Length, Adjs), nth0(Length, Adjs, Adj)}.
+	
+sintagma_adjetival_int_aux(N-G, Adv, Adjs, Ob3, _) -->
+	{var(Ob3)},
 	adverbio(Adv),
 	adjetivo(N-G, Adj),
 	{actual_length(Adjs,0,Length), nth0(Length,Adjs,Adj)}.
 	%{count(Length, Adjs), nth0(Length, Adjs, Adj)}.
 
-sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2) -->
+sintagma_adjetival_int_aux(N-G, Adv, _, Ob3, Adjs3) -->
+	{nonvar(Ob3)},
+	adverbio(Adv),
+	adjetivo(N-G, Adj),
+	{actual_length(Adjs3,0,Length), nth0(Length,Adjs3,Adj)}.
+	%{count(Length, Adjs), nth0(Length, Adjs, Adj)}.	
+
+sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	{nonvar(Ob3), Q = ql},
+	[que],
 	verbo(N, A, _),
-	sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2).
+	sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3).
+	
+sintagma_verbal_int(N-G, Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3) -->
+	{var(Ob3)},
+	verbo(N, A, _),
+	sintagma_nominal_int(N-G, Q, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3).
 	
 resposta(Q, A, Ob, _, _, _, _, _, _, _, Resposta) :-
 	%write('Q: '), write(Q), nl,
@@ -375,7 +411,7 @@ resposta_existencia_livros(Q, A, Ob3, Adjs3, Resposta) :-
 	P =.. [Ob3, LivroId, _, Autores, _, _, _],
 	findall(Titulo, (P, ser(AutID, _, _, CleanAdjs, _, _, _), member(AutID, Autores), livro(LivroId, Titulo, _, _, _, _)), L),
 	(Q==ql, atomic_list_concat(L, ',', Resposta); 
-	length(L,Resposta)).
+	length(L,Resposta)).	
 
 %%%%%%%%%%%%%%%%%%%%%%%
 % FRASES DECLARATIVAS %
