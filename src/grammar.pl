@@ -4,6 +4,7 @@
 :-include('kb.pl').
 :-include('lexicon.pl').
 :-include('utils.pl').
+:-include('ui.pl').
 
 procurar_autor(AutorId, Prim, Ultim, Nasc, Morte, Sexo, Nacionalidade, Pseudonimos)-->
 	[Prim],[Ultim],
