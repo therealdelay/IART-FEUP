@@ -314,7 +314,9 @@ producao(Resposta)-->
 	nome(N-G,Ob),
 	{
 		contexto(Q,A,_,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3),
-		resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta)
+		resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta),
+		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
+		assert(contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3))
 	}.
 
 % Quais sao os escritores portugueses do seculo XX? E franceses?
@@ -337,6 +339,8 @@ producao(Resposta)-->
 		write('Prep2: '), write(Prep2), nl,
 		write('Ob3: '), write(Ob3), nl,
 		write('Adjs3: '), write(Adjs3), nl,
-		resposta(Q,A,Ob,Adv,[Adj,_,_,_,_],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta)
+		resposta(Q,A,Ob,Adv,[Adj,_,_,_,_],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta),
+		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
+		assert(contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3))
 	}.
 
