@@ -90,7 +90,7 @@ questionMenu:-
 	answerMenu(FinalQuestion).
 
 readQuestion(Question):-
-	read_string(user_input,"\n", "\r", End, Question).
+	read_string(user_input,"\n", "\r", _, Question).
 
 quoteTokens([],SplitQuestionAux,SplitQuestionAux).
 quoteTokens([H|T],List,SplitQuestionAux):-
