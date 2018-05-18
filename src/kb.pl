@@ -364,15 +364,9 @@ resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2, Resposta) :-
 	length(CleanAdjs, Length),
 	Length > 1, !,
 	
-	nth0(0, CleanAdjs, Elem1),
-	nth0(1, CleanAdjs, Elem2),
-	Clean1 = [Elem1], Clean2 = [Elem2],
+	multiple_adjs_solver(CleanAdjs, CleanAdjs2, A, Ob, Ob2, Prep, List), append(List, L), sort(L, L1),
+	write(L1), nl,
 	
-	P =.. [A, AutID, _, _, Clean1, _, _, _],
-	P1 =.. [A, AutID, _, _, Clean2, _, _, _],
-	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
-	
-	findall(Res, ((P; P1), P2, (nascer(AutID, _, _, _, Prep, Ob2, CleanAdjs2); morrer(AutID, _, _, _, Prep, Ob2, CleanAdjs2)), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L), sort(L, L1),
 	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
 	length(L1,Resposta)).
 	
@@ -400,15 +394,9 @@ resposta_nacionalidade(Q, A, Ob, Adjs, Resposta) :-
 	length(CleanAdjs, Length),
 	Length > 1, !,
 	
-	nth0(0, CleanAdjs, Elem1),
-	nth0(1, CleanAdjs, Elem2),
-	Clean1 = [Elem1], Clean2 = [Elem2],
+	multiple_adjs_solver(CleanAdjs, A, Ob, List), append(List, L), sort(L, L1),
+	write(L1), nl,
 	
-	P =.. [A, AutID, _, _, Clean1, _, _, _],
-	P1 =.. [A, AutID, _, _, Clean2, _, _, _],
-	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
-	
-	findall(Res, ((P; P1), P2, atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L), sort(L, L1),
 	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
 	length(L1,Resposta)).
 
