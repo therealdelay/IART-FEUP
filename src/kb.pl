@@ -174,15 +174,14 @@ pais(15, 'russia', europa, 'russo', 'russa').
 pais(16, 'estados unidos', america, 'americano', 'americana').
 pais(17, 'india', asia, 'indiano', 'indiana').
 
-
 anoAtual(2018).
 
+
 %---------------------------------------------------------%
-% Acoes                                                   %
+% DECLARATIVAS                                            %
 %---------------------------------------------------------%
 
-%ser(Suj,Ob,Adv,Adjs,Prep,Ob2,Adj2):-
-
+%formato(Suj,Ob,Adv,Adjs,Prep,Ob2,Adj2)
 
 %----------------------%
 % Ser                  %
@@ -221,7 +220,7 @@ ser(AutorId,_,_,Adjs,_,_,_):-
 	autor(AutorId,_,_,_,_,_,PaisId,_,_).
 
 % Popularidade
-% ?- frase(['A Mensagem','e','o','livro','mais','conhecido','de','Pessoa'],[]).
+% ?- frase(['A','Mensagem','e','o','livro','mais','conhecido','de','Pessoa'],[]).
 
 ser(Titulo,_,mais,Adjs,=,AutorId,_):-
 	length(Adjs,1),
@@ -231,7 +230,7 @@ ser(Titulo,_,mais,Adjs,=,AutorId,_):-
 	Pop == MaxPop.
 	
 	
-% ?- frase(['A Mensagem','e','o','livro','menos','conhecido','de','Pessoa'],[]).
+% ?- frase(['A','Mensagem','e','o','livro','menos','conhecido','de','Pessoa'],[]).
 
 ser(Titulo,_,menos,Adjs,=,AutorId,_):-
 	length(Adjs,1),
@@ -332,8 +331,6 @@ morrer(AutorId,_,_,_,Cmp,seculo,Adjs2):-
 % Existir              %
 %----------------------%
 
-
-
 existir(LivroId,_,_,_Cmp,seculo,Adjs2,Adjs3) :-
 	(Cmp == = ;  Cmp == < ; Cmp == >),
 	length(Adjs2,1),
@@ -345,3 +342,123 @@ existir(LivroId,_,_,_Cmp,seculo,Adjs2,Adjs3) :-
 	pais(PaisId, _, Origem, _, _),
 	autor(AutorId, _, _, _, _, _, PaisId, _, _),
 	member(AutorId, Autores).
+	
+	
+%---------------------------------------------------------%
+% INTERROGATIVAS                                          %
+%---------------------------------------------------------%	
+	
+%still not formatted
+resposta_escrever(Q, A, Ob, Resposta) :-
+	A == escrever,
+	P =.. [A, AutID, Ob, _, _, _, _, _],
+	findall(Res, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L),
+	(Q==ql, atomic_list_concat(L, ',', Resposta); 
+	length(L,Resposta)).
+	
+%frase_interrogativa(['quais','sao','os','escritores','portugueses','e','europeus','do','seculo','XIX','?'],[]).
+resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2, Resposta) :-
+	A == ser, Ob == autor, Ob2 == seculo,
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2, [], CleanAdjs2),
+	length(CleanAdjs, Length),
+	Length > 1, !,
+	
+	nth0(0, CleanAdjs, Elem1),
+	nth0(1, CleanAdjs, Elem2),
+	Clean1 = [Elem1], Clean2 = [Elem2],
+	
+	P =.. [A, AutID, _, _, Clean1, _, _, _],
+	P1 =.. [A, AutID, _, _, Clean2, _, _, _],
+	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
+	
+	findall(Res, ((P; P1), P2, (nascer(AutID, _, _, _, Prep, Ob2, CleanAdjs2); morrer(AutID, _, _, _, Prep, Ob2, CleanAdjs2)), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L), sort(L, L1),
+	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
+	length(L1,Resposta)).
+	
+%frase_interrogativa(['quais','sao','os','escritores','portugueses','do','seculo','XIX','?'],[]).
+resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2, Resposta) :-
+	A == ser, Ob == autor, Ob2 == seculo,
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2, [], CleanAdjs2),
+	
+	length(CleanAdjs, 1), !,
+	
+	P =.. [A, AutID, _, _, CleanAdjs, _, _, _],
+	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
+	
+	findall(Res, (P, P2, (nascer(AutID, _, _, _, Prep, Ob2, CleanAdjs2); morrer(AutID, _, _, _, Prep, Ob2, CleanAdjs2)), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L),
+	sort(L, L1),
+	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
+	length(L1,Resposta)).
+
+%frase_interrogativa(['quais','sao','os','escritores','portugueses','e','europeus','?'],[]).
+resposta_nacionalidade(Q, A, Ob, Adjs, Resposta) :-
+	A == ser,
+	Ob == autor,
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	length(CleanAdjs, Length),
+	Length > 1, !,
+	
+	nth0(0, CleanAdjs, Elem1),
+	nth0(1, CleanAdjs, Elem2),
+	Clean1 = [Elem1], Clean2 = [Elem2],
+	
+	P =.. [A, AutID, _, _, Clean1, _, _, _],
+	P1 =.. [A, AutID, _, _, Clean2, _, _, _],
+	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
+	
+	findall(Res, ((P; P1), P2, atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L), sort(L, L1),
+	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
+	length(L1,Resposta)).
+
+%frase_interrogativa(['quais','sao','os','escritores','portugueses','?'],[]).	
+resposta_nacionalidade(Q, A, Ob, Adjs, Resposta) :-
+	A == ser,
+	Ob == autor,
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	
+	length(CleanAdjs, 1), !,
+	
+	P =.. [A, AutID, _, _, CleanAdjs, _, _, _],
+	P2 =.. [Ob, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
+	
+	findall(Res, (P, P2, atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L), 
+	(Q==ql, atomic_list_concat(L, ',', Resposta); 
+	length(L,Resposta)).
+	
+resposta_nascimento(Q, A, Prep, Ob2, Adjs2, Resposta) :-
+	(A == nascer; A == morrer),
+	getCleanAdjs(Adjs2, [], CleanAdjs),
+	P =.. [A, AutID, _, _, _, Prep, Ob2, CleanAdjs],
+	findall(Res, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L),
+	(Q==ql, atomic_list_concat(L, ',', Resposta); 
+	length(L,Resposta)).
+	
+%falta limitar em casos de '...apos o sec XIX'	
+resposta_existencia_livros(Q, A, Ob3, Adjs3, Resposta) :-
+	A == existir, Ob3 == livro,
+	getCleanAdjs(Adjs3, [], CleanAdjs),
+	length(CleanAdjs, Length),
+	Length > 1, !,
+	
+	nth0(0, CleanAdjs, Elem1),
+	nth0(1, CleanAdjs, Elem2),
+	Clean1 = [Elem1], Clean2 = [Elem2],
+	
+	P =.. [Ob3, LivroId, _, Autores, _, _, _],
+	findall(Titulo, (P, (ser(AutID, _, _, Clean1, _, _, _) ; ser(AutID, _, _, Clean2, _, _, _)), member(AutID, Autores), livro(LivroId, Titulo, _, _, _, _)), L),
+	(Q==ql, atomic_list_concat(L, ',', Resposta); 
+	length(L,Resposta)).
+
+%falta limitar em casos de '...apos o sec XIX'		
+resposta_existencia_livros(Q, A, Ob3, Adjs3, Resposta) :-
+	A == existir, Ob3 == livro,
+	getCleanAdjs(Adjs3, [], CleanAdjs),
+	
+	length(CleanAdjs, 1), !,
+	
+	P =.. [Ob3, LivroId, _, Autores, _, _, _],
+	findall(Titulo, (P, ser(AutID, _, _, CleanAdjs, _, _, _), member(AutID, Autores), livro(LivroId, Titulo, _, _, _, _)), L),
+	(Q==ql, atomic_list_concat(L, ',', Resposta); 
+	length(L,Resposta)).	

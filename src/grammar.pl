@@ -75,10 +75,7 @@ concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2,Resposta):-
 	(P,!,Resposta=concordo;
 	Resposta=discordo).
 
-	
-interrogacao_opcional --> [?].
-interrogacao_opcional --> [.].
-	
+		
 frase(Resposta)-->frase_declarativa(Resposta).
 frase(Resposta)-->frase_interrogativa(Resposta).
 %frase-->frase_conjuntiva.
@@ -94,7 +91,27 @@ frase_declarativa(Resposta) -->
 	%write('HERE'),nl,
 	{concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2,Resposta)}.
 	
-frase_interrogativa(_) -->
+%formato(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta)
+	
+resposta(Q,A,Ob,_,_,_,_,_,_,_,_,_,Resposta):-
+	resposta_escrever(Q,A,Ob,Resposta).
+	
+resposta(Q, A,Ob,_,Adjs,_,Ob2,_,_,_,_,_,Resposta) :-
+	var(Ob2),
+	resposta_nacionalidade(Q, A, Ob, Adjs, Resposta).
+	
+resposta(Q,A,Ob,_,Adjs,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
+	nonvar(Ob2),
+	resposta_nacionalidade(Q,A,Ob,Adjs,Prep,Ob2,Adjs2,Resposta).
+	
+resposta(Q,A,_,_,_,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
+	resposta_nascimento(Q,A,Prep,Ob2,Adjs2,Resposta).
+	
+resposta(Q,A,_,_,_,_,_,_,_,_,Ob3,Adjs3,Resposta) :-
+	resposta_existencia_livros(Q,A,Ob3,Adjs3,Resposta).	
+	
+
+frase_interrogativa(Resposta) -->
 	%{write('Start'), nl},
 	sintagma_int(N-G, Q), !,
 	{length(Adjs,5),length(Adjs2,5),length(Adjs3,5)},
@@ -112,8 +129,8 @@ frase_interrogativa(_) -->
 	write('A2: '), write(A2), nl,
 	write('Prep2: '), write(Prep2), nl,
 	write('Ob3: '), write(Ob3), nl,
-	write('Adjs3: '), write(Adjs3), nl
-	%,resposta(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Ob3, Adjs3, Resposta).
+	write('Adjs3: '), write(Adjs3), nl,
+	resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta)
 	}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -167,7 +184,7 @@ sintagma_verbal_int(N-G,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3) -->
 % FRASES DECLARATIVAS %
 %%%%%%%%%%%%%%%%%%%%%%%
 	
-	
+
 %%%%%%%%%%%%%%%%%%%%%%
 % sintagma_nominal   %
 %%%%%%%%%%%%%%%%%%%%%%
@@ -216,11 +233,14 @@ sintagma_nominal_aux3(N-G,Ob) -->
 	
 sintagma_nominal_aux3(_,_) --> [].
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% sintagma_preposicional %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 sintagma_preposicional(Prep,Ob,Adjs) -->
 	preposicao(N-G,Prep),
-	{write('Prep: '),write(Prep)},
 	sintagma_nominal(N-G,Ob,_,Adjs,_,_,_).
-	%{write(Ob),nl}.
 	
 %%%%%%%%%%%%%%%%%%%%%%
 % sintagma_adjetival %
@@ -260,6 +280,13 @@ sintagma_adjetival_conj(_,_) --> [].
 sintagma_verbal(N-G,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2) -->
 	verbo(N,A,_),
 	sintagma_nominal(N-G,Ob,Adv,Adjs,Prep,Ob2,Adjs2).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+% interrogacao_opcional %
+%%%%%%%%%%%%%%%%%%%%%%%%%	
+
+interrogacao_opcional --> [?].
+interrogacao_opcional --> [.].
 	
 %%%%%%%%%%%%%%%%%%%%%%%
 % FRASES CONJUNTIVAS  %
