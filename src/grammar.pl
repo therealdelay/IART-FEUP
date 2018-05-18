@@ -88,6 +88,15 @@ frase_declarativa(Resposta) -->
 	sintagma_verbal(N-G,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2),
 	%{write('Predicado'),nl,write(Prep),nl,write(Ob2),nl},
 	interrogacao_opcional,
+	{
+	write('A: '), write(A), nl,
+	write('Ob: '), write(Ob), nl,
+	write('Adv: '), write(Adv), nl,
+	write('Adjs: '), write(Adjs), nl,
+	write('Prep: '), write(Prep), nl,
+	write('Ob2: '), write(Ob2), nl,
+	write('Adjs2: '), write(Adjs2), nl
+	},
 	%write('HERE'),nl,
 	{concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2,Resposta)}.
 	
@@ -108,7 +117,7 @@ resposta(Q,A,_,_,_,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
 	resposta_nascimento(Q,A,Prep,Ob2,Adjs2,Resposta).
 	
 resposta(Q,A,_,_,_,_,_,_,_,_,Ob3,Adjs3,Resposta) :-
-	resposta_existencia_livros(Q,A,Ob3,Adjs3,Resposta).	
+	resposta_existencia_livros(Q,A,Ob3,Adjs3,Resposta).
 	
 
 frase_interrogativa(Resposta) -->

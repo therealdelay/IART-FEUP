@@ -4,7 +4,7 @@ atom_int(Atom,Int):- atom_chars(Atom, Y), number_chars(Int, Y).
 actual_length([],Length,Length).
 
 actual_length([Adj|T],Acc,Clean):-
-	atom(Adj),
+	(atom(Adj) ; integer(Adj)),
 	NewAcc is Acc+1,
 	actual_length(T,NewAcc,Clean).
 
