@@ -108,19 +108,32 @@ frase_declarativa(Resposta) -->
 resposta(Q,A,Ob,_,_,_,_,_,_,_,_,_,Resposta):-
 	resposta_escrever(Q,A,Ob,Resposta).
 	
-resposta(Q, A,Ob,_,Adjs,_,Ob2,_,_,_,_,_,Resposta) :-
-	var(Ob2),
+resposta(Q,A,Ob,_,Adjs,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
+	resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2, Resposta).
+	
+resposta(Q,A,Ob,_,Adjs,_,_,_,_,_,_,_,Resposta) :-
 	resposta_nacionalidade(Q, A, Ob, Adjs, Resposta).
 	
-resposta(Q,A,Ob,_,Adjs,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
-	nonvar(Ob2),
-	resposta_nacionalidade(Q,A,Ob,Adjs,Prep,Ob2,Adjs2,Resposta).
+resposta(Q,A,Ob,_,_,_,Ob2,Adjs2,A2,_,_,_,Resposta) :-
+	resposta_existencia_livros(Q, A, Ob, Ob2, Adjs2, A2, Resposta).
 	
-resposta(Q,A,_,_,_,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
-	resposta_nascimento(Q,A,Prep,Ob2,Adjs2,Resposta).
+resposta(Q,A,Ob,_,Adjs,_,_,_,A2,Prep2,Ob3,Adjs3,Resposta) :-
+	resposta_nascimento(Q, A, Ob, Adjs, A2, Prep2, Ob3, Adjs3, Resposta).
 	
-resposta(Q,A,_,_,_,_,_,_,_,_,Ob3,Adjs3,Resposta) :-
-	resposta_existencia_livros(Q,A,Ob3,Adjs3,Resposta).
+resposta(Q,A,Ob,_,_,_,_,_,A2,Prep2,Ob3,Adjs3,Resposta) :-
+	resposta_nascimento(Q, A, Ob, A2, Prep2, Ob3, Adjs3, Resposta).
+	
+resposta(Q,A,Ob,_,_,_,_,_,A2,Prep2,Ob3,_,Resposta) :-
+	resposta_nascimento(Q, A, Ob, A2, Prep2, Ob3, Resposta).
+
+resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
+	resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Resposta).
+	
+resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,_,_,_,_,_,Resposta) :-
+	resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Resposta).
+	
+%resposta(Q,A,_,_,_,_,_,_,_,_,Ob3,Adjs3,Resposta) :-
+%	resposta_existencia_livros(Q,A,Ob3,Adjs3,Resposta).
 	
 
 frase_interrogativa(Resposta) -->
