@@ -4,62 +4,15 @@
 
 :-include('kb.pl').
 :-include('lexicon.pl').
+:-include('query.pl').
 :-include('utils.pl').
 :-include('ui.pl').
 
 contexto(_,_,_,_,_,_,_,_,_,_,_,_).
 
-procurar_autor(AutorId, Prim, Ultim, Nasc, Morte, Sexo, Nacionalidade, Pseudonimos)-->
-	[Prim],[Ultim],
-	autor(AutorId, Prim, Ultim, Nasc, Morte, Sexo, Nacionalidade, Pseudonimos).
-
-
-expr_ano(Comparador, Ano) -->
-	expr_ano1(Comparador),
-	[AnoAtom], {write(AnoAtom),atom_int(AnoAtom,Ano)}.
-
-expr_ano1(=) --> [em].
-expr_ano1(=) --> [no], expr_ano2.
-expr_ano1(<) --> [antes], expr_ano4.
-expr_ano1(>) --> [depois], expr_ano4.
-expr_ano2 --> [ano], expr_ano3.
-expr_ano3 --> [de].
-expr_ano3 --> [].
-expr_ano4 --> [do], [ano], expr_ano3.
-expr_ano4 --> expr_ano3.
-
-expr_seculo(Comparador,Seculo)-->
-	expr_seculo1(Comparador),
-	[seculo], [SeculoAtom],
-	{seculo(SeculoAtom,Seculo)}.
-
-expr_seculo1(<) --> [antes], [do].
-expr_seculo1(>) --> [depois], [do].
-expr_seculo1(=) --> [no].
-
-%%%%%%%%%%%%%%%%%%
-%% VERIFICACOES %%
-%%%%%%%%%%%%%%%%%%
-
-verificar_seculo(=, Ano, Seculo):-
-	LimiteSuperior is (Seculo * 100),
-	LimiteInferior is LimiteSuperior - 99,
-	Ano >= LimiteInferior,
-	Ano =< LimiteSuperior.
-
-verificar_seculo(<, Ano, Seculo):-
-	LimiteSuperior is (Seculo * 100),
-	LimiteInferior is LimiteSuperior - 99,
-	Ano < LimiteInferior.
-
-verificar_seculo(>, Ano, Seculo):-
-	LimiteSuperior is (Seculo * 100),
-	Ano > LimiteSuperior.
-	
-verificar_genero(Titulo,Genero):-
-	genero(Genero_id,Genero),!,
-	livro(_,Titulo,_,_,Generos_ids),
-	member(Genero_id,Generos_ids).
+frase(Resposta)-->frase_declarativa(Resposta).
+frase(Resposta)-->frase_interrogativa(Resposta).
+frase(Resposta)-->frase_conjuntiva(Resposta).
 
 concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2,Resposta):-
 	% write(A),nl,
@@ -77,11 +30,6 @@ concorda_frase(A,S,Ob,Adv,Adjs,Prep,Ob2,Adjs2,Resposta):-
 	P =.. [A,S,Ob,Adv,CleanAdjs,Prep,Ob2,CleanAdjs2],
 	(P,!,Resposta=concordo;
 	Resposta=discordo).
-
-		
-frase(Resposta)-->frase_declarativa(Resposta).
-frase(Resposta)-->frase_interrogativa(Resposta).
-frase(Resposta)-->frase_conjuntiva(Resposta).
 
 frase_declarativa(Resposta) -->
 	%{write('Inicio'),nl},
@@ -114,6 +62,9 @@ resposta(Q,A,Ob,_,Adjs,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
 resposta(Q,A,Ob,_,Adjs,_,_,_,_,_,_,_,Resposta) :-
 	resposta_nacionalidade(Q, A, Ob, Adjs, Resposta).
 	
+resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta) :-
+	resposta_existencia_livros_data(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta).
+	
 resposta(Q,A,Ob,_,_,_,Ob2,Adjs2,A2,_,_,_,Resposta) :-
 	resposta_existencia_livros(Q, A, Ob, Ob2, Adjs2, A2, Resposta).
 	
@@ -132,8 +83,6 @@ resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
 resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,_,_,_,_,_,Resposta) :-
 	resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Resposta).
 	
-%resposta(Q,A,_,_,_,_,_,_,_,_,Ob3,Adjs3,Resposta) :-
-%	resposta_existencia_livros(Q,A,Ob3,Adjs3,Resposta).
 	
 
 frase_interrogativa(Resposta) -->
@@ -267,7 +216,7 @@ sintagma_nominal_aux3(_,_) --> [].
 
 sintagma_preposicional(Prep,Ob,Adjs) -->
 	preposicao(N-G,Prep),
-	sintagma_nominal(N-G,Ob,_,Adjs,_,_,_).
+	sintagma_nominal_aux2(N-G,Ob,_,Adjs).
 	
 %%%%%%%%%%%%%%%%%%%%%%
 % sintagma_adjetival %
@@ -324,7 +273,7 @@ frase_conjuntiva(Resposta) -->
 
 % Quem escreveu Os Maias? E A Mensagem?
 producao(Resposta)-->
-	nome(N-G,Ob),
+	nome(_,Ob),
 	{
 		contexto(Q,A,_,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3),
 		resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta),
@@ -336,7 +285,7 @@ producao(Resposta)-->
 producao(Resposta)-->
 	%{write('prod'),nl},
 	%nome(N-G,Nome),
-	adjetivo(N-G,Adj),
+	adjetivo(_,NAdj),
 	%{write('adjetivo'),write(Adj),nl},
 	{
 		contexto(Q,A,Ob,Adv,_,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3),
@@ -354,6 +303,6 @@ producao(Resposta)-->
 		write('Adjs3: '), write(Adjs3), nl,
 		resposta(Q,A,Ob,Adv,[Adj,_,_,_,_],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta),
 		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
-		assert(contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3))
+		assert(contexto(Q,A,Ob,Adv,[NAdj],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3))
 	}.
 

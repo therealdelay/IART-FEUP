@@ -345,6 +345,18 @@ existir(LivroId,_,_,_,Cmp,seculo,Adjs2,Adjs3) :-
 	autor(AutorId, _, _, _, _, _, PaisId, _, _),
 	member(AutorId, Autores).
 	
+existir(LivroId,_,_,_,Cmp,seculo,Adjs2,Adjs3) :-
+	(Cmp == = ;  Cmp == < ; Cmp == >),
+	length(Adjs2,1),
+	nth0(0,Adjs2,Seculo),
+	length(Adjs3,1),
+	nth0(0, Adjs3, Origem),
+	livro(LivroId, _, Autores, AnoPub, _, _),
+	verificar_seculo(Cmp, AnoPub, Seculo),
+	pais(PaisId, _, Origem, _, _),
+	autor(AutorId, _, _, _, _, _, PaisId, _, _),
+	member(AutorId, Autores).
+	
 existir(LivroId, _, _, _, _, _, _, Adjs2) :-
 	length(Adjs2, 1),
 	nth0(0, Adjs2, Origem),
@@ -497,5 +509,17 @@ resposta_existencia_livros(Q, A, Ob, Ob2, Adjs2, A2, Resposta) :-
 	P =.. [A2, LivroID, _, _, _, _, _, _, CleanAdjs],
 	P1 =.. [Ob, LivroID, Titulo, _, _, _, _],
 	findall(Titulo, (P, P1), L),
-	(Q==ql, atomic_list_concat(L, ',', Resposta); 
+	(Q==ql, atomic_list_concat(L, ',', Resposta);
 	length(L,Resposta)).
+	
+%frase(R,['quais','os','livros','de','escritores','portugueses','que','existem','apos','o','seculo','XX','?'], []).	
+resposta_existencia_livros_data(Q,ser,livro,_,Adjs,=,autor,Adjs2,existir,Cmp,seculo,Adjs3,Resposta):-
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2,[],CleanAdjs2),
+	getCleanAdjs(Adjs3,[],CleanAdjs3),
+	length(CleanAdjs,0),
+	length(CleanAdjs3,1),
+	nth0(0,CleanAdjs3,Seculo),
+	livros_nacionalidades_data(CleanAdjs2,Cmp,Seculo,L),append(L, L1), sort(L1, L2),
+	(Q==ql, atomic_list_concat(L2, ',', Resposta);
+	length(L2,Resposta)).	
