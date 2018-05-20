@@ -489,7 +489,7 @@ resposta_nascimento(Q, A, _, A2, Prep2, Ob3, Resposta) :-
 	(Q==ql, atomic_list_concat(L, ',', Resposta); 
 	length(L,Resposta)).
 
-%frase_interrogativa(R, ['quais','sao','os','livros','mais','conhecidos','de','Camilo','Castelo Branco','?'], []).	
+%frase_interrogativa(R, ['quais','sao','os','livros','mais','conhecidos','de','Camilo','Castelo','Branco','?'], []).	
 resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Resposta) :-
 	A == ser, Ob == livro, integer(Ob2),
 	getCleanAdjs(Adjs, [], CleanAdjs),
@@ -522,7 +522,7 @@ resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Resposta) :-
 	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
 	length(L1,Resposta)).
 
-%frase_interrogativa(R, ['quais','sao','os','livros','mais','recentes','de','Camilo','Castelo Branco','?'], []).	
+%frase_interrogativa(R, ['quais','sao','os','livros','mais','recentes','de','Camilo','Castelo','Branco','?'], []).	
 resposta_tempo(Q, ser, livro, mais, Adjs, =, AutorId, Resposta) :-
 	integer(AutorId),
 	getCleanAdjs(Adjs,[],CleanAdjs),
@@ -532,7 +532,7 @@ resposta_tempo(Q, ser, livro, mais, Adjs, =, AutorId, Resposta) :-
 	(Q==ql, atomic_list_concat(L, ',', Resposta); 
 	length(L,Resposta)).
 	
-%frase_interrogativa(R, ['quais','sao','os','livros','menos','antigos','de','Camilo','Castelo Branco','?'], []).	
+%frase_interrogativa(R, ['quais','sao','os','livros','menos','antigos','de','Camilo','Castelo','Branco','?'], []).	
 resposta_tempo(Q, ser, livro, menos, Adjs, =, AutorId, Resposta) :-
 	integer(AutorId),
 	getCleanAdjs(Adjs,[],CleanAdjs),
@@ -542,7 +542,7 @@ resposta_tempo(Q, ser, livro, menos, Adjs, =, AutorId, Resposta) :-
 	(Q==ql, atomic_list_concat(L, ',', Resposta); 
 	length(L,Resposta)).
 	
-%frase_interrogativa(R, ['quais','sao','os','livros','menos','recentes','de','Camilo','Castelo Branco','?'], []).	
+%frase_interrogativa(R, ['quais','sao','os','livros','menos','recentes','de','Camilo','Castelo','Branco','?'], []).	
 resposta_tempo(Q, ser, livro, menos, Adjs, =, AutorId, Resposta) :-
 	integer(AutorId),
 	getCleanAdjs(Adjs,[],CleanAdjs),
@@ -553,7 +553,7 @@ resposta_tempo(Q, ser, livro, menos, Adjs, =, AutorId, Resposta) :-
 	length(L,Resposta)).
 	
 %livro(1, 'A Casa dos Espiritos', [17], 1982, [12], 6).
-%frase_interrogativa(R, ['quais','sao','os','livros','mais','antigos','de','Camilo','Castelo Branco','?'], []).	
+%frase_interrogativa(R, ['quais','sao','os','livros','mais','antigos','de','Camilo','Castelo','Branco','?'], []).	
 resposta_tempo(Q, ser, livro, mais, Adjs, =, AutorId, Resposta) :-
 	integer(AutorId),
 	getCleanAdjs(Adjs,[],CleanAdjs),
