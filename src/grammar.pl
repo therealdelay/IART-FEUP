@@ -71,19 +71,17 @@ resposta(Q,A,Ob,_,_,_,Ob2,Adjs2,A2,_,_,_,Resposta) :-
 resposta(Q,A,Ob,_,Adjs,_,_,_,A2,Prep2,Ob3,Adjs3,Resposta) :-
 	resposta_nascimento(Q, A, Ob, Adjs, A2, Prep2, Ob3, Adjs3, Resposta).
 	
-resposta(Q,A,Ob,_,_,_,_,_,A2,Prep2,Ob3,Adjs3,Resposta) :-
-	resposta_nascimento(Q, A, Ob, A2, Prep2, Ob3, Adjs3, Resposta).
-	
-resposta(Q,A,Ob,_,_,_,_,_,A2,Prep2,Ob3,_,Resposta) :-
-	resposta_nascimento(Q, A, Ob, A2, Prep2, Ob3, Resposta).
-
 resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
 	resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Resposta).
 	
 resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,_,_,_,_,_,Resposta) :-
-	resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Resposta).
+	resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Resposta).	
 	
+resposta(Q,A,Ob,_,_,_,_,_,A2,Prep2,Ob3,Adjs3,Resposta) :-
+	resposta_nascimento(Q, A, Ob, A2, Prep2, Ob3, Adjs3, Resposta).
 	
+resposta(Q,A,Ob,_,_,_,_,_,A2,Prep2,Ob3,_,Resposta) :-
+	resposta_nascimento(Q, A, Ob, A2, Prep2, Ob3, Resposta).	
 
 frase_interrogativa(Resposta) -->
 	%{write('Start'), nl},
