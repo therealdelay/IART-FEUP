@@ -272,7 +272,7 @@ producao(Resposta)-->
 		Q=ql,
 		resposta(Q,A,Ob,Adv,[Adj,_,_,_,_],Prep,Ob2,Adjs2,_,_,_,_,Resposta),
 		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
-		assert(contexto(Q,A,Ob,Adv,[NAdj],Prep,Ob2,Adjs2,_,_,_,_))
+		assert(contexto(Q,A,Ob,Adv,[Adj],Prep,Ob2,Adjs2,_,_,_,_))
 	}.
 
 % Quais os livros de Pessoa? E qual o mais recente?
@@ -285,12 +285,11 @@ producao(Resposta)-->
 		contexto(_,A,Ob,_,_,Prep,Ob2,Adjs2,_,_,_,_),
 		resposta(Q,A,Ob,Adv,[Adj,_,_,_,_],Prep,Ob2,Adjs2,_,_,_,_,Resposta),
 		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
-		assert(contexto(Q,A,Ob,Adv,[NAdj],Prep,Ob2,Adjs2,_,_,_,_))
+		assert(contexto(Q,A,Ob,Adv,[Adj],Prep,Ob2,Adjs2,_,_,_,_))
 	}.
 
 % Quem escreveu Os Maias? E A Mensagem?
 producao(Resposta)-->
-	{write('1'),nl},
 	nome(_,Ob),
 	{
 		contexto(Q,A,_,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3),
@@ -301,11 +300,10 @@ producao(Resposta)-->
 
 % Quais sao os escritores portugueses do seculo XX? E franceses?
 producao(Resposta)-->
-	{write('2'),nl},
 	adjetivo(_,NAdj),
 	{
 		contexto(Q,A,Ob,Adv,_,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3),
-		resposta(Q,A,Ob,Adv,[Adj,_,_,_,_],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta),
+		resposta(Q,A,Ob,Adv,[NAdj,_,_,_,_],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta),
 		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
 		assert(contexto(Q,A,Ob,Adv,[NAdj],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3))
 	}.

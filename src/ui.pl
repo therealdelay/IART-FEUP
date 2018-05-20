@@ -106,8 +106,11 @@ processQuestion(Question,FinalQuestion):-
 	atomic_concat('',Point,Aux),atomic_concat(Aux,'',Res),
 	append(SplitQuestionAux,[Res],FinalQuestion).
 
+processQuestion(_,FinalQuestion):-
+	FinalQuestion = 'Erro semantico/sintatico.'.
+
 answerMenu(Question):-
-	frase(Resposta,Question,[]),
+	ite(Question = 'Erro semantico/sintatico.',Resposta=Question,frase(Resposta,Question,[])),
 	write('*                                                                              *'),nl,
 	write('********************************************************************************'),nl,
 	write('* Resposta:                                                                    *'),nl,
