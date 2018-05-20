@@ -55,6 +55,11 @@ livros_nacionalidades_existencia([Adj|T], ser, livro, autor, existir, [L|L1]) :-
 	P2 =.. [livro, LivroID, Titulo, _, _, _, _],
 	findall(Titulo, (P1, P2), L),
 	livros_nacionalidades_existencia(T, ser, livro, autor, existir, L1).
+	
+livros_nacionalidades_existencia([Adj|T], ser, Genero, autor, existir, [L|L1]) :-
+	P1 =.. [existir, LivroID, Genero, _, _, _, _, _, [Adj]],
+	findall(Titulo, (P1, livro(LivroID, Titulo, _, _, _, _)), L),
+	livros_nacionalidades_existencia(T, ser, Genero, autor, existir, L1).
 
 %multiple_adjs_solver([], _, _, _, _, _, []).	
 %multiple_adjs_solver([Adj|T], [Seculo], ser, autor, seculo, Prep, [L|L1]) :-

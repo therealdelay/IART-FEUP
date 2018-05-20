@@ -68,6 +68,9 @@ resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta) :-
 resposta(Q,A,Ob,_,_,_,Ob2,Adjs2,A2,_,_,_,Resposta) :-
 	resposta_existencia_livros(Q, A, Ob, Ob2, Adjs2, A2, Resposta).
 	
+resposta(Q,A,Ob,_,_,_,_,_,A2,_,_,_,Resposta) :-
+	resposta_existencia_livros(Q, A, Ob, A2, Resposta).
+	
 resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
 	resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Resposta).
 	
