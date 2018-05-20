@@ -287,26 +287,36 @@ producao(Resposta)-->
 
 % Quais sao os escritores portugueses do seculo XX? E franceses?
 producao(Resposta)-->
-	%{write('prod'),nl},
-	%nome(N-G,Nome),
 	adjetivo(_,NAdj),
-	%{write('adjetivo'),write(Adj),nl},
 	{
 		contexto(Q,A,Ob,Adv,_,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3),
-		write('Q: '), write(Q), nl,
-		write('A: '), write(A), nl,
-		write('Ob: '), write(Ob), nl,
-		write('Adv: '), write(Adv), nl,
-		write('Adjs: '), write([Adj,_,_,_,_]), nl,
-		write('Prep: '), write(Prep), nl,
-		write('Ob2: '), write(Ob2), nl,
-		write('Adjs2: '), write(Adjs2), nl,
-		write('A2: '), write(A2), nl,
-		write('Prep2: '), write(Prep2), nl,
-		write('Ob3: '), write(Ob3), nl,
-		write('Adjs3: '), write(Adjs3), nl,
 		resposta(Q,A,Ob,Adv,[Adj,_,_,_,_],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta),
 		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
 		assert(contexto(Q,A,Ob,Adv,[NAdj],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3))
 	}.
 
+% Quais os livros de Pessoa? E o mais recente?
+producao(Resposta)-->
+	%{write('prod'),nl},
+	%nome(N-G,Nome),
+	adverbio(_,Adv),
+	{write('adverbio'),write(Adv),nl},
+	%{
+	%	contexto(Q,A,Ob,_,_,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3),
+	%	write('Q: '), write(Q), nl,
+	%	write('A: '), write(A), nl,
+	%	write('Ob: '), write(Ob), nl,
+	%	write('Adv: '), write(Adv), nl,
+	%	write('Adjs: '), write([Adj,_,_,_,_]), nl,
+	%	write('Prep: '), write(Prep), nl,
+	%	write('Ob2: '), write(Ob2), nl,
+	%	write('Adjs2: '), write(Adjs2), nl,
+	%	write('A2: '), write(A2), nl,
+	%	write('Prep2: '), write(Prep2), nl,
+	%	write('Ob3: '), write(Ob3), nl,
+	%	write('Adjs3: '), write(Adjs3), nl,
+	%	resposta(Q,A,Ob,Adv,[Adj,_,_,_,_],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta),
+	%	retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
+	%	assert(contexto(Q,A,Ob,Adv,[NAdj],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3))
+	%}
+	.

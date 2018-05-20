@@ -446,16 +446,16 @@ nome(s-m,3) --> ['Clarke'].
 nome(s-m,3) --> ['Arthur','Clarke'].
 
 nome(s-m,4) --> ['Camilo'].
-nome(s-m,4) --> ['Castelo Branco'].
-nome(s-m,4) --> ['Camilo','Castelo Branco'].
+nome(s-m,4) --> ['Castelo','Branco'].
+nome(s-m,4) --> ['Camilo','Castelo','Branco'].
 
 nome(s-f,5) --> ['Charlotte'].
 nome(s-f,5) --> ['Bronte'].
 nome(s-f,5) --> ['Charlotte','Bronte'].
 
 nome(s-m,6) --> ['Eca'].
-nome(s-m,6) --> ['de Queiroz'].
-nome(s-m,6) --> ['Eca','de Queiroz'].
+nome(s-m,6) --> ['de','Queiroz'].
+nome(s-m,6) --> ['Eca','de','Queiroz'].
 
 nome(s-m,7) --> ['Eiichirou'].
 nome(s-m,7) --> ['Oda'].
@@ -486,8 +486,8 @@ nome(s-m,13) --> ['Nietzsche'].
 nome(s-m,13) --> ['Friedrich','Nietzsche'].
 
 nome(s-m,14) --> ['Gabriel'].
-nome(s-m,14) --> ['Garcia Marquez'].
-nome(s-m,14) --> ['Gabriel','Garcia Marquez'].
+nome(s-m,14) --> ['Garcia','Marquez'].
+nome(s-m,14) --> ['Gabriel','Garcia','Marquez'].
 
 nome(s-m,15) --> ['Haruki'].
 nome(s-m,15) --> ['Murakami'].
@@ -518,8 +518,8 @@ nome(s-m,21) --> ['Tolstoi'].
 nome(s-m,21) --> ['Leo','Tolstoi'].
 
 nome(s-m,22) --> ['Luis'].
-nome(s-m,22) --> ['de Camoes'].
-nome(s-m,22) --> ['Luis','de Camoes'].
+nome(s-m,22) --> ['de','Camoes'].
+nome(s-m,22) --> ['Luis','de','Camoes'].
 
 nome(s-m,23) --> ['Mark'].
 nome(s-m,23) --> ['Twain'].
