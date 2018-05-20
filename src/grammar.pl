@@ -264,7 +264,8 @@ frase_conjuntiva(Resposta) -->
 
 % Quais os livros de Pessoa? E o mais recente?
 producao(Resposta)-->
-	[o],
+	%[o],
+	art_def(_),
 	adverbio(Adv),
 	adjetivo(_,Adj),
 	{
@@ -278,7 +279,8 @@ producao(Resposta)-->
 % Quais os livros de Pessoa? E qual o mais recente?
 producao(Resposta)-->
 	pron_int(_, Q),
-	[o],
+	%[o],
+	art_def(_),
 	adverbio(Adv),
 	adjetivo(_,Adj),
 	{
