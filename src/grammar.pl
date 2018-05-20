@@ -268,7 +268,7 @@ producao(Resposta)-->
 	adverbio(Adv),
 	adjetivo(_,Adj),
 	{
-		contexto(_,A,Ob,_,_,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3),
+		contexto(_,A,Ob,_,_,Prep,Ob2,Adjs2,_,_,_,_),
 		Q=ql,
 		resposta(Q,A,Ob,Adv,[Adj,_,_,_,_],Prep,Ob2,Adjs2,_,_,_,_,Resposta),
 		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
@@ -282,7 +282,7 @@ producao(Resposta)-->
 	adverbio(Adv),
 	adjetivo(_,Adj),
 	{
-		contexto(_,A,Ob,_,_,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3),
+		contexto(_,A,Ob,_,_,Prep,Ob2,Adjs2,_,_,_,_),
 		resposta(Q,A,Ob,Adv,[Adj,_,_,_,_],Prep,Ob2,Adjs2,_,_,_,_,Resposta),
 		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
 		assert(contexto(Q,A,Ob,Adv,[NAdj],Prep,Ob2,Adjs2,_,_,_,_))

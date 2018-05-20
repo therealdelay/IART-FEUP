@@ -168,10 +168,10 @@ adjetivo(s-m, 19) --> ['XIX'].
 adjetivo(s-m, 20) --> ['XX'].
 adjetivo(s-m, 21) --> ['XXI'].
 
-%adjetivo(s-m, Nr) --> 
-	%{between(0,2050,Nr)},
-	%{atom_number(NrAtom,Nr)},
-	%[NrAtom].
+adjetivo(s-m, Nr) --> 
+	{between(0,2050,Nr)},
+	{atom_number(NrAtom,Nr)},
+	[NrAtom].
 
 	
 adjetivo(s-m, conhecido) --> [conhecido].
@@ -426,10 +426,10 @@ nome(p-m, teatro) --> [teatros].
 nome(s-f, tragedia) --> [tragedia].
 nome(p-f, tragedia) --> [tragedias].
 
-%nome(_-_, Nr) -->
-	%{between(0,2050,Nr)},
-	%{atom_number(NrAtom,Nr)},
-	%[NrAtom].
+nome(_-_, Nr) -->
+	{between(0,2050,Nr)},
+	{atom_number(NrAtom,Nr)},
+	[NrAtom].
 	
 	
 	
