@@ -413,6 +413,7 @@ existir(LivroId, _, _, _, _, _, _, Adjs2) :-
 %---------------------------------------------------------%	
 	
 %still not formatted
+%frase_interrogativa(R, ['quem','escreveu','Os', 'Maias','?'],[]).
 resposta_escrever(Q, A, Ob, Resposta) :-
 	A == escrever,
 	P =.. [A, AutID, Ob, _, _, _, _, _],
@@ -476,7 +477,7 @@ resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Resposta) :-
 	getCleanAdjs(Adjs, [], CleanAdjs),
 	getCleanAdjs(Adjs2, [], CleanAdjs2),
 	length(CleanAdjs2, N), N > 1, !,
-	multiple_adjs_solver(CleanAdjs2, CleanAdjs, A, Ob2, Ob, Adv, Prep, L), append(L, L1), sort(L1, L2),
+	livros_nacionalidades_popularidade(CleanAdjs2, CleanAdjs, A, Ob2, Ob, Adv, Prep, L), append(L, L1), sort(L1, L2),
 	(Q==ql, atomic_list_concat(L2, ',', Resposta); 
 	length(L2,Resposta)).
 
@@ -594,7 +595,7 @@ resposta_nacionalidade(Q, A, Ob, Adjs, Resposta) :-
 	A == ser, Ob == autor,
 	getCleanAdjs(Adjs, [], CleanAdjs),
 	length(CleanAdjs, N), N > 1, !,
-	multiple_adjs_solver(CleanAdjs, A, Ob, L), append(L, L1), sort(L1, L2),
+	autores_nacionalidades(CleanAdjs, A, Ob, L), append(L, L1), sort(L1, L2),
 	(Q==ql, atomic_list_concat(L2, ',', Resposta); 
 	length(L2,Resposta)).		
 	
@@ -614,7 +615,7 @@ resposta_existencia_livros(Q, A, Ob, Ob2, Adjs2, A2, Resposta) :-
 	A == ser, Ob == livro, Ob2 == autor, A2 == existir,
 	getCleanAdjs(Adjs2, [], CleanAdjs),
 	length(CleanAdjs, N), N > 1, !,
-	multiple_adjs_solver(CleanAdjs, A, Ob, Ob2, A2, L), append(L, L1), sort(L1, L2),
+	livros_nacionalidades_existencia(CleanAdjs, A, Ob, Ob2, A2, L), append(L, L1), sort(L1, L2),
 	(Q==ql, atomic_list_concat(L2, ',', Resposta); 
 	length(L2,Resposta)).
 	
