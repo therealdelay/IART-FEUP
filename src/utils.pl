@@ -10,7 +10,7 @@ actual_length([Adj|T],Acc,Clean):-
 
 actual_length(_,Length,Length).
 
-getCleanAdjs([],Clean,Clean).
+getCleanAdjs([],Clean,Clean):- !.
 
 getCleanAdjs([Adj|T],Acc,Clean):-
 	(atom(Adj) ; number(Adj)),

@@ -192,7 +192,6 @@ anoAtual(2018).
 % ?- frase(['Alberto Caeiro', 'e', 'heteronimo', 'de','Fernando','Pessoa'],[]).
 
 ser(Suj,pseudonimo,_,_,_,Ob2,_):-
-	%write(Suj),nl, write(Ob2),nl,
 	Suj == Ob2.
 
 %Genero
@@ -665,7 +664,6 @@ resposta_nacionalidade(Q, ser, autor, Adjs, =, seculo, Adjs2, Resposta) :-
 	length(CleanAdjs, 0), 
 	length(CleanAdjs2,1),
 	nth0(0,CleanAdjs2,Seculo),!,
-	write(Seculo),nl,
 	%autor(1, 'Alexandre', 'Dumas', 1802, 1870, m, 9, 1, []).
 	P =.. [autor,_,Primeiro,Ultimo,Nascimento,Morte,_,_,_,_],
 	findall(Res, (P,verificar_ser_seculo(Nascimento,Morte,Seculo), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L), sort(L, L1),
@@ -758,11 +756,10 @@ resposta_existencia_livros(Q, A, Ob, A2, Resposta) :-
 	
 %frase(R,['quais','os','livros','que','existem','em','1888','?'], []).	
 resposta_existencia_livros_data(Q,ser,livro,Adjs,Adjs2,existir,Cmp,Ano,Adjs3,Resposta):-
-	write('Here'),nl,
 	integer(Ano),
 	getCleanAdjs(Adjs,[],CleanAdjs),
 	getCleanAdjs(Adjs2,[],CleanAdjs2),
-	getCleanAdjs(Adjs3,[],CleanAdjs3),
+	getCleanAdjs(Adjs3,[],CleanAdjs3),!,
 	length(CleanAdjs,0),
 	length(CleanAdjs2,0),
 	length(CleanAdjs3,0),
@@ -773,10 +770,9 @@ resposta_existencia_livros_data(Q,ser,livro,Adjs,Adjs2,existir,Cmp,Ano,Adjs3,Res
 	
 %frase(R,['quais','os','livros','que','existem','no','ano','1888','?'], []).	
 resposta_existencia_livros_data(Q,ser,livro,Adjs,Adjs2,existir,Cmp,ano,Adjs3,Resposta):-
-	write('Here2'),nl,
 	getCleanAdjs(Adjs,[],CleanAdjs),
 	getCleanAdjs(Adjs2,[],CleanAdjs2),
-	getCleanAdjs(Adjs3,[],CleanAdjs3),
+	getCleanAdjs(Adjs3,[],CleanAdjs3),!,
 	length(CleanAdjs,0),
 	length(CleanAdjs2,0),
 	length(CleanAdjs3,1),
@@ -788,17 +784,11 @@ resposta_existencia_livros_data(Q,ser,livro,Adjs,Adjs2,existir,Cmp,ano,Adjs3,Res
 	
 %frase(R,['quais','os','livros','que','existem','no','seculo','XX','?'], []).	
 resposta_existencia_livros_data(Q,ser,livro,Adjs,Adjs2,existir,Cmp,seculo,Adjs3,Resposta):-
-	write('Here3'),nl,
-	write(Adjs2),nl,
 	getCleanAdjs(Adjs,[],CleanAdjs),
 	getCleanAdjs(Adjs2,[],CleanAdjs2),
 	getCleanAdjs(Adjs3,[],CleanAdjs3),!,
-	write(CleanAdjs),nl,
-	write(CleanAdjs2),nl,
-	write(CleanAdjs3),nl,
 	length(CleanAdjs,0),
 	length(CleanAdjs2,0),
-	write('Here3-2'),nl,
 	length(CleanAdjs3,1),
 	nth0(0,CleanAdjs3,Seculo),
 	P =.. [livro,_,Titulo,_,Pub,_,_],
@@ -812,10 +802,9 @@ resposta_existencia_livros_data(Q,ser,livro,Adjs,Adjs2,existir,Cmp,seculo,Adjs3,
 	
 %frase(R,['quais','os','dramas','que','existem','no','seculo','XX','?'], []).	
 resposta_existencia_livros_data(Q,ser,Genero,Adjs,Adjs2,existir,Cmp,seculo,Adjs3,Resposta):-
-	write('Here generos'),nl,
 	getCleanAdjs(Adjs,[],CleanAdjs),
 	getCleanAdjs(Adjs2,[],CleanAdjs2),
-	getCleanAdjs(Adjs3,[],CleanAdjs3),
+	getCleanAdjs(Adjs3,[],CleanAdjs3),!,
 	length(CleanAdjs,0),
 	length(CleanAdjs2,0),
 	length(CleanAdjs3,1),
@@ -866,7 +855,6 @@ resposta_existencia_livros_nacionalidade_data(Q,ser,livro,_,Adjs,=,autor,Adjs2,e
 	
 %frase(R,['quais','os','livros','de','escritores','portugueses','que','existem','apos','o','seculo','XX','?'], []).	
 resposta_existencia_livros_nacionalidade_data(Q,ser,livro,_,Adjs,=,autor,Adjs2,existir,Cmp,seculo,Adjs3,Resposta):-
-	write('Com escritores'),nl,
 	getCleanAdjs(Adjs,[],CleanAdjs),
 	getCleanAdjs(Adjs2,[],CleanAdjs2),
 	getCleanAdjs(Adjs3,[],CleanAdjs3),
