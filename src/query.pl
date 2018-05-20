@@ -86,12 +86,12 @@ livros_nacionalidades_existencia([Adj|T], ser, Genero, autor, existir, [L|L1]) :
 	findall(Titulo, (P1, livro(LivroID, Titulo, _, _, _, _)), L),
 	livros_nacionalidades_existencia(T, ser, Genero, autor, existir, L1).
 
-%multiple_adjs_solver([], _, _, _, _, _, []).	
-%multiple_adjs_solver([Adj|T], [Seculo], ser, autor, seculo, Prep, [L|L1]) :-
-%	P1 =.. [ser, AutID, _, _, [Adj], _, _, _],
-%	P2 =.. [autor, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
-%	findall(Res, (P1, P2, (nascer(AutID, _, _, _, Prep, seculo, [Seculo]); morrer(AutID, _, _, _, Prep, seculo, [Seculo])), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L),
-%	multiple_adjs_solver(T, [Seculo], ser, autor, seculo, Prep, L1).
+autores_nacionalidades_existencia([], _, _, _, _, _, []).	
+autores_nacionalidades_existencia([Adj|T], [Seculo], ser, autor, seculo, Prep, [L|L1]) :-
+	P1 =.. [ser, AutID, _, _, [Adj], _, _, _],
+	P2 =.. [autor, AutID, Primeiro, Ultimo, _, _, _, _, _, _],
+	findall(Res, (P1, P2, (nascer(AutID, _, _, _, Prep, seculo, [Seculo]); morrer(AutID, _, _, _, Prep, seculo, [Seculo])), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L),
+	autores_nacionalidades_existencia(T, [Seculo], ser, autor, seculo, Prep, L1).
 
 %livros mais populares de autores de multiplas nacionalidades
 livros_nacionalidades_popularidade([], _, _, _, _, _, _, []).	

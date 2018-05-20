@@ -391,6 +391,13 @@ existir(LivroId,_,_,_,Cmp,seculo,Adjs2,Adjs3) :-
 	autor(AutorId, _, _, _, _, _, PaisId, _, _),
 	member(AutorId, Autores).
 	
+existir(LivroId,_,_,_,Cmp,seculo,Adjs2,_) :-
+	(Cmp == = ;  Cmp == < ; Cmp == >),
+	length(Adjs2,1),
+	nth0(0,Adjs2,Seculo),
+	livro(LivroId, _, _, AnoPub, _, _), !,
+	verificar_seculo(Cmp, AnoPub, Seculo).
+	
 existir(LivroId, Genero, _, _, _, _, _, Adjs2) :-
 	nonvar(Genero),
 	length(Adjs2, 1),
@@ -624,6 +631,20 @@ resposta_tempo(Q, ser, livro, mais, Adjs, =, autor, Adjs2, Resposta) :-
 % escritores %
 %%%%%%%%%%%%%%
 
+%frase_interrogativa(['quais','sao','os','escritores','portugueses','e','europeus','do','seculo','XIX','?'],[]).
+resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2, Resposta) :-
+	A == ser, Ob == autor, Ob2 == seculo,
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2, [], CleanAdjs2),
+	length(CleanAdjs, Length),
+	Length > 1, !,
+	
+	autores_nacionalidades_existencia(CleanAdjs, CleanAdjs2, A, Ob, Ob2, Prep, List), append(List, L), sort(L, L1),
+	write(L1), nl,
+	
+	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
+	length(L1,Resposta)).
+
 %frase_interrogativa(R, ['quais', 'sao','os','escritores','portugueses','do','seculo','XIX','?'], []).	
 resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2, Resposta) :-
 	A == ser, Ob == autor, Ob2 == seculo,
@@ -809,6 +830,16 @@ resposta_existencia_livros_data(Q,ser,Genero,Adjs,Adjs2,existir,Cmp,seculo,Adjs3
 % livros-escritores-nacionalidade-data %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%frase_interrogativa(R, ['quais','os','livros','que','existem','no','seculo','XIX','?'], []).		
+resposta_existencia_livros_data(Q, A, Ob, A2, Prep, Ob3, Adjs3, Resposta) :-
+	A == ser, Ob == livro, A2 == existir, (Ob3 == ano ; Ob3 == seculo),
+	getCleanAdjs(Adjs3, [], CleanAdjs),
+	P =.. [Ob, LivroID, Titulo, _, _, _, _],
+	P1 =.. [A2, LivroID, _, _, _, Prep, Ob3, CleanAdjs, _],
+	findall(Titulo, (P, P1), L), sort(L, L1),
+	(Q==ql, atomic_list_concat(L1, ',', Resposta);
+	length(L1,Resposta)).
+
 %frase(R,['quais','os','livros','de','escritores','portugueses','que','existem','em','1888','?'], []).	
 resposta_existencia_livros_nacionalidade_data(Q,ser,livro,_,Adjs,=,autor,Adjs2,existir,Cmp,Ano,Adjs3,Resposta):-
 	integer(Ano),
@@ -835,7 +866,7 @@ resposta_existencia_livros_nacionalidade_data(Q,ser,livro,_,Adjs,=,autor,Adjs2,e
 	
 %frase(R,['quais','os','livros','de','escritores','portugueses','que','existem','apos','o','seculo','XX','?'], []).	
 resposta_existencia_livros_nacionalidade_data(Q,ser,livro,_,Adjs,=,autor,Adjs2,existir,Cmp,seculo,Adjs3,Resposta):-
-	write('FUCK MAN'),nl,
+	write('Com escritores'),nl,
 	getCleanAdjs(Adjs,[],CleanAdjs),
 	getCleanAdjs(Adjs2,[],CleanAdjs2),
 	getCleanAdjs(Adjs3,[],CleanAdjs3),
