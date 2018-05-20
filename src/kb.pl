@@ -472,6 +472,15 @@ resposta_nascimento(Q, A, Ob, A2, Prep2, Ob3, Adjs3, Resposta) :-
 	sort(L, L1),
 	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
 	length(L1,Resposta)).
+
+resposta_nascimento(Q, A, _, A2, Prep2, Ob3, Adjs3, Resposta) :-
+	A == ser,
+	getCleanAdjs(Adjs3, [], CleanAdjs),
+	P =.. [A2, AutID, _, _, _, Prep2, Ob3, CleanAdjs],
+	findall(Res, (P, autor(AutID, Primeiro, Ultimo, _, _, _, _, _, _), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L),
+	sort(L, L1),
+	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
+	length(L1,Resposta)).
 	
 %frase_interrogativa(R, ['quem','sao','os','escritores','que','nasceram','em','1888','?'],[]).
 resposta_nascimento(Q, A, Ob, A2, Prep2, Ob3, Resposta) :-
