@@ -14,6 +14,24 @@ verificar_seculo(>, Ano, Seculo):-
 	LimiteSuperior is (Seculo * 100),
 Ano > LimiteSuperior.
 
+ser_mais_recente(Titulo,AutorId):-
+	livro_mais_recente(AutorId,MaxIdade),
+	livro(_,Titulo,_,Idade,_,_),
+	Idade == MaxIdade.
+	
+ser_mais_antigo(Titulo,AutorId):-
+	livro_mais_antigo(AutorId,MinIdade),
+	livro(_,Titulo,_,Idade,_,_),
+	Idade == MinIdade.
+
+livro_mais_recente(AutorId, MaxIdade):-
+	findall(Idade, (livro(_,_,Autores,Idade,_,_),member(AutorId, Autores)), Idades),
+	max_list(Idades,MaxIdade).
+
+livro_mais_antigo(AutorId, MinIdade):-
+	findall(Idade, (livro(_,_,Autores,Idade,_,_),member(AutorId, Autores)), Idades),
+	min_list(Idades,MinIdade).
+
 getHighestPop(AutorId, MaxPop):-
 	findall(LivroPop, (livro(_,_,Autores,_,_,LivroPop),member(AutorId, Autores)), Pops),
 	max_list(Pops,MaxPop).
@@ -51,6 +69,24 @@ multiple_adjs_solver([Adj| T], [conhecido], ser, autor, livro, Adv, Prep, [L|L1]
 	findall(Titulo, (P2, P1, P, member(AutID, Autores)), L),
 	multiple_adjs_solver(T, [conhecido], ser, autor, livro, Adv, Prep, L1).
 	
+%livros de autores de multiplas nacionalidades mais recentes
+livros_nacionalidade_antigos([],[]).
+livros_nacionalidade_antigos([Nacionalidade|T],[L|L1]):-
+	P =.. [autor,AutorId,_,_,_,_,_,PaisId,_,_],
+	P1 =.. [ser_mais_recente,Titulo,AutorId],
+	P2 =.. [pais,PaisId,_,Continente,_,_],
+	findall(Titulo,(P,P1,P2,(Nacionalidade == Continente ; Nacionalidade == PaisId)),L),
+	livros_nacionalidade_antigos(T,L1).	
+	
+%livros de autores de multiplas nacionalidades mais antigos
+livros_nacionalidade_antigos([],[]).
+livros_nacionalidade_antigos([Nacionalidade|T],[L|L1]):-
+	P =.. [autor,AutorId,_,_,_,_,_,PaisId,_,_],
+	P1 =.. [ser_mais_antigo,Titulo,AutorId],
+	P2 =.. [pais,PaisId,_,Continente,_,_],
+	findall(Titulo,(P,P1,P2,(Nacionalidade == Continente ; Nacionalidade == PaisId)),L),write(L),nl,
+	livros_nacionalidade_antigos(T,L1).
+
 %livros de autores de multiplas nacionalidades de uma data
 livros_nacionalidades_data([],_,_,[]).
 livros_nacionalidades_data([Nacionalidade|T],Cmp,Seculo,[L|L1]):-
