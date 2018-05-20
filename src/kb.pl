@@ -320,7 +320,7 @@ morrer(AutorId,_,_,_,Cmp,ano,Adjs2):-
 	autor(AutorId,_,_,_,Morte,_,_,_,_),
 	call(Cmp,Morte,Ano).
 	
-% ?- frase(Res,['Fernando','Pessoa','morreu','no','seculo','1935','.'],[]).
+% ?- frase(Res,['Fernando','Pessoa','morreu','no','seculo','XX','.'],[]).
 
 morrer(AutorId,_,_,_,Cmp,seculo,Adjs2):-
 	(Cmp == = ;  Cmp == < ; Cmp == >),

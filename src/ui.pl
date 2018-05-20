@@ -35,7 +35,7 @@ start:-
 
 header:-
 	write('********************************************************************************'),nl,
-	write('*************************Cenas de Literatura Portuguesa*************************'),nl,
+	write('**************************Informacoes sobre Literatura**************************'),nl,
 	write('********************************************************************************'),nl,
 	write('*                                                                              *'),nl.
 
@@ -67,7 +67,7 @@ mainMenu:-
 mainMenu:-
 	clearScreen,
 	header,
-	write('*   Opcao invalida! Tente novamente.       *'),nl,
+	write('* Opcao invalida, tente novamente                                              *'),nl,
 	mainMenu.
 
 questionMenu:-
