@@ -12,7 +12,27 @@ verificar_seculo(<, Ano, Seculo):-
 
 verificar_seculo(>, Ano, Seculo):-
 	LimiteSuperior is (Seculo * 100),
-Ano > LimiteSuperior.
+	Ano > LimiteSuperior.
+	
+anos_no_seculo(Inf,Sup,Nas,Mor,0):-
+	(Nas > Sup ; Inf > Mor).
+	
+anos_no_seculo(Inf,Sup,Nas,Mor,Anos):-
+	Low is max(Inf,Nas),
+	High is min(Sup,Mor),
+	Anos is High - Low.
+	
+ano_de_morte(-1,Ano):- !,anoAtual(Ano).
+ano_de_morte(Ano,Ano).
+
+verificar_ser_seculo(Nascimento,Morte,Seculo):-
+	LimiteSuperior is (Seculo * 100),
+	LimiteInferior is LimiteSuperior - 99,
+	ano_de_morte(Morte,MorteRes),
+	anos_no_seculo(Nascimento,MorteRes,LimiteInferior,LimiteSuperior,Anos),
+	Vida is MorteRes - Nascimento,
+	Prop is Anos / Vida,
+	Prop > 0.5.
 
 ser_mais_recente(Titulo,AutorId):-
 	livro_mais_recente(AutorId,MaxIdade),

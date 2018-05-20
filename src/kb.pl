@@ -627,6 +627,20 @@ resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2, Resposta) :-
 	sort(L, L1),
 	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
 	length(L1,Resposta)).
+	
+%frase_interrogativa(R, ['quais', 'sao','os','escritores','do','seculo','XIX','?'], []).	
+resposta_nacionalidade(Q, ser, autor, Adjs, =, seculo, Adjs2, Resposta) :-
+	getCleanAdjs(Adjs, [], CleanAdjs),
+	getCleanAdjs(Adjs2, [], CleanAdjs2),
+	length(CleanAdjs, 0), 
+	length(CleanAdjs2,1),
+	nth0(0,CleanAdjs2,Seculo),!,
+	write(Seculo),nl,
+	%autor(1, 'Alexandre', 'Dumas', 1802, 1870, m, 9, 1, []).
+	P =.. [autor,_,Primeiro,Ultimo,Nascimento,Morte,_,_,_,_],
+	findall(Res, (P,verificar_ser_seculo(Nascimento,Morte,Seculo), atomic_concat(Primeiro, ' ', Aux), atomic_concat(Aux, Ultimo, Res)), L), sort(L, L1),
+	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
+	length(L1,Resposta)).
 
 %frase_interrogativa(R, ['quais', 'sao','os','escritores','africanos','e','portugueses','?'], []).
 resposta_nacionalidade(Q, A, Ob, Adjs, Resposta) :-
