@@ -379,7 +379,7 @@ existir(LivroId, _, _, _, _, _, _, Adjs2) :-
 %---------------------------------------------------------%	
 	
 %still not formatted
-%frase_interrogativa(R, ['quem','escreveu','Os Maias','?'],[]).
+%frase_interrogativa(R, ['quem','escreveu','Os', 'Maias','?'],[]).
 resposta_escrever(Q, A, Ob, Resposta) :-
 	A == escrever,
 	P =.. [A, AutID, Ob, _, _, _, _, _],
