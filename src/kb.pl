@@ -498,6 +498,11 @@ resposta_nascimento(Q, A, _, A2, Prep2, Ob3, Resposta) :-
 	(Q==ql, atomic_list_concat(L, ',', Resposta); 
 	length(L,Resposta)).
 
+	
+%%%%%%%%%%%%%%%%%%%%%%%
+% livros-popularidade %
+%%%%%%%%%%%%%%%%%%%%%%%
+
 %frase_interrogativa(R, ['quais','sao','os','livros','mais','conhecidos','de','Camilo','Castelo','Branco','?'], []).	
 resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Resposta) :-
 	A == ser, Ob == livro, integer(Ob2),
@@ -530,6 +535,10 @@ resposta_popularidade(Q, A, Ob, Adv, Adjs, Prep, Ob2, Adjs2, Resposta) :-
 	findall(Titulo, (P2, P1, P, member(AutID, Autores)), L), sort(L, L1),
 	(Q==ql, atomic_list_concat(L1, ',', Resposta); 
 	length(L1,Resposta)).
+	
+%%%%%%%%%%%%%%%%
+% livros-tempo %
+%%%%%%%%%%%%%%%%
 
 %frase_interrogativa(R, ['quais','sao','os','livros','mais','recentes','de','Camilo','Castelo','Branco','?'], []).	
 resposta_tempo(Q, ser, livro, mais, Adjs, =, AutorId, Resposta) :-
@@ -610,6 +619,10 @@ resposta_tempo(Q, ser, livro, mais, Adjs, =, autor, Adjs2, Resposta) :-
 	livros_nacionalidade_antigos(CleanAdjs2,L), append(L, L1), sort(L1, L2),
 	(Q==ql, atomic_list_concat(L2, ',', Resposta); 
 	length(L2,Resposta)).
+	
+%%%%%%%%%%%%%%
+% escritores %
+%%%%%%%%%%%%%%
 
 %frase_interrogativa(R, ['quais', 'sao','os','escritores','portugueses','do','seculo','XIX','?'], []).	
 resposta_nacionalidade(Q, A, Ob, Adjs, Prep, Ob2, Adjs2, Resposta) :-
@@ -644,6 +657,11 @@ resposta_nacionalidade(Q, A, Ob, Adjs, Resposta) :-
 	(Q==ql, atomic_list_concat(L, ',', Resposta); 
 	length(L,Resposta)).
 
+	
+%%%%%%%%%%%%%%%%%%%%%
+% livros-escritores %
+%%%%%%%%%%%%%%%%%%%%%
+	
 %frase_interrogativa(R, ['quais','os','livros','de','escritores','africanos','e','portugueses','que','existem','?'], []).	
 resposta_existencia_livros(Q, A, Ob, Ob2, Adjs2, A2, Resposta) :-
 	A == ser, Ob == livro, Ob2 == autor, A2 == existir,
@@ -697,7 +715,36 @@ resposta_existencia_livros(Q, A, Ob, A2, Resposta) :-
 	P =.. [A2, LivroID, Ob, _, _, _, _, _, _],
 	findall(Titulo, (P, livro(LivroID, Titulo, _, _, _, _)), L), sort(L, L1),
 	(Q==ql, atomic_list_concat(L1, ',', Resposta);
-	length(L1,Resposta)).
+	length(L1,Resposta)).	
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% livros-escritores-data %
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%frase(R,['quais','os','livros','de','escritores','portugueses','que','existem','em','1888','?'], []).	
+resposta_existencia_livros_data(Q,ser,livro,_,Adjs,=,autor,Adjs2,existir,Cmp,Ano,Adjs3,Resposta):-
+	integer(Ano),
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2,[],CleanAdjs2),
+	getCleanAdjs(Adjs3,[],CleanAdjs3),
+	length(CleanAdjs,0),
+	length(CleanAdjs3,0),
+	livros_nacionalidades_ano(CleanAdjs2,Cmp,Ano,L),append(L, L1), sort(L1, L2),
+	(Q==ql, atomic_list_concat(L2, ',', Resposta);
+	length(L2,Resposta)).
+	
+%frase(R,['quais','os','livros','de','escritores','portugueses','que','existem','apos','o','ano','1500','?'], []).	
+resposta_existencia_livros_data(Q,ser,livro,_,Adjs,=,autor,Adjs2,existir,Cmp,ano,Adjs3,Resposta):-
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2,[],CleanAdjs2),
+	getCleanAdjs(Adjs3,[],CleanAdjs3),
+	length(CleanAdjs,0),
+	length(CleanAdjs3,1),
+	nth0(0,CleanAdjs3,Ano),
+	livros_nacionalidades_ano(CleanAdjs2,Cmp,Ano,L),append(L, L1), sort(L1, L2),
+	(Q==ql, atomic_list_concat(L2, ',', Resposta);
+	length(L2,Resposta)).
 	
 %frase(R,['quais','os','livros','de','escritores','portugueses','que','existem','apos','o','seculo','XX','?'], []).	
 resposta_existencia_livros_data(Q,ser,livro,_,Adjs,=,autor,Adjs2,existir,Cmp,seculo,Adjs3,Resposta):-
@@ -707,10 +754,40 @@ resposta_existencia_livros_data(Q,ser,livro,_,Adjs,=,autor,Adjs2,existir,Cmp,sec
 	length(CleanAdjs,0),
 	length(CleanAdjs3,1),
 	nth0(0,CleanAdjs3,Seculo),
-	livros_nacionalidades_data(CleanAdjs2,Cmp,Seculo,L),append(L, L1), sort(L1, L2),
+	livros_nacionalidades_seculo(CleanAdjs2,Cmp,Seculo,L),append(L, L1), sort(L1, L2),
 	(Q==ql, atomic_list_concat(L2, ',', Resposta);
-	length(L2,Resposta)).	
+	length(L2,Resposta)).
 	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% generos-escritores-data %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%frase(R,['quais','os','dramas','de','escritores','portugueses','que','existem','em','1500','?'], []).	
+resposta_existencia_livros_data(Q,ser,Genero,_,Adjs,=,autor,Adjs2,existir,Cmp,Ano,Adjs3,Resposta):-
+	integer(Ano),
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2,[],CleanAdjs2),
+	getCleanAdjs(Adjs3,[],CleanAdjs3),
+	length(CleanAdjs,0),
+	length(CleanAdjs3,0),
+	genero(GeneroId,Genero),
+	livros_nacionalidades_existencia_ano(CleanAdjs2,GeneroId,Cmp,Ano,L),append(L, L1), sort(L1, L2),
+	(Q==ql, atomic_list_concat(L2, ',', Resposta);
+	length(L2,Resposta)).
+
+%frase(R,['quais','os','dramas','de','escritores','portugueses','que','existem','apos','o','ano','1500','?'], []).	
+resposta_existencia_livros_data(Q,ser,Genero,_,Adjs,=,autor,Adjs2,existir,Cmp,ano,Adjs3,Resposta):-
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2,[],CleanAdjs2),
+	getCleanAdjs(Adjs3,[],CleanAdjs3),
+	length(CleanAdjs,0),
+	length(CleanAdjs3,1),
+	nth0(0,CleanAdjs3,Ano),
+	genero(GeneroId,Genero),
+	livros_nacionalidades_existencia_ano(CleanAdjs2,GeneroId,Cmp,Ano,L),append(L, L1), sort(L1, L2),
+	(Q==ql, atomic_list_concat(L2, ',', Resposta);
+	length(L2,Resposta)).
+
 %frase(R,['quais','os','dramas','de','escritores','portugueses','que','existem','apos','o','seculo','XX','?'], []).	
 resposta_existencia_livros_data(Q,ser,Genero,_,Adjs,=,autor,Adjs2,existir,Cmp,seculo,Adjs3,Resposta):-
 	getCleanAdjs(Adjs,[],CleanAdjs),
@@ -720,6 +797,6 @@ resposta_existencia_livros_data(Q,ser,Genero,_,Adjs,=,autor,Adjs2,existir,Cmp,se
 	length(CleanAdjs3,1),
 	nth0(0,CleanAdjs3,Seculo),
 	genero(GeneroId,Genero),
-	livros_nacionalidades_existencia_data(CleanAdjs2,GeneroId,Cmp,Seculo,L),append(L, L1), sort(L1, L2),
+	livros_nacionalidades_existencia_seculo(CleanAdjs2,GeneroId,Cmp,Seculo,L),append(L, L1), sort(L1, L2),
 	(Q==ql, atomic_list_concat(L2, ',', Resposta);
 	length(L2,Resposta)).

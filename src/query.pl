@@ -65,15 +65,6 @@ livros_nacionalidades_existencia([Adj|T], ser, Genero, autor, existir, [L|L1]) :
 	P1 =.. [existir, LivroID, Genero, _, _, _, _, _, [Adj]],
 	findall(Titulo, (P1, livro(LivroID, Titulo, _, _, _, _)), L),
 	livros_nacionalidades_existencia(T, ser, Genero, autor, existir, L1).
-	
-%livros de um género de multiplas nacionalidades de uma data
-livros_nacionalidades_existencia_data([],_,_,_,[]).
-livros_nacionalidades_existencia_data([Nacionalidade|T],GeneroId,Cmp,Seculo,[L|L1]) :-
-	P =.. [livro,_,Titulo,Autores,Ano,Generos,_],
-	P1 =.. [autor,AutorId,_,_,_,_,_,PaisId,_,_],
-	P2 =.. [pais,PaisId,_,Continente,_,_],
-	findall(Titulo,(P,member(GeneroId,Generos),member(AutorId,Autores),P1,P2,verificar_seculo(Cmp,Ano,Seculo),(Nacionalidade == Continente ; Nacionalidade == PaisId)),L),
-	livros_nacionalidades_existencia_data(T,GeneroId,Cmp,Seculo,L1).
 
 %multiple_adjs_solver([], _, _, _, _, _, []).	
 %multiple_adjs_solver([Adj|T], [Seculo], ser, autor, seculo, Prep, [L|L1]) :-
@@ -109,11 +100,38 @@ livros_nacionalidade_antigos([Nacionalidade|T],[L|L1]):-
 	findall(Titulo,(P,P1,P2,(Nacionalidade == Continente ; Nacionalidade == PaisId)),L),write(L),nl,
 	livros_nacionalidade_antigos(T,L1).
 
-%livros de autores de multiplas nacionalidades de uma data
-livros_nacionalidades_data([],_,_,[]).
-livros_nacionalidades_data([Nacionalidade|T],Cmp,Seculo,[L|L1]):-
+%livros de autores de multiplas nacionalidades de um ano
+livros_nacionalidades_ano([],_,_,[]).
+livros_nacionalidades_ano([Nacionalidade|T],Cmp,Ano,[L|L1]):-
+	P =.. [livro,_,Titulo,Autores,AnoPub,_,_],
+	P1 =.. [autor,AutorId,_,_,_,_,_,PaisId,_,_],
+	P2 =.. [pais,PaisId,_,Continente,_,_],
+	findall(Titulo,(P,call(Cmp,AnoPub,Ano),member(AutorId,Autores),P1,P2,(Nacionalidade == Continente ; Nacionalidade == PaisId )),L),
+	livros_nacionalidades_ano(T,Cmp,Ano,L1).
+	
+%livros de autores de multiplas nacionalidades de um seculo
+livros_nacionalidades_seculo([],_,_,[]).
+livros_nacionalidades_seculo([Nacionalidade|T],Cmp,Seculo,[L|L1]):-
 	P =.. [livro,_,Titulo,Autores,Ano,_,_],
 	P1 =.. [autor,AutorId,_,_,_,_,_,PaisId,_,_],
 	P2 =.. [pais,PaisId,_,Continente,_,_],
 	findall(Titulo,(P,verificar_seculo(Cmp,Ano,Seculo),member(AutorId,Autores),P1,P2,(Nacionalidade == Continente ; Nacionalidade == PaisId )),L),
-	livros_nacionalidades_data(T,Cmp,Seculo,L1).
+	livros_nacionalidades_seculo(T,Cmp,Seculo,L1).
+	
+%livros de um género de multiplas nacionalidades de um ano
+livros_nacionalidades_existencia_ano([],_,_,_,[]).
+livros_nacionalidades_existencia_ano([Nacionalidade|T],GeneroId,Cmp,Ano,[L|L1]) :-
+	P =.. [livro,_,Titulo,Autores,AnoPub,Generos,_],
+	P1 =.. [autor,AutorId,_,_,_,_,_,PaisId,_,_],
+	P2 =.. [pais,PaisId,_,Continente,_,_],
+	findall(Titulo,(P,member(GeneroId,Generos),member(AutorId,Autores),P1,P2,call(Cmp,AnoPub,Ano),(Nacionalidade == Continente ; Nacionalidade == PaisId)),L),
+	livros_nacionalidades_existencia_ano(T,GeneroId,Cmp,Ano,L1).
+	
+%livros de um género de multiplas nacionalidades de uma seculo
+livros_nacionalidades_existencia_seculo([],_,_,_,[]).
+livros_nacionalidades_existencia_seculo([Nacionalidade|T],GeneroId,Cmp,Seculo,[L|L1]) :-
+	P =.. [livro,_,Titulo,Autores,Ano,Generos,_],
+	P1 =.. [autor,AutorId,_,_,_,_,_,PaisId,_,_],
+	P2 =.. [pais,PaisId,_,Continente,_,_],
+	findall(Titulo,(P,member(GeneroId,Generos),member(AutorId,Autores),P1,P2,verificar_seculo(Cmp,Ano,Seculo),(Nacionalidade == Continente ; Nacionalidade == PaisId)),L),
+	livros_nacionalidades_existencia_seculo(T,GeneroId,Cmp,Seculo,L1).
