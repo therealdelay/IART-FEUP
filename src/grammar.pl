@@ -261,6 +261,9 @@ interrogacao_opcional --> [.].
 
 frase_conjuntiva(Resposta) -->
 	['E'], producao(Resposta),[?].
+	
+frase_conjuntiva(Resposta) -->
+	['e'], producao(Resposta),[?].
 
 % Quais os livros de Pessoa? E o mais recente?
 producao(Resposta)-->
@@ -310,3 +313,54 @@ producao(Resposta)-->
 		assert(contexto(Q,A,Ob,Adv,[NAdj],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3))
 	}.
 
+% Quais sao os escritores portugueses do seculo XX? E do s?culo XIX?
+producao(Resposta)-->
+	preposicao(N-G, Prep),
+	nome(N-G, Ob2),
+	adjetivo(N-G, Seculo),
+	{
+		(Ob2 == ano ; Ob2 == seculo),
+		contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,_,A2,Prep2,Ob3,Adjs3),
+		resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,[Seculo, _, _, _, _],A2,Prep2,Ob3,Adjs3,Resposta),
+		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
+		assert(contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,[Seculo],A2,Prep2,Ob3,Adjs3))
+	}.
+
+% Quem nasceu em 1888? E no ano 1917?
+producao(Resposta)-->
+	preposicao(N-G, Prep),
+	nome(N-G, Ob3),
+	adjetivo(N-G, Seculo),
+	{
+		(Ob3 == ano ; Ob3 == seculo),
+		write('AQUI'), nl,
+		contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,_,_),
+		resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,[Seculo, _, _, _, _],Resposta),
+		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
+		assert(contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,[Seculo]))
+	}.
+	
+% Quais sao os livros de escritores portugueses do seculo XX? E do s?culo XIX?
+producao(Resposta)-->
+	preposicao(N-G, Prep),
+	nome(N-G, Ob3),
+	adjetivo(N-G, Seculo),
+	{
+		(Ob3 == ano ; Ob3 == seculo),
+		contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,_),
+		resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,[Seculo, _, _, _, _],Resposta),
+		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
+		assert(contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,[Seculo]))
+	}.
+
+% Quais sao os livros de escritores portugueses do seculo XX? E em 1999?
+producao(Resposta)-->
+	preposicao(N-G, Prep),
+	nome(N-G, Ob3),
+	{
+		integer(Ob3),
+		contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,_,_),
+		resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,[_, _, _, _, _],Resposta),
+		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
+		assert(contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,_))
+	}.
