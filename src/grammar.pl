@@ -39,9 +39,6 @@ resposta(Q,A,Ob,_,Adjs,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
 resposta(Q,A,Ob,_,Adjs,_,_,_,_,_,_,_,Resposta) :-
 	resposta_nacionalidade(Q, A, Ob, Adjs, Resposta).
 	
-%resposta(Q,A,Ob,_,_,_,_,_,A2,Prep2,Ob3,Adjs3,Resposta) :-
-	%resposta_existencia_livros_data(Q,A,Ob,A2,Prep2,Ob3,Adjs3,Resposta).
-	
 resposta(Q,A,Ob,_,Adjs,_,_,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta) :-
 	resposta_existencia_livros_data(Q,A,Ob,Adjs,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta).
 	
@@ -81,18 +78,6 @@ frase_interrogativa(Resposta) -->
 	sintagma_verbal_int(N-G,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3),
 	[?],
 	{
-	write('Q: '), write(Q), nl,
-	write('A: '), write(A), nl,
-	write('Ob: '), write(Ob), nl,
-	write('Adv: '), write(Adv), nl,
-	write('Adjs: '), write(Adjs), nl,
-	write('Prep: '), write(Prep), nl,
-	write('Ob2: '), write(Ob2), nl,
-	write('Adjs2: '), write(Adjs2), nl,
-	write('A2: '), write(A2), nl,
-	write('Prep2: '), write(Prep2), nl,
-	write('Ob3: '), write(Ob3), nl,
-	write('Adjs3: '), write(Adjs3), nl,
 	resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta),
 	retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
 	assert(contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3))
