@@ -287,8 +287,22 @@ producao(Resposta)-->
 		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
 		assert(contexto(Q,A,Ob,Adv,[NAdj],Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3))
 	}.
+	
+% Quem nasceu em 1888? E no ano 1917?
+producao(Resposta)-->
+	preposicao(N-G, Prep),
+	nome(N-G, Ob3),
+	adjetivo(N-G, Seculo),
+	{
+		(Ob3 == ano ; Ob3 == seculo),
+		contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,_,_),
+		(A2 == nascer ; A2 == morrer),
+		resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,[Seculo, _, _, _, _],Resposta),
+		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
+		assert(contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,[Seculo]))
+	}.
 
-% Quais sao os escritores portugueses do seculo XX? E do s?culo XIX?
+% Quais sao os escritores portugueses do seculo XX? E do seculo XIX?
 producao(Resposta)-->
 	preposicao(N-G, Prep),
 	nome(N-G, Ob2),
@@ -300,22 +314,8 @@ producao(Resposta)-->
 		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
 		assert(contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,[Seculo],A2,Prep2,Ob3,Adjs3))
 	}.
-
-% Quem nasceu em 1888? E no ano 1917?
-producao(Resposta)-->
-	preposicao(N-G, Prep),
-	nome(N-G, Ob3),
-	adjetivo(N-G, Seculo),
-	{
-		(Ob3 == ano ; Ob3 == seculo),
-		write('AQUI'), nl,
-		contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,_,_),
-		resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,[Seculo, _, _, _, _],Resposta),
-		retract(contexto(_,_,_,_,_,_,_,_,_,_,_,_)),
-		assert(contexto(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,[Seculo]))
-	}.
 	
-% Quais sao os livros de escritores portugueses do seculo XX? E do s?culo XIX?
+% Quais sao os livros de escritores portugueses do seculo XX? E do seculo XIX?
 producao(Resposta)-->
 	preposicao(N-G, Prep),
 	nome(N-G, Ob3),
