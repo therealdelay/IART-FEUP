@@ -632,8 +632,8 @@ nome(s-_,'Por Quem Os Sinos Tocam') --> ['Por','Quem','Os','Sinos','Tocam'].
 nome(s-_,'Razao e Sensibilidade') --> ['Razao','e','Sensibilidade'].
 nome(s-_,'Rei Leao') --> ['Rei','Leao'].
 nome(s-_,'Romeu e Julieta') --> ['Romeu','e','Julieta'].
-nome(s-_,'Sonho de uma Noite de Verão') --> ['Sonho','de','uma','Noite','de','Verão'].
-nome(s-_,'Terra Sonâmbula') --> ['Terra','Sonâmbula'].
+nome(s-_,'Sonho de uma Noite de Verao') --> ['Sonho','de','uma','Noite','de','Verao'].
+nome(s-_,'Terra Sonambula') --> ['Terra','Sonambula'].
 nome(s-_,'Uma Família Inglesa') --> ['Uma','Família','Inglesa'].
 nome(s-_,'Vinte Anos Depois') --> ['Vinte','Anos','Depois'].
 

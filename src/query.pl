@@ -60,6 +60,20 @@ livros_nacionalidades_existencia([Adj|T], ser, Genero, autor, existir, [L|L1]) :
 	P1 =.. [existir, LivroID, Genero, _, _, _, _, _, [Adj]],
 	findall(Titulo, (P1, livro(LivroID, Titulo, _, _, _, _)), L),
 	livros_nacionalidades_existencia(T, ser, Genero, autor, existir, L1).
+	
+livros_nacionalidades_existencia([Adj|T], ser, Genero, autor, existir, [L|L1]) :-
+	P1 =.. [existir, LivroID, Genero, _, _, _, _, _, [Adj]],
+	findall(Titulo, (P1, livro(LivroID, Titulo, _, _, _, _)), L),
+	livros_nacionalidades_existencia(T, ser, Genero, autor, existir, L1).
+	
+%livros de um género de multiplas nacionalidades de uma data
+livros_nacionalidades_existencia_data([],_,_,_,[]).
+livros_nacionalidades_existencia_data([Nacionalidade|T],GeneroId,Cmp,Seculo,[L|L1]) :-
+	P =.. [livro,_,Titulo,Autores,Ano,Generos,_],
+	P1 =.. [autor,AutorId,_,_,_,_,_,PaisId,_,_],
+	P2 =.. [pais,PaisId,_,Continente,_,_],
+	findall(Titulo,(P,member(GeneroId,Generos),member(AutorId,Autores),P1,P2,verificar_seculo(Cmp,Ano,Seculo),(Nacionalidade == Continente ; Nacionalidade == PaisId)),L),
+	livros_nacionalidades_existencia_data(T,GeneroId,Cmp,Seculo,L1).
 
 %multiple_adjs_solver([], _, _, _, _, _, []).	
 %multiple_adjs_solver([Adj|T], [Seculo], ser, autor, seculo, Prep, [L|L1]) :-
@@ -78,13 +92,13 @@ livros_nacionalidades_popularidade([Adj| T], [conhecido], ser, autor, livro, Adv
 	livros_nacionalidades_popularidade(T, [conhecido], ser, autor, livro, Adv, Prep, L1).
 	
 %livros de autores de multiplas nacionalidades mais recentes
-livros_nacionalidade_antigos([],[]).
-livros_nacionalidade_antigos([Nacionalidade|T],[L|L1]):-
+livros_nacionalidade_recentes([],[]).
+livros_nacionalidade_recentes([Nacionalidade|T],[L|L1]):-
 	P =.. [autor,AutorId,_,_,_,_,_,PaisId,_,_],
 	P1 =.. [ser_mais_recente,Titulo,AutorId],
 	P2 =.. [pais,PaisId,_,Continente,_,_],
 	findall(Titulo,(P,P1,P2,(Nacionalidade == Continente ; Nacionalidade == PaisId)),L),
-	livros_nacionalidade_antigos(T,L1).	
+	livros_nacionalidade_recentes(T,L1).	
 	
 %livros de autores de multiplas nacionalidades mais antigos
 livros_nacionalidade_antigos([],[]).
