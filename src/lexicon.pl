@@ -168,10 +168,10 @@ adjetivo(s-m, 19) --> ['XIX'].
 adjetivo(s-m, 20) --> ['XX'].
 adjetivo(s-m, 21) --> ['XXI'].
 
-adjetivo(s-m, Nr) --> 
-	{between(0,2050,Nr)},
-	{atom_number(NrAtom,Nr)},
-	[NrAtom].
+%adjetivo(s-m, Nr) --> 
+	%{between(0,2050,Nr)},
+	%{atom_number(NrAtom,Nr)},
+	%[NrAtom].
 
 	
 adjetivo(s-m, conhecido) --> [conhecido].
@@ -426,10 +426,10 @@ nome(p-m, teatro) --> [teatros].
 nome(s-f, tragedia) --> [tragedia].
 nome(p-f, tragedia) --> [tragedias].
 
-nome(_-_, Nr) -->
-	{between(0,2050,Nr)},
-	{atom_number(NrAtom,Nr)},
-	[NrAtom].
+%nome(_-_, Nr) -->
+	%{between(0,2050,Nr)},
+	%{atom_number(NrAtom,Nr)},
+	%[NrAtom].
 	
 	
 	
@@ -437,113 +437,114 @@ nome(_-_, Nr) -->
 % Substantivos: Autores                                   %
 %---------------------------------------------------------%
 
-nome(s-m,1) --> ['Alexandre'].
-nome(s-m,1) --> ['Dumas'].
 nome(s-m,1) --> ['Alexandre','Dumas'].
+nome(s-m,1) --> ['Dumas'].
+nome(s-m,1) --> ['Alexandre'].
 
-nome(s-m,3) --> ['Arthur'].
-nome(s-m,3) --> ['Clarke'].
 nome(s-m,3) --> ['Arthur','Clarke'].
+nome(s-m,3) --> ['Clarke'].
+nome(s-m,3) --> ['Arthur'].
 
-nome(s-m,4) --> ['Camilo'].
-nome(s-m,4) --> ['Castelo','Branco'].
 nome(s-m,4) --> ['Camilo','Castelo','Branco'].
+nome(s-m,4) --> ['Castelo','Branco'].
+nome(s-m,4) --> ['Camilo'].
 
-nome(s-f,5) --> ['Charlotte'].
-nome(s-f,5) --> ['Bronte'].
 nome(s-f,5) --> ['Charlotte','Bronte'].
+nome(s-f,5) --> ['Bronte'].
+nome(s-f,5) --> ['Charlotte'].
 
-nome(s-m,6) --> ['Eca'].
-nome(s-m,6) --> ['de','Queiroz'].
 nome(s-m,6) --> ['Eca','de','Queiroz'].
+nome(s-m,6) --> ['Queiroz'].
+nome(s-m,6) --> ['Eca'].
 
-nome(s-m,7) --> ['Eiichirou'].
-nome(s-m,7) --> ['Oda'].
 nome(s-m,7) --> ['Eiichirou','Oda'].
+nome(s-m,7) --> ['Oda'].
+nome(s-m,7) --> ['Eiichirou'].
 
-nome(s-f,8) --> ['Emily'].
-nome(s-f,8) --> ['Bronte'].
 nome(s-f,8) --> ['Emily','Bronte'].
+nome(s-f,8) --> ['Bronte'].
+nome(s-f,8) --> ['Emily'].
 
-nome(s-m,9) --> ['Yuusei'].
-nome(s-m,9) --> ['Matsui'].
 nome(s-m,9) --> ['Yuusei','Matsui'].
+nome(s-m,9) --> ['Matsui'].
+nome(s-m,9) --> ['Yuusei'].
 
-nome(s-m,10) --> ['Ernest'].
-nome(s-m,10) --> ['Hemingway'].
 nome(s-m,10) --> ['Ernest','Hemingway'].
+nome(s-m,10) --> ['Hemingway'].
+nome(s-m,10) --> ['Ernest'].
 
-nome(s-m,11) --> ['Fernando'].
-nome(s-m,11) --> ['Pessoa'].
 nome(s-m,11) --> ['Fernando','Pessoa'].
+nome(s-m,11) --> ['Pessoa'].
+nome(s-m,11) --> ['Fernando'].
 
-nome(s-m,12) --> ['Fiodor'].
 nome(s-m,12) --> ['Dostoievski'].
 nome(s-m,12) --> ['Fiodor','Dostoievski'].
+nome(s-m,12) --> ['Fiodor'].
 
-nome(s-m,13) --> ['Friedrich'].
-nome(s-m,13) --> ['Nietzsche'].
 nome(s-m,13) --> ['Friedrich','Nietzsche'].
+nome(s-m,13) --> ['Nietzsche'].
+nome(s-m,13) --> ['Friedrich'].
 
-nome(s-m,14) --> ['Gabriel'].
-nome(s-m,14) --> ['Garcia','Marquez'].
 nome(s-m,14) --> ['Gabriel','Garcia','Marquez'].
+nome(s-m,14) --> ['Garcia','Marquez'].
+nome(s-m,14) --> ['Gabriel'].
 
-nome(s-m,15) --> ['Haruki'].
-nome(s-m,15) --> ['Murakami'].
 nome(s-m,15) --> ['Haruki','Murakami'].
+nome(s-m,15) --> ['Murakami'].
+nome(s-m,15) --> ['Haruki'].
 
-nome(s-m,16) --> ['Hiroshi'].
-nome(s-m,16) --> ['Fujimoto'].
+
 nome(s-m,16) --> ['Hiroshi','Fujimoto'].
+nome(s-m,16) --> ['Fujimoto'].
+nome(s-m,16) --> ['Hiroshi'].
 
-nome(s-f,17) --> ['Isabel'].
-nome(s-f,17) --> ['Allende'].
 nome(s-f,17) --> ['Isabel','Allende'].
+nome(s-f,17) --> ['Allende'].
+nome(s-f,17) --> ['Isabel'].
 	
-nome(s-f,18) --> ['Jane'].
-nome(s-f,18) --> ['Austen'].
 nome(s-f,18) --> ['Jane','Austen'].
+nome(s-f,18) --> ['Austen'].
+nome(s-f,18) --> ['Jane'].
 
-nome(s-m,19) --> ['Julio'].
-nome(s-m,19) --> ['Dinis'].
 nome(s-m,19) --> ['Julio','Dinis'].
+nome(s-m,19) --> ['Dinis'].
+nome(s-m,19) --> ['Julio'].
 
-nome(s-m,20) --> ['Kiyohiko'].
-nome(s-m,20) --> ['Azuma'].
 nome(s-m,20) --> ['Kiyohiko','Azuma'].
+nome(s-m,20) --> ['Azuma'].
+nome(s-m,20) --> ['Kiyohiko'].
 
-nome(s-m,21) --> ['Leo'].
-nome(s-m,21) --> ['Tolstoi'].
 nome(s-m,21) --> ['Leo','Tolstoi'].
+nome(s-m,21) --> ['Tolstoi'].
+nome(s-m,21) --> ['Leo'].
 
-nome(s-m,22) --> ['Luis'].
-nome(s-m,22) --> ['de','Camoes'].
 nome(s-m,22) --> ['Luis','de','Camoes'].
+nome(s-m,22) --> ['Camoes'].
+nome(s-m,22) --> ['Luis'].
 
-nome(s-m,23) --> ['Mark'].
-nome(s-m,23) --> ['Twain'].
 nome(s-m,23) --> ['Mark','Twain'].
+nome(s-m,23) --> ['Twain'].
+nome(s-m,23) --> ['Mark'].
 
-nome(s-m,24) --> ['Mia'].
-nome(s-m,24) --> ['Couto'].
 nome(s-m,24) --> ['Mia','Couto'].
+nome(s-m,24) --> ['Couto'].
+nome(s-m,24) --> ['Mia'].
 
-nome(s-m,25) --> ['Motou'].
-nome(s-m,25) --> ['Abiko'].
 nome(s-m,25) --> ['Motou','Abiko'].
+nome(s-m,25) --> ['Abiko'].
+nome(s-m,25) --> ['Motou'].
 
-nome(s-m,26) --> ['Oscar'].
-nome(s-m,26) --> ['Wilde'].
 nome(s-m,26) --> ['Oscar','Wilde'].
+nome(s-m,26) --> ['Wilde'].
+nome(s-m,26) --> ['Oscar'].
 
-nome(s-m,27) --> ['Vergilio'].
-nome(s-m,27) --> ['Ferreira'].
 nome(s-m,27) --> ['Vergilio','Ferreira'].
+nome(s-m,27) --> ['Ferreira'].
+nome(s-m,27) --> ['Vergilio'].
 
-nome(s-m,28) --> ['William'].
-nome(s-m,28) --> ['Shakespeare'].
 nome(s-m,28) --> ['William','Shakespeare'].
+nome(s-m,28) --> ['Shakespeare'].
+nome(s-m,28) --> ['William'].
 
 %---------------------------------------------------------%
 % Substantivos: Titulos                                   %

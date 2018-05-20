@@ -195,22 +195,6 @@ sintagma_nominal_aux3(N-G,Ob) -->
 sintagma_nominal_aux3(N-G,Ob) -->
 	nome(N-G,Ob).
 	
-sintagma_nominal_aux3(N-G,Ob) -->
-	[Primeiro],[Ultimo],
-	{autor(AutorId,Primeiro,Ultimo,_,_,G,_,_,_),
-	N=s, Ob=AutorId}.
-	
-sintagma_nominal_aux3(N-G,Ob) -->
-	%{write('Autor Primeiro'),nl},
-	[Primeiro],
-	{autor(AutorId,Primeiro,_,_,_,G,_,_,_),
-	N=s, Ob=AutorId}.
-	
-sintagma_nominal_aux3(N-G,Ob) -->
-	[Ultimo],
-	{autor(AutorId,_,Ultimo,_,_,G,_,_,_),
-	N=s, Ob=AutorId}.
-	
 sintagma_nominal_aux3(_,_) --> [].
 
 
