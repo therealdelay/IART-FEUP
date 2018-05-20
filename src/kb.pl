@@ -121,8 +121,8 @@ livro(79, 'Por Quem Os Sinos Tocam', [10], 1940, [12], 4).
 livro(80, 'Razao e Sensibilidade', [18], 1811, [12],9).
 livro(81, 'Rei Leao', [28], 1605, [13], 7).
 livro(82, 'Romeu e Julieta', [28], 1595, [13], 2).
-livro(83, 'Sonho de uma Noite de Verão', [28], 1596, [4], 1).
-livro(84, 'Terra Sonâmbula', [24], 1992, [12], 2).
+livro(83, 'Sonho de uma Noite de Verao', [28], 1596, [4], 1).
+livro(84, 'Terra Sonambula', [24], 1992, [12], 2).
 livro(85, 'Uma Família Inglesa', [19], 1868, [12], 9).
 livro(86, 'Vinte Anos Depois', [1], 1845, [12], 1).
 
@@ -552,7 +552,6 @@ resposta_tempo(Q, ser, livro, menos, Adjs, =, AutorId, Resposta) :-
 	(Q==ql, atomic_list_concat(L, ',', Resposta); 
 	length(L,Resposta)).
 	
-%livro(1, 'A Casa dos Espiritos', [17], 1982, [12], 6).
 %frase_interrogativa(R, ['quais','sao','os','livros','mais','antigos','de','Camilo','Castelo','Branco','?'], []).	
 resposta_tempo(Q, ser, livro, mais, Adjs, =, AutorId, Resposta) :-
 	integer(AutorId),
@@ -702,3 +701,16 @@ resposta_existencia_livros_data(Q,ser,livro,_,Adjs,=,autor,Adjs2,existir,Cmp,sec
 	livros_nacionalidades_data(CleanAdjs2,Cmp,Seculo,L),append(L, L1), sort(L1, L2),
 	(Q==ql, atomic_list_concat(L2, ',', Resposta);
 	length(L2,Resposta)).	
+	
+%frase(R,['quais','os','dramas','de','escritores','portugueses','que','existem','apos','o','seculo','XX','?'], []).	
+resposta_existencia_livros_data(Q,ser,Genero,_,Adjs,=,autor,Adjs2,existir,Cmp,seculo,Adjs3,Resposta):-
+	getCleanAdjs(Adjs,[],CleanAdjs),
+	getCleanAdjs(Adjs2,[],CleanAdjs2),
+	getCleanAdjs(Adjs3,[],CleanAdjs3),
+	length(CleanAdjs,0),
+	length(CleanAdjs3,1),
+	nth0(0,CleanAdjs3,Seculo),
+	genero(GeneroId,Genero),
+	livros_nacionalidades_existencia_data(CleanAdjs2,GeneroId,Cmp,Seculo,L),append(L, L1), sort(L1, L2),
+	(Q==ql, atomic_list_concat(L2, ',', Resposta);
+	length(L2,Resposta)).
