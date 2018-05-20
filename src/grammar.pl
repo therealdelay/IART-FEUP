@@ -39,6 +39,9 @@ resposta(Q,A,Ob,_,Adjs,Prep,Ob2,Adjs2,_,_,_,_,Resposta) :-
 resposta(Q,A,Ob,_,Adjs,_,_,_,_,_,_,_,Resposta) :-
 	resposta_nacionalidade(Q, A, Ob, Adjs, Resposta).
 	
+resposta(Q,A,Ob,_,_,_,_,_,A2,Prep2,Ob3,Adjs3,Resposta) :-
+	resposta_existencia_livros_data(Q,A,Ob,A2,Prep2,Ob3,Adjs3,Resposta).
+	
 resposta(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta) :-
 	resposta_existencia_livros_data(Q,A,Ob,Adv,Adjs,Prep,Ob2,Adjs2,A2,Prep2,Ob3,Adjs3,Resposta).
 	
